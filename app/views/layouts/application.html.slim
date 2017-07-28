@@ -1,0 +1,15 @@
+doctype html
+html lang="en"
+  head
+    meta content=("text/html; charset=UTF-8") http-equiv="Content-Type" /
+    meta charset="utf-8" /
+    meta content="NOODP" name="ROBOTS" /
+    meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport" /
+    title vote_sfedu_ru
+    = stylesheet_link_tag :application, media: 'all'
+    = csrf_meta_tags
+  body
+    = render 'flashes'
+    = yield
+    = render 'javascript'
+    = render 'css_overrides'
