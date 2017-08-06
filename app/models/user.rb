@@ -1,10 +1,9 @@
 class User < ApplicationRecord
-  # devise :openid_authenticatable, :rememberable, :trackable
-  devise :rememberable, :trackable
+  devise :openid_authenticatable, :rememberable, :trackable
+  belongs_to :kind, polymorphic: true, dependent: :destroy
 
-  belongs_to :kind, polymorphic: true
+  enum role: %i(regular moderator admin)
 
-  enum role: [:regular, :moderator, :admin]
   attr_accessor :identity_name
 
   def self.build_identity_url(url)
@@ -12,20 +11,26 @@ class User < ApplicationRecord
   end
 
   def self.build_from_identity_url(identity_url)
-    self.new(identity_url: identity_url)
+    new(identity_url: identity_url)
   end
 
   def self.openid_optional_fields
-    %w(email nickname r61globalkey r61recoverymail r61studentid staff student)
+    %w(email nickname r61globalkey r61studentid student staff)
   end
 
   def openid_fields=(fields)
     self.email = fields.fetch('email')
     self.nickname = fields.fetch('nickname')
-    self.kind ||= if fields.fetch['student'] == 1
-                    Student.find_or_create_by(external_id: fields.fetch('r61studentid'))
-                  else
-                    Teacher.find_or_create_by(external_id: fields.fetch('r61globalkey'))
-                  end
+    if fields.fetch('student') == '1'
+      id = normalize_id(fields.fetch('r61studentid'))
+      self.kind = Student.find_or_create_by(external_id: id)
+    else
+      id = normalize_id(fields.fetch('r61globalkey'))
+      self.kind = Teacher.find_or_create_by(external_id: id)
+    end
+  end
+
+  def normalize_id(raw_id)
+    raw_id.gsub(/[^0-9]/, '').rjust(9, '0')
   end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170727215738) do
+ActiveRecord::Schema.define(version: 20170806115524) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -68,9 +68,22 @@ ActiveRecord::Schema.define(version: 20170727215738) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "semesters", force: :cascade do |t|
+    t.integer "year_begin"
+    t.integer "year_end"
+    t.integer "kind"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "semesters_stages", force: :cascade do |t|
+    t.bigint "semester_id"
+    t.bigint "stage_id"
+    t.index ["semester_id"], name: "index_semesters_stages_on_semester_id"
+    t.index ["stage_id"], name: "index_semesters_stages_on_stage_id"
+  end
+
   create_table "stages", force: :cascade do |t|
-    t.integer "semester"
-    t.string "year_id"
     t.datetime "starts_at", null: false
     t.datetime "ends_at", null: false
     t.datetime "created_at", null: false
@@ -86,13 +99,28 @@ ActiveRecord::Schema.define(version: 20170727215738) do
 
   create_table "students", force: :cascade do |t|
     t.string "external_id", null: false
+    t.string "name"
     t.boolean "enabled", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
+  create_table "students_teachers_relations", force: :cascade do |t|
+    t.bigint "student_id"
+    t.bigint "teacher_id"
+    t.bigint "semester_id"
+    t.string "disciplines", array: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["semester_id"], name: "index_students_teachers_relations_on_semester_id"
+    t.index ["student_id"], name: "index_students_teachers_relations_on_student_id"
+    t.index ["teacher_id"], name: "index_students_teachers_relations_on_teacher_id"
+  end
+
   create_table "teachers", force: :cascade do |t|
     t.string "external_id", null: false
+    t.string "name"
+    t.string "snils"
     t.boolean "enabled", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -127,6 +155,11 @@ ActiveRecord::Schema.define(version: 20170727215738) do
   add_foreign_key "participations", "stages"
   add_foreign_key "participations", "students"
   add_foreign_key "participations", "teachers"
+  add_foreign_key "semesters_stages", "semesters"
+  add_foreign_key "semesters_stages", "stages"
   add_foreign_key "stages_questions", "questions"
   add_foreign_key "stages_questions", "stages"
+  add_foreign_key "students_teachers_relations", "semesters"
+  add_foreign_key "students_teachers_relations", "students"
+  add_foreign_key "students_teachers_relations", "teachers"
 end
