@@ -28,12 +28,18 @@ class Student < ApplicationRecord
 
   def evaluated_teachers(stage)
     all_teachers(stage)
-      .joins("INNER JOIN \"participations\" ON \"teachers\".\"id\" = \"participations\".\"teacher_id\" AND \"participations\".\"student_id\" = #{id}")
+      .joins("INNER JOIN \"participations\"
+              ON \"teachers\".\"id\" = \"participations\".\"teacher_id\"
+              AND \"participations\".\"stage_id\" = #{stage.id}
+              AND \"participations\".\"student_id\" = #{id}")
   end
 
   def skipped_teachers(stage)
     all_teachers(stage)
-      .joins("LEFT JOIN \"participations\" ON \"teachers\".\"id\" = \"participations\".\"teacher_id\" AND \"participations\".\"student_id\" = #{id}")
+      .joins("LEFT JOIN \"participations\"
+              ON \"teachers\".\"id\" = \"participations\".\"teacher_id\"
+              AND \"participations\".\"stage_id\" = #{stage.id}
+              AND \"participations\".\"student_id\" = #{id}")
       .where(participations: { student_id: nil })
   end
 
@@ -54,10 +60,6 @@ class Student < ApplicationRecord
   end
 
   private
-
-  # def actualize_book_information!
-  #
-  # end
 
   def create_relations!(teacher, relations)
     result = []
