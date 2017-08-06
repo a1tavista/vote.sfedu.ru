@@ -68,6 +68,13 @@ ActiveRecord::Schema.define(version: 20170806115524) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "questions_stages", id: false, force: :cascade do |t|
+    t.bigint "stage_id"
+    t.bigint "question_id"
+    t.index ["question_id"], name: "index_questions_stages_on_question_id"
+    t.index ["stage_id"], name: "index_questions_stages_on_stage_id"
+  end
+
   create_table "semesters", force: :cascade do |t|
     t.integer "year_begin"
     t.integer "year_end"
@@ -76,7 +83,7 @@ ActiveRecord::Schema.define(version: 20170806115524) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "semesters_stages", force: :cascade do |t|
+  create_table "semesters_stages", id: false, force: :cascade do |t|
     t.bigint "semester_id"
     t.bigint "stage_id"
     t.index ["semester_id"], name: "index_semesters_stages_on_semester_id"
@@ -88,13 +95,6 @@ ActiveRecord::Schema.define(version: 20170806115524) do
     t.datetime "ends_at", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "stages_questions", id: false, force: :cascade do |t|
-    t.bigint "stage_id"
-    t.bigint "question_id"
-    t.index ["question_id"], name: "index_stages_questions_on_question_id"
-    t.index ["stage_id"], name: "index_stages_questions_on_stage_id"
   end
 
   create_table "students", force: :cascade do |t|
@@ -155,10 +155,10 @@ ActiveRecord::Schema.define(version: 20170806115524) do
   add_foreign_key "participations", "stages"
   add_foreign_key "participations", "students"
   add_foreign_key "participations", "teachers"
+  add_foreign_key "questions_stages", "questions"
+  add_foreign_key "questions_stages", "stages"
   add_foreign_key "semesters_stages", "semesters"
   add_foreign_key "semesters_stages", "stages"
-  add_foreign_key "stages_questions", "questions"
-  add_foreign_key "stages_questions", "stages"
   add_foreign_key "students_teachers_relations", "semesters"
   add_foreign_key "students_teachers_relations", "students"
   add_foreign_key "students_teachers_relations", "teachers"
