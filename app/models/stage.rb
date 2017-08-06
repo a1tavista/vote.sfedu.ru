@@ -5,8 +5,8 @@ class Stage < ApplicationRecord
   def self.current
     current_time = Time.current
     Stage
-      .where('stages.starts_at >= ?', current_time)
-      .where('stages.ends_at <= ?', current_time)
+      .where('stages.starts_at <= ?', current_time)
+      .where('stages.ends_at >= ?', current_time)
       .first
   end
 end
