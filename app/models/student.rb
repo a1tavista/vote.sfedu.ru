@@ -2,6 +2,7 @@ class Student < ApplicationRecord
   has_one :user, as: :kind, dependent: :destroy
   has_many :grade_books, dependent: :destroy
   has_many :students_teachers_relations, dependent: :destroy
+  has_many :participations, dependent: :destroy
 
   after_create :load_personal_information!
   # after_find :actualize_book_information
