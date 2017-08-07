@@ -5,7 +5,6 @@ class Student < ApplicationRecord
   has_many :participations, dependent: :destroy
 
   after_create :load_personal_information!
-  # after_find :actualize_book_information
 
   def load_personal_information!
     student = Soap::StudentPersonal.all_info(external_id)
@@ -35,7 +34,7 @@ class Student < ApplicationRecord
               AND \"participations\".\"student_id\" = #{id}")
   end
 
-  def skipped_teachers(stage)
+  def available_teachers(stage)
     all_teachers(stage)
       .joins("LEFT JOIN \"participations\"
               ON \"teachers\".\"id\" = \"participations\".\"teacher_id\"

@@ -62,8 +62,7 @@ ActiveRecord::Schema.define(version: 20170806115524) do
 
   create_table "questions", force: :cascade do |t|
     t.string "text", null: false
-    t.integer "min_evaluation", default: 1, null: false
-    t.integer "max_evaluation", default: 10, null: false
+    t.integer "max_rating", default: 10, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -93,6 +92,12 @@ ActiveRecord::Schema.define(version: 20170806115524) do
   create_table "stages", force: :cascade do |t|
     t.datetime "starts_at", null: false
     t.datetime "ends_at", null: false
+    t.integer "lower_participants_limit", default: 10, null: false
+    t.integer "scale_min", default: 6, null: false
+    t.integer "scale_max", default: 10, null: false
+    t.integer "lower_truncation_percent", default: 5, null: false
+    t.integer "upper_truncation_percent", default: 5, null: false
+    t.string "scale_ladder", array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
