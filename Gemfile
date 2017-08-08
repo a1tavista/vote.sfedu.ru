@@ -24,6 +24,7 @@ gem 'savon'
 gem 'slim-rails'
 gem 'sprockets', '>= 3.0.0'
 gem 'uglifier'
+gem 'webpacker'
 
 group :development do
   gem 'listen'
@@ -59,4 +60,5 @@ end
 group :staging, :production do
   gem 'rack-timeout'
   gem 'rails_stdout_logging'
+  gem 'rollbar'
 end
