@@ -10,8 +10,10 @@ html lang="en"
     = csrf_meta_tags
   body
     = render 'shared/header'
-    = yield
+    main#common-app
+      = yield
     = render 'shared/footer'
     = render 'shared/metrika'
     = render 'javascript'
     = render 'css_overrides'
+    = javascript_pack_tag 'common'
