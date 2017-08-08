@@ -1,0 +1,14 @@
+.page-content
+  h1.teacher-name = @teacher.name
+  = form_tag(teacher_respond_path(@teacher.id), method: :post)
+    - @questions.each do |q|
+      .question
+        .text = q.text
+        .answers
+          - (1..q.max_rating).each do |e|
+            = label_tag "form_question_#{q.id}_#{e}" do
+              .score = e
+              .button
+                = radio_button("answers", "question_#{q.id}", e, required: true, id: "form_question_#{q.id}_#{e}")
+    = submit_tag("Оценить преподавателя", class: "full-width")
+

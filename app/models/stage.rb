@@ -2,6 +2,8 @@ class Stage < ApplicationRecord
   has_and_belongs_to_many :semesters
   has_and_belongs_to_many :questions
 
+  # Валидация на значения min_scale, max_scale и т.д.
+
   after_save :recalculate_scale_ladder!
 
   def self.current

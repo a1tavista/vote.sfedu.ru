@@ -4,6 +4,8 @@ class Ability
   def initialize(user)
     return unless user.present?
 
-    # Define abilities here. More info: https://github.com/CanCanCommunity/cancancan/wiki/defining-abilities
+    can %i(read respond), Teacher do |teacher|
+      user.kind.available_teachers(Stage.current).include?(teacher)
+    end
   end
 end

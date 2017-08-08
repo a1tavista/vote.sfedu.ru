@@ -262,7 +262,7 @@ ru:
     formats:
       full: "%a, %d %b %Y, %H:%M:%S %z"
       default: "%d %B %Y, %H:%M"
-      only_date: "%d.%m.%Y"
+      only_date: "%d %B %Y"
       slug: "%Y%d%m"
       only_time: "%H:%M"
       short: "%d %B, %H:%M"

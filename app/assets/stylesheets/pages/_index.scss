@@ -1,0 +1,145 @@
+.welcome-page {
+
+  &__section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 75px 10px;
+    flex-direction: column;
+    background: white;
+
+    h1 {
+      text-align: center;
+      font-size: 2em;
+    }
+  }
+
+  .list {
+    li {
+      display: block;
+      border-left: 3px solid $blue;
+      padding: 5px 0;
+      padding-left: 10px;
+      width: 100%;
+      margin: 7px 0;
+    }
+  }
+
+  .top-section {
+    box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.45);
+  }
+
+  .accent-section {
+    color: white;
+    background-color: shade($blue, 5%);
+    .list li {
+      border-left-color: white;
+    }
+  }
+
+  &__main {
+    background-image: image_url("abstract-bg.jpg");
+    background-position: center;
+    background-size: cover;
+
+    p {
+      margin: 0;
+    }
+
+    color: white;
+
+    min-height: 500px;
+    text-align: center;
+  }
+
+  .label {
+    &__main { font-size: 1.3em; }
+    &__secondary { font-size: 1em; }
+  }
+
+  &__authorize {
+    margin: 2em 0;
+    width: 100%;
+    max-width: 500px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+
+    input[type="text"] {
+      color: black;
+      width: 55%;
+      margin-bottom: 0;
+      margin-right: 10px;
+    }
+
+    input[type="submit"] {
+      width: 45%;
+    }
+
+    @media(max-width: 425px) {
+      flex-direction: column;
+      input[type="text"], input[type="submit"] {
+        width: 90%;
+        margin: 5px 0;
+      }
+    }
+  }
+
+  .benefits {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: center;
+    flex-basis: 30%;
+    flex-wrap: wrap;
+
+    .benefit {
+      max-width: 350px;
+      margin: 15px 10px;
+      padding: 20px;
+      box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.45);
+      border-radius: 5px;
+
+      h4 {
+        padding: 5px 0;
+        border-bottom: 3px solid $blue;
+      }
+    }
+  }
+
+  .statistics {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: center;
+    flex-basis: 30%;
+    flex-wrap: wrap;
+
+    .info {
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      margin: 15px 15px;
+      padding: 30px;
+      box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.55);
+      text-align: center;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      justify-content: center;
+
+      .number {
+        line-height: 1;
+        font-size: 5em;
+        margin-bottom: 10px;
+      }
+
+      .description {
+        font-size: 1.1em;
+        color: #2E2F30;
+      }
+    }
+  }
+}

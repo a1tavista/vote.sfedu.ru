@@ -1,5 +1,9 @@
-@import 'bourbon';
-@import "base/base";
+@charset "utf-8";
 
-@import url('https://fonts.googleapis.com/css?family=Roboto:400,700&subset=cyrillic');
-@import 'https://fonts.googleapis.com/icon?family=Material+Icons';
+@import "normalize-rails";
+
+@import "bourbon";
+
+@import "base/base";
+@import "pages/pages";
+@import "shared/shared";

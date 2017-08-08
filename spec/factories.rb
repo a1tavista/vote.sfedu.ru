@@ -1,4 +1,10 @@
 FactoryGirl.define do
+  factory :semester do
+    
+  end
+  factory :students_teachers_relation do
+    
+  end
   factory :grade_book do
     
   end

@@ -1,0 +1,31 @@
+footer {
+  padding-top: 25px;
+  border-top: 1px solid $light-gray;
+  background: lighten($light-gray, 10%);
+  text-align: center;
+
+  .title {
+    padding: 0 15px;
+    font-size: 1em;
+    font-weight: bold;
+    color: #666666;
+  }
+
+  .sources {
+    padding: 0 15px;
+    font-size: 0.8em;
+  }
+
+  .sub-footer {
+    text-align: right;
+    @media(max-width: 425px) {
+      text-align: center;
+    }
+    margin-top: 10px;
+    padding: 5px 15px;
+    font-size: 0.6em;
+    a {
+      color: #666666;
+    }
+  }
+}

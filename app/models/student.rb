@@ -43,6 +43,10 @@ class Student < ApplicationRecord
       .where(participations: { student_id: nil })
   end
 
+  def teachers_load_required?
+    students_teachers_relations.empty?
+  end
+
   def load_teachers!
     ActiveRecord::Base.transaction do
       StudentsTeachersRelation.where(student: self).destroy_all

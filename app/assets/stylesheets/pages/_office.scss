@@ -1,0 +1,74 @@
+.page-content {
+  padding: 25px 10px;
+  margin: 0 auto;
+  max-width: 1200px;
+
+  .instructions {
+    margin: 0 10px;
+    p {
+      margin: 10px 0;
+    }
+  }
+
+  .teachers-list {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+
+    &-container {
+      margin-top: 25px;
+      h1 { margin-left: 10px; }
+    }
+
+    .teacher {
+      box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.25);
+      background: white;
+      margin: 5px 10px;
+      padding: 10px;
+      border-left: 3px solid $blue;
+      width: calc(50% - 20px);
+      min-width: 280px;
+
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      @media(max-width: 660px) {
+        width: 100%;
+      }
+    }
+  }
+
+  h1.teacher-name {
+    font-size: 1.6em;
+  }
+
+  .question {
+    box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.25);
+    background: white;
+    margin: 15px 0;
+
+    .text {
+      padding: 10px;
+    }
+
+    .answers {
+      background: $light-gray;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      flex-wrap: wrap;
+      label {
+        text-align: center;
+        color: black;
+        padding: 10px 15px;
+        margin: 0 2.5px;
+      }
+      input {
+        margin: 0;
+      }
+    }
+  }
+}
