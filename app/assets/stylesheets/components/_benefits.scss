@@ -1,0 +1,21 @@
+.benefits {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: center;
+  flex-basis: 30%;
+  flex-wrap: wrap;
+
+  &__point {
+    max-width: 350px;
+    margin: 15px 10px;
+    padding: 20px;
+    box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.45);
+    border-radius: 5px;
+  }
+
+  &__title {
+    padding: 5px 0;
+    border-bottom: 3px solid $blue;
+  }
+}

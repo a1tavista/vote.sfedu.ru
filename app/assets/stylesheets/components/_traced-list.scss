@@ -1,0 +1,10 @@
+.traced-list {
+  &__item {
+    display: block;
+    border-left: 3px solid $blue;
+    padding: 5px 0;
+    padding-left: 10px;
+    width: 100%;
+    margin: 7px 0;
+  }
+}

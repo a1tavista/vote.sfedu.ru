@@ -1,0 +1,41 @@
+.header {
+  box-shadow: 0 3px 2px 0 rgba(0, 0, 0, 0.15);
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: stretch;
+
+  &__logo {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+
+    padding: 10px 20px;
+
+    img {
+      max-height: 50px;
+      margin-right: 15px;
+    }
+  }
+
+  &__title {
+    margin: 0;
+    font-size: 1.2em;
+  }
+
+  &__menu {
+    padding: 0 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: stretch;
+
+    &-item {
+      margin-left: 20px;
+      display: flex;
+      align-items: center;
+    }
+  }
+}

@@ -15,10 +15,10 @@
 </script>
 
 <template>
-  <form :action="path" method="post" class="welcome-page__authorize">
-    <input type="text" placeholder="Логин на sfedu.ru" v-model="identityName">
+  <form :action="path" method="post" class="authorization">
+    <input class="authorization__text-field" type="text" placeholder="Логин на sfedu.ru" v-model="identityName">
     <input type="hidden" :name="name" v-model="identityUrl">
     <slot></slot>
-    <button>Войти</button>
+    <button class="authorization__submit-button">Войти</button>
   </form>
 </template>

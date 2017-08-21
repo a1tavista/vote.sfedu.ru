@@ -15,6 +15,7 @@ class Student < ApplicationRecord
   end
 
   def all_teachers(stage)
+    return [] if stage.nil?
     Teacher.
       select('"teachers"."id"', '"teachers"."name"').
       distinct.
@@ -27,6 +28,7 @@ class Student < ApplicationRecord
   end
 
   def evaluated_teachers(stage)
+    return [] if stage.nil?
     all_teachers(stage)
       .joins("INNER JOIN \"participations\"
               ON \"teachers\".\"id\" = \"participations\".\"teacher_id\"
@@ -35,6 +37,7 @@ class Student < ApplicationRecord
   end
 
   def available_teachers(stage)
+    return [] if stage.nil?
     all_teachers(stage)
       .joins("LEFT JOIN \"participations\"
               ON \"teachers\".\"id\" = \"participations\".\"teacher_id\"

@@ -1,0 +1,46 @@
+.page-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 75px 10px;
+  flex-direction: column;
+  background: white;
+
+  // Modifiers
+
+  &--accented {
+    color: white;
+    background-color: shade($blue, 5%);
+  }
+
+  &--main {
+    color: white;
+    background-image: image_url("abstract-bg.jpg");
+    background-position: center;
+    background-size: cover;
+    min-height: 500px;
+  }
+
+  &--raised {
+    box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.45);
+  }
+
+  // Elements
+
+  &__title {
+    text-align: center;
+    font-size: 2em;
+  }
+
+  &__label {
+    &--main {
+      font-weight: normal;
+      font-size: 1.3em;
+    }
+
+    &--sub {
+      font-weight: normal;
+      font-size: 1em;
+    }
+  }
+}
