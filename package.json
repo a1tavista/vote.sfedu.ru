@@ -2,6 +2,7 @@
   "name": "vote_sfedu_ru",
   "private": true,
   "dependencies": {
+    "N3-components": "^2.4.2",
     "autoprefixer": "^7.1.2",
     "babel-core": "^6.25.0",
     "babel-loader": "7.x",

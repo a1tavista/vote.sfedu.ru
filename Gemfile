@@ -10,6 +10,7 @@ gem 'cancancan'
 gem 'devise'
 gem 'devise_openid_authenticatable', git: 'https://github.com/a1tavista/devise_openid_authenticatable.git', ref: '35e7d83'
 gem 'high_voltage'
+gem 'jquery-rails'
 gem 'normalize-rails', '~> 3.0.0'
 gem 'pg'
 gem 'puma'
@@ -60,5 +61,4 @@ end
 group :staging, :production do
   gem 'rack-timeout'
   gem 'rails_stdout_logging'
-  gem 'rollbar'
 end

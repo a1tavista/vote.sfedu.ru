@@ -8,3 +8,5 @@ header.header
     = link_to "Вопросы и ответы", page_path('faq'), class: 'header__menu-item'
     - if current_user.present?
       = link_to "Выход", destroy_user_session_path, class: 'header__menu-item'
+    .header__sidebar-trigger
+      img.open-sidebar src=(image_path('menu.svg'))

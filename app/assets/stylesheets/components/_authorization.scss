@@ -21,6 +21,7 @@
 
   @media(max-width: 425px) {
     flex-direction: column;
+    align-items: center;
 
     &__text-field, &__submit-button {
       width: 90%;

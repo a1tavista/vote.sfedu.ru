@@ -23,6 +23,10 @@
   &__title {
     margin: 0;
     font-size: 1.2em;
+
+    @media(max-width: 424px) {
+      font-size: 1em;
+    }
   }
 
   &__menu {
@@ -33,9 +37,27 @@
     align-items: stretch;
 
     &-item {
+      @media(max-width: 1023px) {
+        display: none;
+      }
+
       margin-left: 20px;
       display: flex;
       align-items: center;
+    }
+  }
+
+  &__sidebar-trigger {
+    display: none;
+
+    @media(max-width: 1023px) {
+      display: flex;
+      align-items: center;
+    }
+
+    img {
+      min-width: 32px;
+      min-height: 32px;
     }
   }
 }

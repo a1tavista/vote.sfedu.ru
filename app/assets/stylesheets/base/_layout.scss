@@ -16,3 +16,18 @@ body {
 body {
   background: #FAFAFA;
 }
+
+.sticky-wrapper {
+  min-height: 100%;
+  margin-bottom: -103px;
+
+  &:after {
+    content: "";
+    height: 103px;
+    display: block;
+  }
+}
+
+footer {
+  height: 103px;
+}

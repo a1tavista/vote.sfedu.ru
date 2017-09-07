@@ -1,3 +1,5 @@
 = javascript_include_tag :application
 = yield :javascript
 = javascript_pack_tag 'common'
+javascript:
+  $('.sidebar').sidebar({ trigger: '.open-sidebar', content: '.sidebar__overlay' });
