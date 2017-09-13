@@ -26,7 +26,7 @@ section.page-section.page-section--main.page-section--raised
       - @stages.each do |stage|
         li.traced-list__item
           | С #{l(stage.starts_at, format: :only_date)} по #{l(stage.ends_at, format: :only_date)}:&nbsp
-          = link_to 'статистика участия и результаты опроса'
+          = link_to 'статистика участия и результаты опроса', stage_path(stage)
 
 .page-section.page-section--raised
   h1.page-section__title Зачем проводится анкетирование

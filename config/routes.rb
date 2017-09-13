@@ -5,4 +5,8 @@ Rails.application.routes.draw do
   resources :teachers do
     post :respond
   end
+
+  resources :stages do
+    # get :results, on: :member
+  end
 end

@@ -21,6 +21,12 @@
     min-height: 500px;
   }
 
+  &--survey-header {
+    //background: image_url('survey.png') center !important;
+    background-color: #4E342E;
+    color: white;
+  }
+
   &--raised {
     box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.45);
   }
@@ -43,6 +49,17 @@
       text-align: center;
       font-weight: normal;
       font-size: 1em;
+    }
+  }
+
+  &__content {
+    padding: 0 10px;
+    &--limited {
+      max-width: 1000px;
+    }
+
+    &--justify {
+      text-align: justify;
     }
   }
 }

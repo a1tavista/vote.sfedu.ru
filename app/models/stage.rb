@@ -6,6 +6,14 @@ class Stage < ApplicationRecord
 
   after_save :recalculate_scale_ladder!
 
+  def self.upcoming
+    Stage.where('stages.starts_at > ?', Time.current)
+  end
+
+  def self.past
+    Stage.where('stages.ends_at < ?', Time.current)
+  end
+
   def self.current
     current_time = Time.current
     Stage

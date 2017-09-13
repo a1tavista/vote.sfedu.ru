@@ -1,0 +1,46 @@
+section.page-section.page-section--raised.page-section--survey-header
+  h1.page-section__label--main Анкетирование студентов Южного федерального университета
+  p с #{l(@stage.starts_at, format: :only_date)} по #{l(@stage.ends_at, format: :only_date)}
+
+section.page-section.page-section--raised
+  h1 Порядок проведения
+  .page-section__content.page-section__content--limited.page-section__content--justify
+    p В анкетировании участвуют студенты всех структурных подразделений Южного федерального университета,
+      прослушавшие курсы за #{stage_semesters_list(@stage)}.
+    p Во время заполнения анкеты студентам предлагается оценить преподавателя по следующим критериям
+      путём проставления оценки по шкале от 1 до 10:
+  .page-section__content.page-section__content--limited
+    .traced-list
+      - @stage.questions.each do |question|
+        .traced-list__item = question.text
+  .page-section__content.page-section__content--limited
+    p Анкетирование проводится в анонимном режиме. Система раздельно хранит факт заполнения анкеты
+      и её содержимое. После внесения ответа в систему его <b>невозможно отследить, изменить или отменить</b>,
+      так как отсутствует связь между респондентом и его оценкой преподавателя.
+
+section.page-section.page-section--raised
+  h1 Правила подсчета результатов
+  .page-section__content.page-section__content--limited.page-section__content--justify
+    p Для того, чтобы участвовать в рейтинге, преподавателю необходимо набрать
+      <b>не менее #{@stage.lower_participants_limit} голосов</b>. Если данная планка не была преодолена,
+      преподавателю автоматически присваивается <b>0 баллов</b> за текущее анкетирование.
+    p По каждому критерию отбрасываются <b>#{@stage.lower_truncation_percent}%</b> минимальных и <b>#{@stage.upper_truncation_percent}%</b> максимальных
+      оценок, но не менее одной с каждой стороны. Это необходимо, чтобы исключить явно завышенные или заниженные оценки
+      от участников анкетирования.
+    / p (тут интерактивный пример, как это работает)
+    p После этого по каждому критерию подсчитывается среднее арифметическое, затем подсчитывается среднее арифметическое
+      по всем средним оценкам за критерии.
+    p Так как речь идёт о системе поощрения, то необходима постобработка полученных результатов &ndash; шкалирование.
+      Шкала перевода необработанных баллов в итоговые выглядит следующим образом:
+
+    table
+      thead
+        td <b>Диапазон</b>
+        td <b>Итоговая оценка</b>
+      tbody
+        = stage_ladder_table(@stage)
+
+
+/section.page-section.page-section--raised
+  h1 Статистика участия
+
