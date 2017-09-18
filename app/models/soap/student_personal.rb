@@ -12,7 +12,8 @@ class Soap::StudentPersonal
     handled_response = response[:get_student_info_response][:return][:student_info]
     {
       name: handled_response[:fio],
-      grade_books: handled_response[:study_inf].to_a.map { |grade_book| grade_book[:zachetka] }.uniq,
+      grade_books: prepare_grade_books(handled_response[:study_inf])
+                     .map { |grade_book| grade_book[:zachetka] }.uniq,
     }
   end
 
@@ -71,5 +72,13 @@ class Soap::StudentPersonal
       'Десятый' => 10,
       'Одиннадцатый' => 11,
     }.fetch(raw)
+  end
+
+  def self.prepare_grade_books(study_info)
+    if study_info.is_a?(Hash)
+      [study_info]
+    elsif study_info.is_a?(Array)
+      study_info
+    end
   end
 end
