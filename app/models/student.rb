@@ -9,9 +9,9 @@ class Student < ApplicationRecord
   def load_personal_information!
     student = Soap::StudentPersonal.all_info(external_id)
     update(name: student[:name])
-    student[:study_info].each do |info|
-      grade_books << GradeBook.create(info)
-    end
+    # student[:study_info].each do |info|
+    #   grade_books << GradeBook.create(info)
+    # end
   end
 
   def all_teachers(stage)
