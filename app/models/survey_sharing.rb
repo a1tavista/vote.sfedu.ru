@@ -1,0 +1,2 @@
+class SurveySharing < ApplicationRecord
+end

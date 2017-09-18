@@ -26,6 +26,7 @@ gem 'slim-rails'
 gem 'sprockets', '>= 3.0.0'
 gem 'uglifier'
 gem 'webpacker'
+gem 'jbuilder'
 
 group :development do
   gem 'listen'

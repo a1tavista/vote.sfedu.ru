@@ -1,4 +1,22 @@
 FactoryGirl.define do
+  factory :survey_participation do
+    
+  end
+  factory :survey_sharing do
+    
+  end
+  factory :survey_answer do
+    
+  end
+  factory :survey_option do
+    
+  end
+  factory :survey_question do
+    
+  end
+  factory :survey do
+    
+  end
   factory :semester do
     
   end

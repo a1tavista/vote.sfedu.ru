@@ -1,0 +1,18 @@
+.survey-form-question {
+  padding-bottom: 15px;
+
+  &__title {
+
+  }
+
+  &__option {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+
+  &__option-label {
+    font-weight: normal;
+  }
+}

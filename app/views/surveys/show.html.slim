@@ -1,0 +1,10 @@
+.page-content
+  h1 = @survey.title
+
+  - if @survey.answered_for?(current_user.id)
+    .note
+      p Спасибо, Вы уже поучаствовали в опросе!
+  - else
+    .note
+      p Пожалуйста, обратите внимание, что вопросы со звёздочкой обязательно требуют ответа.
+    survey-form id=(@survey.id)

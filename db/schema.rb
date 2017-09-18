@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170806115524) do
+ActiveRecord::Schema.define(version: 20170914151429) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -120,6 +120,60 @@ ActiveRecord::Schema.define(version: 20170806115524) do
     t.index ["semester_id"], name: "index_students_teachers_relations_on_semester_id"
     t.index ["student_id"], name: "index_students_teachers_relations_on_student_id"
     t.index ["teacher_id"], name: "index_students_teachers_relations_on_teacher_id"
+  end
+
+  create_table "survey_answers", force: :cascade do |t|
+    t.bigint "survey_id", null: false
+    t.bigint "survey_question_id", null: false
+    t.bigint "survey_option_id", null: false
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["survey_id"], name: "index_survey_answers_on_survey_id"
+    t.index ["survey_option_id"], name: "index_survey_answers_on_survey_option_id"
+    t.index ["survey_question_id"], name: "index_survey_answers_on_survey_question_id"
+    t.index ["user_id"], name: "index_survey_answers_on_user_id"
+  end
+
+  create_table "survey_options", force: :cascade do |t|
+    t.bigint "survey_question_id"
+    t.string "text"
+    t.boolean "custom", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["survey_question_id"], name: "index_survey_options_on_survey_question_id"
+  end
+
+  create_table "survey_questions", force: :cascade do |t|
+    t.bigint "survey_id", null: false
+    t.string "text"
+    t.boolean "required", default: true, null: false
+    t.boolean "multichoice", default: false, null: false
+    t.boolean "free_answer", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["survey_id"], name: "index_survey_questions_on_survey_id"
+  end
+
+  create_table "survey_sharings", force: :cascade do |t|
+    t.bigint "survey_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["survey_id"], name: "index_survey_sharings_on_survey_id"
+    t.index ["user_id"], name: "index_survey_sharings_on_user_id"
+  end
+
+  create_table "surveys", force: :cascade do |t|
+    t.bigint "user_id"
+    t.boolean "private", default: true, null: false
+    t.boolean "anonymous", default: true, null: false
+    t.string "title", null: false
+    t.string "passcode", null: false
+    t.date "active_until", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_surveys_on_user_id"
   end
 
   create_table "teachers", force: :cascade do |t|
