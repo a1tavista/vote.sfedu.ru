@@ -33,7 +33,7 @@ class Soap::StudentPersonal
 
   def self.all_info(external_id)
     personal = personal_info(external_id)
-    # personal[:study_info] = personal[:grade_books].map { |grade_book_id| study_info(grade_book_id) }
+    personal[:study_info] = personal[:grade_books].map { |grade_book_id| study_info(grade_book_id) }
     personal.except(:grade_books)
   end
 
