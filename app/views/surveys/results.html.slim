@@ -1,0 +1,22 @@
+.page-content
+  h1 Результаты опроса
+  = link_to 'Перейти к участникам опроса', respondents_survey_path(@survey.passcode)
+  br
+  br
+  - @breakdown[:results].each do |question_section|
+    h3 = question_section[:question].text
+    table
+      tr
+        th style='width: 70%;' Ответ
+        th Кол-во
+        th % от общего числа
+      - question_section[:survey_options].each do |option_section|
+        tr
+          td = option_section[:option].text
+          td = option_section[:count]
+          td = number_to_percentage(option_section[:rate], precision: 2)
+      - question_section[:custom_options]&.each do |option_section|
+        tr
+          td = option_section[:option].text
+          td = option_section[:count]
+          td = number_to_percentage(option_section[:rate], precision: 2)

@@ -1,0 +1,9 @@
+.page-content
+  h1 Участники опроса (#{@respondents.count})
+  = link_to 'Перейти к результатам опроса', results_survey_path(@survey.passcode)
+  br
+  br
+  table
+    - @respondents.each do |respondent|
+      tr
+        td #{respondent.kind.name} (#{respondent.nickname}@sfedu.ru)

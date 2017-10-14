@@ -6,11 +6,12 @@ Rails.application.routes.draw do
     post :respond
   end
 
-  resources :stages do
-    # get :results, on: :member
-  end
+  resources :stages
 
-  resources :surveys
+  resources :surveys do
+    get :results, on: :member
+    get :respondents, on: :member
+  end
 
   # API
   namespace :api, defaults: { format: :json } do

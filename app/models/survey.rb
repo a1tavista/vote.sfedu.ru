@@ -2,6 +2,7 @@ class Survey < ApplicationRecord
   has_many :questions, class_name: 'SurveyQuestion', dependent: :destroy
   has_many :options, class_name: 'SurveyOption', through: :questions
   has_many :answers, class_name: 'SurveyAnswer', dependent: :destroy
+  has_many :users, -> { distinct }, through: :answers
   has_many :sharings, class_name: 'SurveySharing', dependent: :destroy
 
   belongs_to :user
