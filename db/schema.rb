@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170914151429) do
+ActiveRecord::Schema.define(version: 20171111192620) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -221,4 +221,12 @@ ActiveRecord::Schema.define(version: 20170914151429) do
   add_foreign_key "students_teachers_relations", "semesters"
   add_foreign_key "students_teachers_relations", "students"
   add_foreign_key "students_teachers_relations", "teachers"
+  add_foreign_key "survey_answers", "survey_options"
+  add_foreign_key "survey_answers", "survey_questions"
+  add_foreign_key "survey_answers", "surveys"
+  add_foreign_key "survey_answers", "users"
+  add_foreign_key "survey_questions", "surveys"
+  add_foreign_key "survey_sharings", "surveys"
+  add_foreign_key "survey_sharings", "users"
+  add_foreign_key "surveys", "users"
 end
