@@ -1,7 +1,8 @@
 aside.sidebar
   ul.sidebar__menu
+    = link_to "Главная", root_path, wrap_tag: :li
     = link_to "О сервисе", page_path('about'), wrap_tag: :li
-    = link_to "Вопросы и ответы", page_path('faq'), wrap_tag: :li
+    /= link_to "Вопросы и ответы", page_path('faq'), wrap_tag: :li
     - if current_user.present?
       = link_to "Выход", destroy_user_session_path, wrap_tag: :li
 .sidebar__overlay

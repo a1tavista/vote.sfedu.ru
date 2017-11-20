@@ -1,18 +1,18 @@
 $sidebar-width: 300px;
 
 @keyframes slidein {
-  from { transform: translate(-$sidebar-width, 0); }
+  from { transform: translate($sidebar-width, 0); }
   to   { transform: translate(0              , 0); }
 }
 
 @keyframes slideout {
   from { transform: translate(0              , 0); }
-  to   { transform: translate(-$sidebar-width, 0); }
+  to   { transform: translate($sidebar-width, 0); }
 }
 
 .sidebar {
   height: 100%;
-  left: 0;
+  right: 0;
   position: fixed;
   top: 0;
   font-size: 14px;
@@ -23,7 +23,7 @@ $sidebar-width: 300px;
   overflow: auto;
   animation: all .2s ease-in-out;
 
-  transform: translate(-$sidebar-width, 0);
+  transform: translate($sidebar-width, 0);
 
   &-opened {
     transform: translate(0, 0);
