@@ -22,15 +22,7 @@ p {
 }
 
 a {
-  color: $action-color;
-  text-decoration: none;
-  transition: color $base-duration $base-timing;
-
-  &:active,
-  &:focus,
-  &:hover {
-    color: shade($action-color, 25%);
-  }
+  @include styled-link($action-color);
 }
 
 hr {
@@ -39,4 +31,16 @@ hr {
   border-right: 0;
   border-top: 0;
   margin: $base-spacing 0;
+}
+
+dl {
+  dt, dd {
+    display: inline-block;
+  }
+
+  dt {
+    color: $medium-gray;
+    margin-right: 5px;
+    font-weight: normal;
+  }
 }

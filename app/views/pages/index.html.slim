@@ -1,34 +1,50 @@
-/.page-notice
-  .page-notice__icon
-  .page-notice__title Опрос по работе сотрудников общежитий
-
-section.page-section.page-section--main.page-section--raised
-  h1.page-section__label--main Анкетирование студентов Южного федерального университета
-  - if @stage.present?
-    p.page-section__label--main с #{l(@stage.starts_at, format: :only_date)} по #{l(@stage.ends_at, format: :only_date)}
+section.page-section.page-section--main
+  .page-section__title-block
+    h1.page-section__label--main Система анкетирования Южного федерального университета
+    p.page-section__label--sub
+      | Помогает наладить связь между студентами и профессорско-преподавательским составом.
 
   - if current_user.nil?
     = render 'shared/login'
   - else
-    .authorization
-      = link_to("Принять участие", teachers_path, class: 'btn')
+    .authorization-form
+      h3.authorization-form__title Добро пожаловать, #{current_user.nickname}!
+      = link_to("Перейти в личный кабинет", teachers_path, class: 'btn')
 
-  p.page-section__label--sub
-    | Приняв участие в опросе, Вы поможете улучшить
-    |  качество преподаваемых дисциплин, повысить их доступность и актуальность.
+- if @stage.present?
+  .page-notice
+    = image_tag "poll.svg"
+    = link_to @stage, class: 'page-notice__title' do
+      | Cпешите принять участие в рейтинге с #{l(@stage.starts_at, format: :only_date)} по #{l(@stage.ends_at, format: :only_date)}!
 
-.page-section.page-section--raised
-  - if @stage.present?
-    h1.page-section__title Регламент проведения
-  - else
-    h1.page-section__title Статистика предыдущих опросов
-    ul.traced-list
-      - @stages.each do |stage|
-        li.traced-list__item
-          | С #{l(stage.starts_at, format: :only_date)} по #{l(stage.ends_at, format: :only_date)}:&nbsp
-          = link_to 'статистика участия и результаты опроса', stage_path(stage)
+section.page-section
+  h1.page-section__title Общеуниверситетские опросы
+  .page-section__content--with-cards
+    - @stages.each do |stage|
+      .survey-card class=('survey-card--active' if stage.current?)
+        header.survey-card__title
+          = link_to "Рейтинг НПР", "#"
+        .survey-card__content
+          dl.survey-card__date
+            dt Начало:
+            dd = l(stage.starts_at, format: :only_date)
+          dl.survey-card__date
+            dt Конец:
+            dd = l(stage.ends_at, format: :only_date)
+          footer.survey-card__footer
+            = link_to 'Статистика участия', stage_path(stage)
+            = link_to 'Результаты опроса', stage_path(stage) if stage.past?
 
-.page-section.page-section--raised
+section.page-section.page-section--raised
+  .page-section__content--limited.about-page__service-description-section
+    .about-page__images
+      = image_tag 'logo-colored.png'
+      = image_tag 'studsovet.png'
+    p.about-page__service-description
+      | Система оценки профессорско-преподавательского состава Южного федерального университета реализуется с целью
+      |  совершенствования образовательного процесса университета и вовлечения обучающихся в процесс повышения качества
+      |  образования через независимую оценку преподавательской деятельности.
+/section.page-section.page-section--raised
   h1.page-section__title Зачем проводится анкетирование
   .benefits
     .benefits__point

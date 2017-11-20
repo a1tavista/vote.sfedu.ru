@@ -1,9 +1,9 @@
 .survey-form-question {
   padding-bottom: 15px;
 
-  &__title {
-
-  }
+  @include card;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  margin: 0 0 25px;
 
   &__option {
     display: flex;
@@ -14,5 +14,16 @@
 
   &__option-label {
     font-weight: normal;
+  }
+
+  &__option-text {
+    width: 100%;
+    input, textarea {
+      width: 100%;
+    }
+
+    textarea {
+      min-height: 100px;
+    }
   }
 }

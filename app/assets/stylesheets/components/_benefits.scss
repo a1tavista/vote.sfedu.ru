@@ -8,10 +8,7 @@
 
   &__point {
     max-width: 350px;
-    margin: 15px 10px;
-    padding: 20px;
-    box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.45);
-    border-radius: 5px;
+    @include card;
   }
 
   &__title {

@@ -1,23 +1,16 @@
 .page-notice {
   padding: 25px 15px;
-  background: #0F8031;
-  color: white;
+  margin-top: 20px;
+  background: $blue;
 
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
 
-  &__icon {
-    display: block;
-    min-width: 36px;
-    min-height: 36px;
-    margin-right: 8px;
-    background: image_url('poll.svg') no-repeat;
-    background-size: 100%;
-  }
-
   &__title {
+    @include styled-link(white);
+    margin-left: 8px;
     font-size: 1.3em;
   }
 }

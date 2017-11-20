@@ -1,0 +1,20 @@
+.about-page {
+  &__service-description-section {
+    p {
+      text-align: center;
+    }
+  }
+
+  &__images {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+
+    img {
+      margin: 0 5px;
+      width: 150px;
+    }
+  }
+}

@@ -1,0 +1,45 @@
+.survey-card {
+  //$root: ".survey-card";
+  $root: &;
+  @include card;
+  padding: 0;
+  max-width: 300px;
+  min-width: 300px;
+
+  &__title {
+    background: $blue;
+    padding: 10px 15px;
+    a {
+      @include styled-link(white);
+    }
+  }
+
+  &__content {
+    padding: 20px;
+  }
+
+  &__footer {
+    margin-top: 10px;
+    a {
+      display: block;
+    }
+  }
+
+  &__date {
+    dt {
+      width: 60px;
+    }
+  }
+
+  &--active {
+    box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+    #{$root}__title {
+      background: #fee882;
+      a {
+        @include styled-link(black);
+      }
+    }
+  }
+
+
+}

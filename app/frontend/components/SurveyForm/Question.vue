@@ -8,7 +8,9 @@
     },
     computed: {
       freeAnswerChoosed() {
-        return this.handledAnswers.indexOf(null) > -1;
+        if(this.options.length == 0 && this.free)
+          return true;
+        return this.handledAnswers.indexOf("free") > -1;
       },
       handledAnswers() {
         let options = [];
@@ -58,13 +60,20 @@
           {{ item.text }}
         </label>
       </div>
-      <div class="survey-form-question__option" v-if="free">
+
+      <div class="survey-form-question__option" v-if="free && options.length > 0">
         <div class="survey-form-question__option-box">
-          <input type="checkbox" :value='null' v-model='chosenOptions' v-if='multichoice'>
-          <input type="radio" :value='null' v-model='chosenOptions' v-else>
+          <input type="checkbox" value='free' v-model='chosenOptions' v-if='multichoice'>
+          <input type="radio" value='free' v-model='chosenOptions' v-else>
         </div>
-        <div class="survey-form-question__option-label">
+        <div class="survey-form-question__option-text">
           <input type="text" v-model="freeAnswer" placeholder="Укажите Ваш ответ" :disabled="!freeAnswerChoosed">
+        </div>
+      </div>
+
+      <div class="survey-form-question__option" v-else-if="free && options.length == 0">
+        <div class="survey-form-question__option-text">
+          <textarea v-model="freeAnswer" placeholder="Укажите Ваш ответ"></textarea>
         </div>
       </div>
     </div>

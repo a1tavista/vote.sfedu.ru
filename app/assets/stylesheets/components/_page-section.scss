@@ -1,9 +1,15 @@
 .page-section {
+  $root: ".page_section";
+
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 75px 10px;
   flex-direction: column;
+  flex-basis: 100%;
+
+  z-index: 0;
+
+  padding: 75px 20px;
   background: white;
 
   // Modifiers
@@ -14,45 +20,61 @@
   }
 
   &--main {
-    color: white;
-    background-image: image_url("abstract-bg.jpg");
+    flex-direction: row;
+    justify-content: space-around;
+
+    @media(max-width: 850px) {
+      flex-direction: column;
+    }
+
+    background-color: #fee882;
+    background-image: image_url("newbg.jpg");
     background-position: center;
     background-size: cover;
     min-height: 500px;
   }
 
   &--survey-header {
-    //background: image_url('survey.png') center !important;
     background-color: #4E342E;
     color: white;
   }
 
   &--raised {
-    box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.45);
+    box-shadow: 0 -3px 15px 0 rgba(0, 0, 0, 0.1);
   }
 
   // Elements
 
   &__title {
-    text-align: center;
     font-size: 2em;
+
+    @media(max-width: 850px) {
+      font-size: 1.6em;
+    }
   }
 
   &__label {
     &--main {
-      text-align: center;
       font-weight: normal;
-      font-size: 1.3em;
+      font-size: 2em;
     }
 
     &--sub {
-      text-align: center;
       font-weight: normal;
       font-size: 1em;
     }
   }
 
+  &__title-block {
+    margin: 2 * $small-spacing;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+  }
+
   &__content {
+    width: 100%;
+
     padding: 0 10px;
     &--limited {
       max-width: 1000px;
@@ -60,6 +82,14 @@
 
     &--justify {
       text-align: justify;
+    }
+
+    &--with-cards {
+      display: flex;
+      flex-direction: row;
+      align-items: stretch;
+      justify-content: center;
+      flex-wrap: wrap;
     }
   }
 }

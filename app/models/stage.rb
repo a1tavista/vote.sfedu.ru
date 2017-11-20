@@ -22,6 +22,16 @@ class Stage < ApplicationRecord
       .first
   end
 
+  def current?
+    current_time = Time.current
+    starts_at <= current_time && current_time <= ends_at
+  end
+
+  def past?
+    current_time = Time.current
+    ends_at < current_time
+  end
+
   def recalculate_scale_ladder!
     step = ((scale_max - scale_min) / scale_max.to_f)
     current = scale_min.to_f
