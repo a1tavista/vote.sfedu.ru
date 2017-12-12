@@ -43,6 +43,7 @@ class Soap::StudentPersonal
       'Очная' => :fulltime,
       'Очно-заочная' => :parttime,
       'Заочная' => :extramural,
+      nil => :other_time_type
     }
     list.fetch(raw)
   end
@@ -54,6 +55,7 @@ class Soap::StudentPersonal
       '65' => :specialist,
       '68' => :master,
       '72' => :postgraduate,
+      nil => :other_grade_level
     }.fetch(raw)
   end
 
