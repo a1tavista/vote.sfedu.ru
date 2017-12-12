@@ -1,7 +1,17 @@
 .page-notice {
   padding: 25px 15px;
-  margin-top: 20px;
-  background: $blue;
+
+  &--with-margin {
+    margin-top: 20px;
+  }
+
+  &--notice {
+    background: $blue;
+  }
+
+  &--warning {
+    background: $blue;
+  }
 
   display: flex;
   flex-direction: row;
@@ -12,5 +22,17 @@
     @include styled-link(white);
     margin-left: 8px;
     font-size: 1.3em;
+  }
+
+  &__text-content {
+    text-align: center;
+    max-width: 1200px;
+    color: white;
+  }
+
+  p {
+    &:last-child {
+      margin: 0;
+    }
   }
 }

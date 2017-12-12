@@ -1,3 +1,9 @@
+.page-notice.page-notice--warning
+  .page-notice__text-content
+    h3 Уважаемые студенты Южного федерального университета!
+    p Мы знаем, что у некоторых из вас наблюдаются проблемы
+      с прохождением анкетирования. Разработчики уже знают о них и делают всё возможное, чтобы
+      устранить возникшие неполадки в кратчайшие сроки. Спасибо за понимание!
 section.page-section.page-section--main
   .page-section__title-block
     h1.page-section__label--main Система анкетирования Южного федерального университета
@@ -11,8 +17,10 @@ section.page-section.page-section--main
       h3.authorization-form__title Добро пожаловать, #{current_user.nickname}!
       = link_to("Перейти в личный кабинет", teachers_path, class: 'btn')
 
+
+
 - if @stage.present?
-  .page-notice
+  .page-notice.page-notice--with-margin.page-notice--notice
     = image_tag "poll.svg"
     = link_to @stage, class: 'page-notice__title' do
       | Cпешите принять участие в рейтинге с #{l(@stage.starts_at, format: :only_date)} по #{l(@stage.ends_at, format: :only_date)}!
