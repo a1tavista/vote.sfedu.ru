@@ -7,5 +7,7 @@ class Ability
     can %i(read respond), Teacher do |teacher|
       user.kind.available_teachers(Stage.current).include?(teacher)
     end
+
+    can %i(prepare choose), Teacher
   end
 end

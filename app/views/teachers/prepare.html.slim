@@ -1,0 +1,25 @@
+.page-content
+  .note
+    h1.note__title Прежде, чем Вы приступите к анкетированию...
+    p С этого года все Ваши преподаватели выгружаются из системы 1С:Университет. К сожалению,
+      в системе нет информации о преподавателях иностранных языков и физической культуры.
+    p Пожалуйста, укажите Ваших преподавателей, чтобы Вы в дальнейшем могли заполнить их анкету,
+      или оставьте поля пустыми, если Вы не проходили указанные дисциплины за #{stage_semesters_list(Stage.current)}.
+    p Спасибо!
+
+  = form_tag choose_teachers_path, method: :post do |f|
+    .survey-form
+      .survey-form-question
+        h3.survey-form-question__title Пожалуйста, укажите Ваших преподавателей по иностранным языкам
+        p
+        .survey-form-question__options
+          multiselect-field name='student[lang_teacher_ids][]'
+            = options_from_collection_for_select(@lang_teachers, :id, :name, [])
+
+      .survey-form-question
+        h3.survey-form-question__title Пожалуйста, укажите Ваших преподавателей по физической подготовке
+        p Оставьте пустым, если у Вас не было физической подготовки за #{stage_semesters_list(Stage.current)}
+        .survey-form-question__options
+          multiselect-field name='student[physical_teacher_ids][]'
+            = options_from_collection_for_select(@physical_teachers, :id, :name, [])
+      button.btn Сохранить

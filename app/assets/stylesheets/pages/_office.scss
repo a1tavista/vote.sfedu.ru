@@ -46,16 +46,16 @@
   }
 
   .question {
-    box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.25);
-    background: white;
-    margin: 15px 0;
+    @include card;
+    margin-left: 0;
+    margin-right: 0;
 
     .text {
-      padding: 10px;
+      margin-bottom: 10px;
     }
 
     .answers {
-      background: $light-gray;
+      background: #eee;
       display: flex;
       flex-direction: row;
       justify-content: center;

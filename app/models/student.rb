@@ -2,9 +2,14 @@ class Student < ApplicationRecord
   has_one :user, as: :kind, dependent: :destroy
   has_many :grade_books, dependent: :destroy
   has_many :students_teachers_relations, dependent: :destroy
+  has_many :teachers, through: :students_teachers_relations
   has_many :participations, dependent: :destroy
 
   after_create :load_personal_information!
+
+  def teachers_loaded?
+    teachers.any?
+  end
 
   def load_personal_information!
     student = Soap::StudentPersonal.all_info(external_id)
@@ -12,6 +17,10 @@ class Student < ApplicationRecord
     student[:study_info].each do |info|
       grade_books << GradeBook.create(info)
     end
+  end
+
+  def drop_teachers_relations!
+    self.students_teachers_relations.destroy_all
   end
 
   def all_teachers(stage)
@@ -56,7 +65,8 @@ class Student < ApplicationRecord
       student_teachers = Soap::StudentTeachers.all_info(external_id)
 
       student_teachers.each do |record|
-        teacher = Teacher.find_or_create_by!(external_id: record[:external_id]) do |t|
+        teacher_external_id = Digest::SHA1.hexdigest(record[:snils])
+        teacher = Teacher.find_or_create_by!(external_id: teacher_external_id) do |t|
           t.name = record[:name]
           t.snils = record[:snils]
         end

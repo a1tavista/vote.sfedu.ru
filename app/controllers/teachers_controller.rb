@@ -3,9 +3,39 @@ class TeachersController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    current_user.kind.load_teachers! if current_user.kind.teachers_load_required?
+    unless current_user.kind.teachers_loaded?
+      redirect_to prepare_teachers_path
+    end
     @evaluated = current_user.kind.evaluated_teachers(Stage.current)
     @available = current_user.kind.available_teachers(Stage.current)
+  end
+
+  def prepare
+    teachers = Teacher.all.order(name: :asc)
+    @physical_teachers = teachers.where(kind: 1)
+    @lang_teachers = teachers.where(kind: 2)
+  end
+
+  def choose
+    current_user.kind.drop_teachers_relations!
+    if current_user.kind.teachers_load_required?
+      current_user.kind.load_teachers!
+    end
+
+    ActiveRecord::Base.transaction do
+      semester = Stage.current.semesters.first
+      teachers_params[:lang_teacher_ids].each do |id|
+        relation = StudentsTeachersRelation.new(teacher_id: id, semester: semester)
+        current_user.kind.students_teachers_relations << relation
+      end
+
+      teachers_params[:physical_teacher_ids].each do |id|
+        relation = StudentsTeachersRelation.new(teacher_id: id, semester: semester)
+        current_user.kind.students_teachers_relations << relation
+      end
+    end
+
+    redirect_to action: :index
   end
 
   def show
@@ -25,6 +55,10 @@ class TeachersController < ApplicationController
   end
 
   private
+
+  def teachers_params
+    params.require(:student).permit(lang_teacher_ids: [], physical_teacher_ids: [])
+  end
 
   def answers_param
     params.require(:answers).permit!.to_hash

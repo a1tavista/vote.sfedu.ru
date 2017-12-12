@@ -1,0 +1,132 @@
+@import "vue-multiselect/dist/vue-multiselect.min";
+
+$blue: #004294;
+$blue-dark: #001b3a;
+$blue-dark-alt: #00213d;
+$yellow-light: #ffe35b;
+$yellow: #ffd836;
+$gray: #919191;
+$black-light: #282828;
+$danger: #ff320b;
+
+$geyser: #d7dde6;
+$wild-sand: #f6f6f6;
+$black-pearl: #081a3b;
+
+$mobile-screen-xs-min: "(min-width: 401px)";
+$mobile-screen-xs-max: "(max-width: 400px)";
+$mobile-screen-sm-min: "(min-width: 451px)";
+$mobile-screen-sm-max: "(max-width: 450px)";
+$mobile-screen-md-min: "(min-width: 551px)";
+$mobile-screen-md-max: "(max-width: 550px)";
+$mobile-screen-lg-min: "(min-width: 651px)";
+$mobile-screen-lg-max: "(max-width: 650px)";
+
+$tablet-screen-sm-min: "(min-width: 769px)";
+$tablet-screen-sm-max: "(max-width: 768px)";
+$tablet-screen-md-min: "(min-width: 851px)";
+$tablet-screen-md-max: "(max-width: 850px)";
+$tablet-screen-lg-min: "(min-width: 901px)";
+$tablet-screen-lg-max: "(max-width: 900px)";
+
+$desktop-screen-xs-min: "(min-width: 1025px)";
+$desktop-screen-xs-max: "(max-width: 1024px)";
+$desktop-screen-sm-min: "(min-width: 1201px)";
+$desktop-screen-sm-max: "(max-width: 1200px)";
+$desktop-screen-md-min: "(min-width: 1367px)";
+$desktop-screen-md-max: "(max-width: 1366px)";
+$desktop-screen-lg-min: "(min-width: 1441px)";
+$desktop-screen-lg-max: "(max-width: 1440px)";
+
+
+.multiselect {
+  &__tags{
+    border: 1px solid #919191 !important;
+    border-radius: 5px !important;
+    padding-top: 0 !important;
+    padding-left: 0 !important;
+  }
+
+  &__value {
+    font-size: 14px;
+  }
+
+  &__content-wrapper {
+    border: none !important;
+  }
+
+  &__content {
+    display: flex !important;
+    flex-direction: column;
+  }
+
+  &__select {
+    transform: rotate(0) !important;
+    &::before {
+      border: none !important;
+      content: image_url('multiselect/dropdown.png') !important;
+      position: absolute;
+      right: 10px !important;
+      top: 30% !important;
+
+      @media #{$mobile-screen-lg-max} {
+        top: 30% !important;
+      }
+    }
+  }
+
+  &__option {
+    overflow: hidden;
+    &--highlight {
+      background: $geyser !important;
+    }
+
+    &::after {
+      background: $geyser !important;
+    }
+  }
+
+  &__custom-tag {
+    font-size: 18px;
+    padding: 3px 10px;
+    color: #000;
+    background: #eee;
+    margin: 5px;
+    display: inline-block;
+  }
+
+  &__custom-remove {
+    margin: 0 5px;
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+    background-image: image_url('multiselect/x-icon.png');
+    background-size: cover;
+    cursor: pointer;
+  }
+
+  &__element {
+    border-left: 1px solid #e8e8e8;
+    border-right: 1px solid #e8e8e8;
+    border-bottom: 1px solid #e8e8e8;
+    span {
+      color: $black-light;
+
+      &:hover {
+        color: $black-light;
+      }
+    }
+  }
+
+  &__input {
+    margin: 0;
+    padding: 10px;
+    width: 100%;
+    display: inline-block;
+    border: none;
+
+    @media #{$mobile-screen-lg-max} {
+      padding: 10px !important;
+    }
+  }
+}

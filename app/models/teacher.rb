@@ -3,6 +3,8 @@ class Teacher < ApplicationRecord
   has_many :answers, dependent: :destroy
   has_many :participations, dependent: :destroy
 
+  enum kind: %i(common physical_education foreign_language)
+
   def evaluate_by(student, stage, answers)
     ActiveRecord::Base.transaction do
       Participation.create!(stage: stage, student: student, teacher: self)

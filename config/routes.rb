@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   root 'pages#index'
 
   resources :teachers do
+    get :prepare, on: :collection
+    post :choose, on: :collection
     post :respond
   end
 
