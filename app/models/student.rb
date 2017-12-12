@@ -65,12 +65,14 @@ class Student < ApplicationRecord
       student_teachers = Soap::StudentTeachers.all_info(external_id)
 
       student_teachers.each do |record|
-        teacher_external_id = Digest::SHA1.hexdigest(record[:snils])
-        teacher = Teacher.find_or_create_by!(external_id: teacher_external_id) do |t|
-          t.name = record[:name]
-          t.snils = record[:snils]
+        if record[:snils].present?
+          teacher_external_id = Digest::SHA1.hexdigest(record[:snils])
+          teacher = Teacher.find_or_create_by!(external_id: teacher_external_id) do |t|
+            t.name = record[:name]
+            t.snils = record[:snils]
+          end
+          create_relations!(teacher, record[:relations])
         end
-        create_relations!(teacher, record[:relations])
       end
     end
     true
