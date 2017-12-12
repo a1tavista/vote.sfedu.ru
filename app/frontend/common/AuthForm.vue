@@ -7,7 +7,10 @@
     },
     computed: {
       identityUrl() {
-        return `https://openid.sfedu.ru/server.php/idpage?user=${this.identityName}`;
+        if(this.identityName)
+          return `https://openid.sfedu.ru/server.php/idpage?user=${this.identityName.split('@')[0]}`;
+        else
+          return '';
       }
     },
     props: ['path', 'name']
