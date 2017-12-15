@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
-  devise_for :users, path: ''
   root 'pages#index'
+
+  devise_for :users, path: ''
 
   resources :teachers do
     get :prepare, on: :collection
@@ -22,4 +23,7 @@ Rails.application.routes.draw do
       post :answers, on: :member
     end
   end
+
+  match '/404', to: 'errors#not_found', via: :all
+  match '/500', to: 'errors#internal_server_error', via: :all
 end

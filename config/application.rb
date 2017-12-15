@@ -11,9 +11,6 @@ require "sprockets/railtie"
 Bundler.require(*Rails.groups)
 module VoteSfeduRu
   class Application < Rails::Application
-    # Use the responders controller from the responders gem
-    config.app_generators.scaffold_controller :responders_controller
-
     config.assets.quiet = true
     config.generators do |generate|
       generate.helper false
@@ -24,14 +21,20 @@ module VoteSfeduRu
       generate.test_framework :rspec
       generate.view_specs false
     end
+
     config.autoload_paths << "#{Rails.root}/lib"
     config.eager_load_paths << "#{Rails.root}/lib"
+
     config.time_zone = 'Moscow'
     config.active_record.default_timezone = :local
+
     config.i18n.default_locale = :ru
     config.i18n.available_locales = [:ru]
+
     config.action_controller.action_on_unpermitted_parameters = :raise
     config.load_defaults 5.1
     config.generators.system_tests = nil
+
+    config.exceptions_app = self.routes
   end
 end

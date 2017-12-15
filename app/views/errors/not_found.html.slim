@@ -1,0 +1,6 @@
+.error-page
+  .error-page__message
+    = image_tag 'not_found.png'
+    h1.error-page__title Ошибка!
+    p.error-page__tip Страницы, на которую Вы пытаетесь попасть, не существует.
+    = link_to 'Вернуться на главную', root_path, class: 'btn'

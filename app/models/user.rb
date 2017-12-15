@@ -21,6 +21,7 @@ class User < ApplicationRecord
   def openid_fields=(fields)
     self.email = fields.fetch('email')
     self.nickname = fields.fetch('nickname')
+
     if fields.fetch('student') == '1'
       id = normalize_id(fields.fetch('r61studentid'))
       self.kind = Student.find_or_create_by(external_id: id)
@@ -28,6 +29,14 @@ class User < ApplicationRecord
       id = normalize_id(fields.fetch('r61globalkey'))
       self.kind = Teacher.find_or_create_by(external_id: id)
     end
+  end
+
+  def student?
+    self.kind.is_a?(Student)
+  end
+
+  def teacher?
+    self.kind.is_a?(Teacher)
   end
 
   def normalize_id(raw_id)

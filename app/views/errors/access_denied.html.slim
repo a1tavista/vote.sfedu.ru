@@ -1,0 +1,6 @@
+.error-page
+  .error-page__message
+    = image_tag 'locked.png'
+    h1.error-page__title Ошибка доступа
+    p.error-page__tip = message
+    = link_to 'Вернуться на главную', root_path, class: 'btn'

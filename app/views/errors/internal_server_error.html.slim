@@ -1,0 +1,8 @@
+.error-page
+  .error-page__message
+    = image_tag 'server_error.png'
+    h1.error-page__title Упс!
+    p.error-page__tip
+      | Сервис сломался. Служба поддержки уже знает об этом и делает всё возможное,
+      | чтобы восстановить его работоспособность.
+    = link_to 'Вернуться на главную', root_path, class: 'btn'

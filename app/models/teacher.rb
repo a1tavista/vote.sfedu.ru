@@ -7,7 +7,6 @@ class Teacher < ApplicationRecord
 
   def evaluate_by(student, stage, answers)
     ActiveRecord::Base.transaction do
-      Participation.create!(stage: stage, student: student, teacher: self)
       answers.uniq! { |a| a[:question_id] }
       ids = answers.map { |a| a[:question_id] }
       unless ids.sort == stage.questions.pluck(:id).sort
@@ -16,6 +15,7 @@ class Teacher < ApplicationRecord
       answers.each do |a|
         Answer.save_rating_for!(stage, self, Question.find(a[:question_id]), a[:rate])
       end
+      Participation.create!(stage: stage, student: student, teacher: self)
     end
   end
 
