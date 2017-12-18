@@ -1,6 +1,6 @@
 class TeachersController < ApplicationController
-  load_and_authorize_resource
   before_action :authenticate_user!
+  load_and_authorize_resource
 
   def index
     unless current_kind.teachers_loaded?
