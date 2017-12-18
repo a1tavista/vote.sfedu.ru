@@ -24,10 +24,10 @@ class Soap::StudentPersonal
       external_id: grade_book_id,
       time_type: detect_type(handled_response[:f_obuch]),
       grade_level: detect_level(handled_response[:ur_podg]),
-      major: handled_response[:napr_podg_name],
+      major: handled_response[:napr_podg_name] || 'empty',
       faculty: Faculty.find_or_create_by(name: handled_response[:place][:faculty_name]),
       grade_num: detect_grade_num(handled_response[:place][:kurs]),
-      group_num: handled_response[:place][:group],
+      group_num: handled_response[:place][:group] || 'empty',
     }
   end
 
