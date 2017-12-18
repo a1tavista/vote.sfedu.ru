@@ -12,10 +12,15 @@ class Student < ApplicationRecord
   end
 
   def load_personal_information!
-    student = Soap::StudentPersonal.all_info(external_id)
-    update(name: student[:name])
-    student[:study_info].each do |info|
-      grade_books << GradeBook.create(info)
+    begin
+      student = Soap::StudentPersonal.all_info(external_id)
+      update(name: student[:name])
+      student[:study_info].each do |info|
+        grade_books << GradeBook.create(info)
+      end
+    rescue => e
+      Raven.capture_exception(e)
+      raise e
     end
   end
 
