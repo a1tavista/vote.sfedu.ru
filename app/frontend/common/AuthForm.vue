@@ -7,8 +7,10 @@
     },
     computed: {
       identityUrl() {
-        if(this.identityName)
-          return `https://openid.sfedu.ru/server.php/idpage?user=${this.identityName.split('@')[0]}`;
+        if(this.identityName) {
+          const name = this.identityName.split('@')[0].trim();
+          return `https://openid.sfedu.ru/server.php/idpage?user=${name}`;
+        }
         else
           return '';
       }
