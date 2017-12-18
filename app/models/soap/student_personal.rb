@@ -42,10 +42,9 @@ class Soap::StudentPersonal
       'Дистанционная' => :distant,
       'Очная' => :fulltime,
       'Очно-заочная' => :parttime,
-      'Заочная' => :extramural,
-      nil => :other_time_type
+      'Заочная' => :extramural
     }
-    list.fetch(raw)
+    list.fetch(raw, :other_time_type)
   end
 
   def self.detect_level(raw)
@@ -54,9 +53,8 @@ class Soap::StudentPersonal
       '62' => :academic_bachelor,
       '65' => :specialist,
       '68' => :master,
-      '72' => :postgraduate,
-      nil => :other_grade_level
-    }.fetch(raw)
+      '72' => :postgraduate
+    }.fetch(raw, :other_grade_level)
   end
 
   def self.detect_grade_num(raw)
@@ -73,7 +71,7 @@ class Soap::StudentPersonal
       'Девятый' => 9,
       'Десятый' => 10,
       'Одиннадцатый' => 11,
-    }.fetch(raw)
+    }.fetch(raw, 0)
   end
 
   def self.prepare_grade_books(study_info)

@@ -38,7 +38,7 @@ class Soap::StudentTeachers
     {
       'I полугодие' => :fall,
       'II полугодие' => :spring
-    }.fetch(name)
+    }.fetch(name, :fall)
   end
 
   def self.pack_to_array(entity)
