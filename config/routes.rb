@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   devise_for :users, path: ''
 
   resources :teachers do
+    get :refresh, on: :collection
     get :prepare, on: :collection
     post :choose, on: :collection
     post :respond

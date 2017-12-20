@@ -11,6 +11,13 @@ class TeachersController < ApplicationController
     @available = current_kind.available_teachers(Stage.current)
   end
 
+  def refresh
+    current_kind.students_teachers_relations.joins(:teacher).where(teachers: { kind: :common }).destroy_all
+    current_kind.load_teachers!
+
+    redirect_to action: :index
+  end
+
   def prepare
     teachers = Teacher.all.order(name: :asc)
     @physical_teachers = teachers.where(kind: 1)

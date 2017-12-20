@@ -17,6 +17,13 @@
     justify-content: flex-start;
     align-items: center;
 
+    &-actions {
+      a {
+        display: block;
+        padding: 5px 10px;
+      }
+    }
+
     &-container {
       margin-top: 25px;
       h1 { margin-left: 10px; }
