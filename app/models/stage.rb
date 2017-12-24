@@ -1,6 +1,7 @@
 class Stage < ApplicationRecord
   has_and_belongs_to_many :semesters
   has_and_belongs_to_many :questions
+  has_many :participations
 
   # Валидация на значения min_scale, max_scale и т.д.
 
@@ -20,6 +21,10 @@ class Stage < ApplicationRecord
       .where('stages.starts_at <= ?', current_time)
       .where('stages.ends_at >= ?', current_time)
       .first
+  end
+
+  def total_participants
+    participations.select(:student_id).distinct.count
   end
 
   def current?
