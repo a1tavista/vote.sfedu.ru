@@ -5,6 +5,10 @@ class Teacher < ApplicationRecord
 
   enum kind: %i(common physical_education foreign_language)
 
+  def related_students(stage)
+    students_teachers_relations.where(semester: Stage.current.semesters).map(&:student)
+  end
+
   def evaluate_by(student, stage, answers)
     ActiveRecord::Base.transaction do
       answers.uniq! { |a| a[:question_id] }

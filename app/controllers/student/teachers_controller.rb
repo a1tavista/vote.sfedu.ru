@@ -1,10 +1,10 @@
-class TeachersController < ApplicationController
+class Student::TeachersController < ApplicationController
   before_action :authenticate_user!
   load_and_authorize_resource
 
   def index
     unless current_kind.teachers_loaded?
-      redirect_to prepare_teachers_path
+      redirect_to prepare_student_teachers_path
     end
 
     @evaluated = current_kind.evaluated_teachers(Stage.current)

@@ -3,11 +3,20 @@ Rails.application.routes.draw do
 
   devise_for :users, path: ''
 
-  resources :teachers do
-    get :refresh, on: :collection
-    get :prepare, on: :collection
-    post :choose, on: :collection
-    post :respond
+  namespace :student do
+    root to: 'teachers#index'
+    resources :teachers do
+      get :refresh, on: :collection
+      get :prepare, on: :collection
+      post :choose, on: :collection
+      post :respond
+    end
+  end
+
+  namespace :teacher do
+    root to: 'students#index'
+
+    resources :students, only: %i(index)
   end
 
   resources :stages

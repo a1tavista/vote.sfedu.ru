@@ -1,6 +1,6 @@
 .page-content
   h1.teacher-name = @teacher.name
-  = form_tag(teacher_respond_path(@teacher.id), method: :post)
+  = form_tag(student_teacher_respond_path(@teacher.id), method: :post)
     - @questions.each do |q|
       .question
         .text = q.text

@@ -7,7 +7,7 @@
       или оставьте поля пустыми, если Вы не проходили указанные дисциплины за #{stage_semesters_list(Stage.current)}.
     p Спасибо!
 
-  = form_tag choose_teachers_path, method: :post do |f|
+  = form_tag choose_student_teachers_path, method: :post do |f|
     .survey-form
       .survey-form-question
         h3.survey-form-question__title Пожалуйста, укажите Ваших преподавателей по иностранным языкам
