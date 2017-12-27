@@ -1,0 +1,19 @@
+= paginate @report.source
+table.table.mb-3
+  thead
+    tr
+      th ID
+      th Имя
+      th Количество респондентов
+      th Осталось до лимита
+      th
+  tbody
+    - @report.rows.each do |row|
+      tr
+        td = row[:teacher].id
+        td = row[:teacher].name
+        td = row[:count]
+        td = row[:lack]
+        td
+          / = link_to 'Подробнее', admin_teacher_path(row)
+= paginate @report.source

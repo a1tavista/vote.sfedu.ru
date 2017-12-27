@@ -2,11 +2,25 @@ class Teacher < ApplicationRecord
   has_many :students_teachers_relations, dependent: :destroy
   has_many :answers, dependent: :destroy
   has_many :participations, dependent: :destroy
+  has_many :stages, -> { distinct }, through: :participations
 
   enum kind: %i(common physical_education foreign_language)
 
-  def related_students(stage)
-    students_teachers_relations.where(semester: Stage.current.semesters).map(&:student)
+  def stage_relations(stage)
+    students_teachers_relations.where(semester: stage.semesters)
+  end
+
+  def relations_by_semesters
+    students_by_semesters = students_teachers_relations.group(:semester_id).order(:semester_id).count
+    semesters = Semester.all.index_by(&:id)
+    current_stage = Stage.current
+    students_by_semesters.map do |k, v|
+      {
+        semester: semesters[k].full_title.capitalize,
+        is_current: current_stage&.semester_ids&.include?(k) || false,
+        count: v
+      }
+    end
   end
 
   def evaluate_by(student, stage, answers)
@@ -23,27 +37,24 @@ class Teacher < ApplicationRecord
     end
   end
 
-  def questions_rating_for(stage)
-    answers_list = answers.where(stage: stage, teacher: self)
-    answers_list.map do |a|
-      {
-        question: a.question,
-        rating: a.question_rating,
-        scaled_rating: a.scaled_question_rating,
-      }
-    end
+  def relations_count
+    students_teachers_relations.pluck(:student_id).count
   end
 
-  def total_rating_for(stage, type: :scaled_rating)
-    questions_answers = questions_rating_for(stage)
-    return 0.0 if questions_answers.count.zero?
-    questions_answers.map { |q| q[type] }.sum / questions_answers.count.to_f
+  def clear_snils!
+    update(snils: self.class.clear_snils(snils)) unless snils.nil?
   end
 
-  def scaled_rating_for(stage, type: :scaled_rating)
-    score = stage.scale_ladder.index do |r|
-      r.include?(total_rating_for(stage, type: type))
-    end
-    (score || -1) + 1
+  def encrypt_snils!
+    update(encrypted_snils: Digest::SHA1.hexdigest(snils))
+  end
+
+  def self.clear_snils(snils)
+    snils.gsub(' ', '').gsub('-', '')
+  end
+
+  def self.calculate_encrypted_snils(snils)
+    snils_truncated = clear_snils(snils)
+    Digest::SHA1.hexdigest(snils_truncated)
   end
 end

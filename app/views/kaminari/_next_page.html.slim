@@ -1,0 +1,12 @@
+/ Link to the "Next" page
+  - available local variables
+    url          : url to the next page
+    current_page : a page object for the currently displayed page
+    total_pages  : total number of pages
+    per_page     : number of items to fetch per page
+    remote       : data-remote
+- unless current_page.last?
+  li.page-item
+    = link_to url, { class: 'page-link', rel: 'next' } do
+      span aria-hidden="true" = t('views.pagination.next').html_safe
+      span.sr-only Next

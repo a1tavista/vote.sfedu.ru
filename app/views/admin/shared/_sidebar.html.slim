@@ -1,0 +1,28 @@
+ul.nav.nav-pills.flex-column
+  li.nav-item
+    = active_link_to 'Главная страница', admin_root_path, active: :exact, class: 'nav-link'
+  .dropdown-divider
+  li.nav-item
+    = active_link_to 'Стадии анкетирования', admin_stages_path, class: 'nav-link'
+    ul.nav.flex-column style='margin-left: 30px;'
+      li.nav-item
+        = active_link_to 'Критерии оценивания', admin_questions_path, class: 'nav-link'
+  li.nav-item
+    = active_link_to 'Структурные подразделения', admin_faculties_path, class: 'nav-link'
+  li.nav-item
+    = active_link_to 'Преподаватели', admin_teachers_path, class: 'nav-link'
+  li.nav-item
+    = active_link_to 'Студенты', admin_students_path, class: 'nav-link'
+  .dropdown-divider
+  li.nav-item
+    a.nav-link href="#" Пользователи
+  li.nav-item
+    a.nav-link href="#" Администраторы
+  .dropdown-divider
+  li.nav-item
+    = active_link_to 'Консоль разработчика', admin_console_path, class: 'nav-link'
+  .dropdown-divider
+  li.nav-item
+    a.nav-link href="#" Вернуться на сайт
+  li.nav-item
+    a.nav-link href="#" Выйти из аккаунта

@@ -19,11 +19,38 @@ Rails.application.routes.draw do
     resources :students, only: %i(index)
   end
 
-  resources :stages
+  resources :stages do
+    get :statistics, on: :member
+  end
 
   resources :surveys do
     get :results, on: :member
     get :respondents, on: :member
+  end
+
+  # Admin
+
+  namespace :admin do
+    root to: 'base#index'
+
+    resources :stages
+    resources :students
+    resources :teachers
+    resources :questions
+    resources :faculties
+    resources :users do
+      get 'admins', action: :index, on: :collection
+      get ':kind', action: :index, on: :collection
+    end
+
+    namespace :reports do
+      resources :teachers, only: [] do
+        get :lack_of_participations, on: :collection
+        get :lack_of_students, on: :collection
+      end
+    end
+
+    get 'console', to: 'base#dev_console'
   end
 
   # API

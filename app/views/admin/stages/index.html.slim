@@ -1,0 +1,24 @@
+.page-header
+  h1.page-header-title Стадии анкетирования
+  .page-header-lead
+    p Здесь можно управлять стадиями анкетирования и смотреть статистику участия и результаты по каждой стадии.
+  ul.nav.nav-pills.page-header-actions.d-flex.justify-content-end
+    li.nav-item
+      = active_link_to 'Список', admin_stages_path, class: 'nav-link', role: 'button'
+    li.nav-item
+      = active_link_to 'Статистика', new_admin_stage_path, class: 'nav-link', role: 'button'
+    li.nav-item
+      = active_link_to 'Новая стадия', new_admin_stage_path, class: 'nav-link', role: 'button'
+
+.list-group
+  - @stages.each do |stage|
+    = link_to admin_stage_path(stage), class: 'list-group-item list-group-item-action flex-column align-items-start' do
+      .d-flex.w-100.justify-content-between
+        h5.mb-1 Анкетирование с #{l(stage.starts_at, format: :only_date)} по #{l(stage.ends_at, format: :only_date)}
+        h5
+          - if stage.current?
+            .badge.badge-primary Активная
+          - else
+            .badge.badge-secondary Завершена
+      p.mb-1 = stage_semesters_list(stage).capitalize
+      p.mb-1

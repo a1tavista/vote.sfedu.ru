@@ -12,20 +12,18 @@ class Student < ApplicationRecord
   end
 
   def load_personal_information!
-    begin
-      student = Soap::StudentPersonal.all_info(external_id)
-      update(name: student[:name])
-      student[:study_info].each do |info|
-        grade_books << GradeBook.create(info)
-      end
-    rescue => e
-      Raven.capture_exception(e)
-      raise e
+    student = Soap::StudentPersonal.all_info(external_id)
+    update(name: student[:name])
+    student[:study_info].each do |info|
+      grade_books << GradeBook.create(info)
     end
+  rescue => e
+    Raven.capture_exception(e)
+    raise e
   end
 
   def drop_teachers_relations!
-    self.students_teachers_relations.destroy_all
+    students_teachers_relations.destroy_all
   end
 
   def all_teachers(stage)
@@ -43,8 +41,8 @@ class Student < ApplicationRecord
 
   def evaluated_teachers(stage)
     return [] if stage.nil?
-    all_teachers(stage)
-      .joins("INNER JOIN \"participations\"
+    all_teachers(stage).
+      joins("INNER JOIN \"participations\"
               ON \"teachers\".\"id\" = \"participations\".\"teacher_id\"
               AND \"participations\".\"stage_id\" = #{stage.id}
               AND \"participations\".\"student_id\" = #{id}")
@@ -52,12 +50,12 @@ class Student < ApplicationRecord
 
   def available_teachers(stage)
     return [] if stage.nil?
-    all_teachers(stage)
-      .joins("LEFT JOIN \"participations\"
+    all_teachers(stage).
+      joins("LEFT JOIN \"participations\"
               ON \"teachers\".\"id\" = \"participations\".\"teacher_id\"
               AND \"participations\".\"stage_id\" = #{stage.id}
-              AND \"participations\".\"student_id\" = #{id}")
-      .where(participations: { student_id: nil })
+              AND \"participations\".\"student_id\" = #{id}").
+      where(participations: { student_id: nil })
   end
 
   def teachers_load_required?
@@ -66,17 +64,35 @@ class Student < ApplicationRecord
 
   def load_teachers!
     ActiveRecord::Base.transaction do
+
       StudentsTeachersRelation.where(student: self).destroy_all
+
       student_teachers = Soap::StudentTeachers.all_info(external_id)
 
       student_teachers.each do |record|
-        if record[:snils].present?
-          teacher_external_id = Digest::SHA1.hexdigest(record[:snils])
-          teacher = Teacher.find_or_create_by!(external_id: teacher_external_id) do |t|
-            t.name = record[:name]
-            t.snils = record[:snils]
-          end
+        next if record[:name].nil?
+
+        if record[:snils].nil?
+          msg = "[REGISTRATION] There is an invalid teacher without SNILS ID: #{record[:external_id]}"
+          Raven.capture_message(msg)
+        end
+
+        # Получаем hash СНИЛСа
+        teacher_external_id = Teacher.calculate_encrypted_snils(record[:snils])
+
+        # Создаем преподавателя
+        teacher = Teacher.find_or_create_by(encrypted_snils: teacher_external_id) do |t|
+          t.name = record[:name]
+          t.snils = Teacher.clear_snils(record[:snils])
+        end
+
+        if teacher.persisted?
+          teacher.update(external_id: record[:external_id])
+
+          # Создаем связи между студентом и преподавателем
           create_relations!(teacher, record[:relations])
+        else
+
         end
       end
     end
@@ -93,6 +109,7 @@ class Student < ApplicationRecord
         year_end: r[:year_end],
         kind: r[:semester],
       ).first
+
       result << StudentsTeachersRelation.create!(
         student: self,
         teacher: teacher,

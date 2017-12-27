@@ -15,33 +15,6 @@ class Answer < ApplicationRecord
     answer.save
   end
 
-  def question_rating(ratings_array: nil)
-    idx = 0
-    ratings_array ||= ratings
-
-    participations = ratings_array.sum
-    return 0 if participations.zero?
-
-    ratings_array.map do |value|
-      idx += 1
-      value * idx
-    end.sum / participations.to_f
-  end
-
-  def scaled_question_rating
-    participations = ratings.sum
-    return 0 if participations < stage.lower_participants_limit
-
-    handled_ratings = ratings
-
-    lower_truncation = (participations * (stage.lower_truncation_percent / 100.0)).round
-    upper_truncation = (participations * (stage.upper_truncation_percent / 100.0)).round
-
-    # TODO: Алгоритм подрезки оценок
-
-    question_rating(ratings_array: handled_ratings)
-  end
-
   private
 
   def initialize_ratings!

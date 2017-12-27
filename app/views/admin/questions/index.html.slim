@@ -1,0 +1,10 @@
+.page-header
+  h1.page-header-title Критерии оценивания
+  .page-header-lead
+    p Здесь можно просматривать список критериев, создавать новые и смотреть статистику по каждому критерию.
+.list-group
+  - @questions.each do |question|
+    = link_to admin_question_path(question), class: 'list-group-item list-group-item-action flex-column align-items-start' do
+      .d-flex.w-100.justify-content-between
+        h5.mb-1 = question.text
+      small #{question.stages.count} #{t(:stages, count: question.stages.count)}

@@ -1,13 +1,9 @@
 module StagesHelper
-
   def stage_semesters_list(stage)
-    result = stage.semesters.map do |semester|
-      kind = semester.fall? ? 'осенний' : 'весенний'
-      "#{kind} семестр #{semester.year_begin}/#{semester.year_end}"
-    end
+    result = stage.semesters.map(&:full_title)
 
     if result.length > 1
-      result[0..-1].join(', ') + ' и ' + result[-1]
+      result[0..-2].join(', ') + ' и ' + result[-1]
     else
       result[0]
     end
@@ -15,7 +11,7 @@ module StagesHelper
 
   def stage_ladder_table(stage)
     index = 1
-    result = ""
+    result = ''
     result += <<~RANGE
       <tr>
         <td>от 0.0 до #{stage.scale_min.to_f}</td>
@@ -35,6 +31,4 @@ module StagesHelper
     end
     result.html_safe
   end
-
-
 end

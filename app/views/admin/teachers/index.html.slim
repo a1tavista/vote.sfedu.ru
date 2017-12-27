@@ -1,0 +1,25 @@
+.page-header
+  h1.page-header-title Преподаватели
+  .page-header-lead
+    p Здесь можно просматривать и экспортировать статистику по структурным подразделениям университета.
+
+= paginate @teachers
+table.table.mb-3
+  thead
+    tr
+      th ID
+      th Имя
+      th ID в 1С
+      th Hash для СНИЛС
+      th Действия
+  tbody
+    - @teachers.each do |teacher|
+      tr
+        td = teacher.id
+        td = teacher.name
+        td
+          small = teacher.external_id || '<i>Не передан</i>'.html_safe
+        td
+          small = teacher.encrypted_snils
+        td = link_to 'Подробнее', admin_teacher_path(teacher)
+= paginate @teachers

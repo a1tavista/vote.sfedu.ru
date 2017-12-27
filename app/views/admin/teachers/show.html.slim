@@ -1,0 +1,37 @@
+.page-header
+  h1.page-header-title = @teacher.name
+
+dl.row
+  dt.col-sm-3 Hash для СНИЛСа
+  dd.col-sm-9 = @teacher.encrypted_snils
+
+  dt.col-sm-3 Тип
+  dd.col-sm-9 = @teacher.kind
+
+  dt.col-sm-3 Идентификатор в 1С
+  dd.col-sm-9 = @teacher.external_id || '<i>не передан</i>'.html_safe
+
+
+h3 Видимость у студентов
+
+p <i>Курсивом</i> отмечены семестры, включенные в текущем этапе анкетирования.
+
+table.table.mb-3
+  thead
+    th Семестр
+    th Число студентов
+  tbody
+    - @teacher.relations_by_semesters.each do |r|
+      tr class=('font-italic' if r[:is_current])
+        td = r[:is_current] ? "<i>#{r[:semester]}</i>".html_safe : r[:semester]
+        td = r[:count]
+
+h3 Результаты по стадиям анкетирования
+
+- @results.each do |result|
+  = link_to admin_stage_path(result.stage), class: 'list-group-item list-group-item-action flex-column align-items-start' do
+    .d-flex.w-100.justify-content-between
+      h5.mb-1 Анкетирование с #{l(result.stage.starts_at, format: :only_date)} по #{l(result.stage.ends_at, format: :only_date)}
+      h5.font-weight-bold #{result.mean_rating_of_questions} (#{result.scaled_rating_of_questions})
+    p.mb-1 По оценке #{result.participations_count} cтудентов
+    p.mb-1

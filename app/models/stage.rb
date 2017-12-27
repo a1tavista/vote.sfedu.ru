@@ -23,8 +23,31 @@ class Stage < ApplicationRecord
       .first
   end
 
+  def faculty_breakdown
+    Faculty.find_each.map do |faculty|
+      participants_count = faculty.participants(self).count
+      participations_count = faculty.participations(self).count
+      average_answers = participants_count.zero? ? 0.0 : participations_count.to_f / participants_count
+
+      {
+        name: faculty.name,
+        participants_count: participants_count,
+        average_answers: faculty.participations(self).count,
+      }
+    end
+  end
+
   def total_participants
     participations.select(:student_id).distinct.count
+  end
+
+  def total_average_answers
+    participants_count = total_participants
+    if participants_count.zero?
+      participations.where(stage: self).count.to_f / participants_count
+    else
+      0.0
+    end
   end
 
   def current?
@@ -35,6 +58,15 @@ class Stage < ApplicationRecord
   def past?
     current_time = Time.current
     ends_at < current_time
+  end
+
+  def converted_scale_ladder
+    scale_ladder.map do |range|
+      range_begin, range_end = range.split('...')
+      exclude_end = !range_end.nil?
+      range_begin, range_end = range.split('..') if range_end.nil?
+      Range.new(range_begin.to_f, range_end.to_f, exclude_end)
+    end
   end
 
   def recalculate_scale_ladder!

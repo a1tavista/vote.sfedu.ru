@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171211060034) do
+ActiveRecord::Schema.define(version: 20180118091303) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -177,13 +177,14 @@ ActiveRecord::Schema.define(version: 20171211060034) do
   end
 
   create_table "teachers", force: :cascade do |t|
-    t.string "external_id", null: false
+    t.string "external_id"
     t.string "name"
     t.string "snils"
     t.boolean "enabled", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "kind", default: 0
+    t.string "encrypted_snils"
   end
 
   create_table "users", force: :cascade do |t|

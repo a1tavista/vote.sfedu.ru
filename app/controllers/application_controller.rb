@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
 
   rescue_from CanCan::AccessDenied do |exception|
     Raven.capture_exception(exception)
-    render 'errors/access_denied', locals: { message: exception.message }
+    render 'errors/access_denied', layout: 'application', locals: { message: exception.message }
   end
 
   private

@@ -3,8 +3,8 @@
 @import "normalize-rails";
 @import "bourbon";
 
-@import "mixins/index";
+@import "application/mixins/index";
 
-@import "base/base";
-@import "components/index";
-@import "pages/pages";
+@import "application/base/base";
+@import "application/components/index";
+@import "application/pages/pages";

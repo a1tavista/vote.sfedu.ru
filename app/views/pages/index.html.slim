@@ -1,9 +1,10 @@
-.page-notice.page-notice--warning
+/.page-notice.page-notice--warning
   .page-notice__text-content
     h3 Уважаемые студенты Южного федерального университета!
     p Мы знаем, что у некоторых из вас наблюдаются проблемы
       с прохождением анкетирования. Разработчики уже знают о них и делают всё возможное, чтобы
       устранить возникшие неполадки в кратчайшие сроки. Спасибо за понимание!
+
 section.page-section.page-section--main
   .page-section__title-block
     h1.page-section__label--main Система анкетирования Южного федерального университета
@@ -16,7 +17,6 @@ section.page-section.page-section--main
     .authorization-form
       h3.authorization-form__title Добро пожаловать, #{current_user.nickname}!
       = link_to("Перейти в личный кабинет", user_root_path, class: 'btn')
-
 
 
 - if @stage.present?
@@ -40,8 +40,8 @@ section.page-section
             dt Конец:
             dd = l(stage.ends_at, format: :only_date)
           footer.survey-card__footer
-            = link_to 'Статистика участия', stage_path(stage)
-            = link_to 'Результаты опроса', stage_path(stage) if stage.past?
+            = link_to 'Регламент участия', stage_path(stage)
+            /= link_to 'Результаты опроса', stage_path(stage) if stage.past?
 
 section.page-section.page-section--raised
   .page-section__content--limited.about-page__service-description-section
@@ -52,20 +52,3 @@ section.page-section.page-section--raised
       | Система оценки профессорско-преподавательского состава Южного федерального университета реализуется с целью
       |  совершенствования образовательного процесса университета и вовлечения обучающихся в процесс повышения качества
       |  образования через независимую оценку преподавательской деятельности.
-/section.page-section.page-section--raised
-  h1.page-section__title Зачем проводится анкетирование
-  .benefits
-    .benefits__point
-      h4.benefits__title Для преподавателей
-      p Анкетирование позволяет преподавателям получать обратную связь от своих студентов.
-        Результаты могут быть учтены преподавателем и стать фактором дополнительной мотивации для совершенствования своего мастерства.
-
-    .benefits__point
-      h4.benefits__title Для студентов
-      p Студенту предоставляется возможность стать активным участником в процессе повышения качества своего образования,
-        оценивая работу профессорско-преподавательского состава на своем структурном подразделении.
-
-    .benefits__point
-      h4.benefits__title Для руководства
-      p Благодаря системе руководители разных уровней также получают обратную связь о качестве преподавания от студентов
-        и учитывают её в процессах разработки и принятия управленческих и кадровых решений.

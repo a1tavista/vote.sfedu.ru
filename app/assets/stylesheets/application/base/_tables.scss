@@ -8,13 +8,13 @@ table {
 th {
   border-bottom: 2px solid shade($base-border-color, 25%);
   font-weight: 600;
-  padding: $small-spacing 0 !important;
+  padding: $small-spacing 10px !important;
   text-align: left;
 }
 
 td {
   border-bottom: $base-border;
-  padding: $small-spacing 0 !important;
+  padding: $small-spacing 10px !important;
 }
 
 tr,

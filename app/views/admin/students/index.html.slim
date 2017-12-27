@@ -1,0 +1,21 @@
+.page-header
+  h1.page-header-title Студенты
+  .page-header-lead
+    p Здесь можно просматривать и экспортировать статистику по структурным подразделениям университета.
+
+= paginate @students
+table.table.mb-3
+  thead
+    tr
+      th ID
+      th Имя
+      th Кол-во зачетных книжек
+      th Действия
+  tbody
+    - @students.each do |student|
+      tr
+        td = student.id
+        td = student.name
+        td = student.grade_books.count
+        td = link_to 'Подробнее', admin_student_path(student)
+= paginate @students

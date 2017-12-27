@@ -14,6 +14,23 @@ ru:
         restrict_dependent_destroy:
           has_one: 'Невозможно удалить запись, так как существует зависимость: %{record}'
           has_many: 'Невозможно удалить запись, так как существуют зависимости: %{record}'
+  students:
+    zero: 'студентов'
+    one: 'студент'
+    few: 'студента'
+    many: 'студентов'
+  stages:
+    zero: стадий анкетирования
+    one: стадия анкетирования
+    few: стадии анкетирования
+    many: стадий анкетирования
+  views:
+    pagination:
+      next: '&raquo;'
+      previous: '&laquo;'
+      last: В конец
+      first: В начало
+      truncate: "..."
   date:
     abbr_day_names:
     - Вс

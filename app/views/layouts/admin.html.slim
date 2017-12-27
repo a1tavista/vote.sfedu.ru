@@ -1,0 +1,21 @@
+doctype html
+html lang="en"
+  head
+    meta content=("text/html; charset=UTF-8") http-equiv="Content-Type" /
+    meta charset="utf-8" /
+    meta content="NOODP" name="ROBOTS" /
+    meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport" /
+    title Система анкетирования ЮФУ
+    = stylesheet_link_tag :admin, media: 'all'
+    = csrf_meta_tags
+  body
+    = render 'shared/header'
+    main.container-fluid
+      .row.flex-xl-nowrap
+        .col-12.col-md-3.col-xl-2.bd-sidebar
+          = render 'shared/sidebar'
+        .col-12.col-md-9.col-xl-8.py-md-3.pl-md-5.bd-content
+          = yield
+    = javascript_include_tag :admin
+    = yield :javascript
+
