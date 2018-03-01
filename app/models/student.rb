@@ -73,8 +73,11 @@ class Student < ApplicationRecord
         next if record[:name].nil?
 
         if record[:snils].nil?
-          msg = "[REGISTRATION] There is an invalid teacher without SNILS ID: #{record[:external_id]}"
+          msg = "[SOAP] There is an invalid teacher without SNILS ID: #{record[:external_id]}"
           Raven.capture_message(msg)
+
+          # There you can place the logic for matching fired teachers with existed teachers
+          next # Instead of this!
         end
 
         # Получаем hash СНИЛСа
@@ -92,7 +95,8 @@ class Student < ApplicationRecord
           # Создаем связи между студентом и преподавателем
           create_relations!(teacher, record[:relations])
         else
-
+          msg = "[SOAP] There is an invalid teacher with SNILS but without some stuff: #{record[:external_id]}"
+          Raven.capture_message(msg)
         end
       end
     end

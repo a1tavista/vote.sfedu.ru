@@ -50,7 +50,10 @@ class Teacher < ApplicationRecord
   end
 
   def self.clear_snils(snils)
-    snils.gsub(' ', '').gsub('-', '')
+    return nil if snils.nil?
+    truncated = snils.gsub(' ', '').gsub('-', '')
+    return nil if truncated.empty?
+    truncated
   end
 
   def self.calculate_encrypted_snils(snils)
