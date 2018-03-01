@@ -36,6 +36,5 @@ module VoteSfeduRu
     config.generators.system_tests = nil
 
     config.exceptions_app = self.routes
-    config.web_console.development_only = false
   end
 end

@@ -1,7 +1,16 @@
 .page-header
   h1.page-header-title Преподаватели
   .page-header-lead
-    p Здесь можно просматривать и экспортировать статистику по структурным подразделениям университета.
+    p Здесь можно просматривать информацию о преподавателях университета.
+
+= search_form_for @q, url: admin_teachers_path do |f|
+  .form-row.mb-3
+    .col
+      = f.search_field :name_cont, class: 'form-control', placeholder: 'Поиск по имени'
+    .col
+      = f.search_field :external_id_cont, class: 'form-control', placeholder: 'Поиск по ID в 1С'
+    div
+      button.btn.btn-primary Искать
 
 = paginate @teachers
 table.table.mb-3

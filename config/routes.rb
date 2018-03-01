@@ -49,8 +49,6 @@ Rails.application.routes.draw do
         get :lack_of_students, on: :collection
       end
     end
-
-    get 'console', to: 'base#dev_console'
   end
 
   # API

@@ -20,9 +20,4 @@ ul.nav.nav-pills.flex-column
     a.nav-link href="#" Администраторы
   .dropdown-divider
   li.nav-item
-    = active_link_to 'Консоль разработчика', admin_console_path, class: 'nav-link'
-  .dropdown-divider
-  li.nav-item
-    a.nav-link href="#" Вернуться на сайт
-  li.nav-item
-    a.nav-link href="#" Выйти из аккаунта
+    = link_to 'Вернуться на сайт', root_path, class: 'nav-link'

@@ -2,7 +2,8 @@ class Admin::TeachersController < Admin::BaseController
   load_and_authorize_resource
 
   def index
-    @teachers = paginate_entries(@teachers).order(id: :asc)
+    @q = Teacher.ransack(params[:q])
+    @teachers = paginate_entries(@q.result).order(id: :asc)
   end
 
   def show
