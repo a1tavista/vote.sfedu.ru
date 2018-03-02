@@ -58,6 +58,7 @@ class Teacher < ApplicationRecord
 
   def self.calculate_encrypted_snils(snils)
     snils_truncated = clear_snils(snils)
+    return nil if snils.nil?
     Digest::SHA1.hexdigest(snils_truncated)
   end
 end

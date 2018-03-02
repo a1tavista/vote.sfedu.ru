@@ -72,7 +72,9 @@ class Student < ApplicationRecord
       student_teachers.each do |record|
         next if record[:name].nil?
 
-        if record[:snils].nil?
+        teacher_external_id = Teacher.calculate_encrypted_snils(record[:snils])
+
+        if teacher_external_id.nil?
           msg = "[SOAP] There is an invalid teacher without SNILS ID: #{record[:external_id]}"
           Raven.capture_message(msg)
 
@@ -81,7 +83,7 @@ class Student < ApplicationRecord
         end
 
         # Получаем hash СНИЛСа
-        teacher_external_id = Teacher.calculate_encrypted_snils(record[:snils])
+
 
         # Создаем преподавателя
         teacher = Teacher.find_or_create_by(encrypted_snils: teacher_external_id) do |t|
