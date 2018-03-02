@@ -1,0 +1,58 @@
+.page-header
+  h1.page-header-title = @student.name
+
+h3.mb-3 Данные об аккаунте
+
+dl.row.mb-3
+  dt.col-sm-3 Последний раз был
+  dd.col-sm-9 = l @student.user.last_sign_in_at
+
+  dt.col-sm-3 Заходов на сайт
+  dd.col-sm-9 = @student.user.sign_in_count
+
+  dt.col-sm-3 E-Mail на sfedu.ru
+  dd.col-sm-9 = @student.user.email || '<i>не передан</i>'.html_safe
+
+h3.mb-3 Данные о студенте
+
+dl.row.mb-3
+  dt.col-sm-3 Идентификатор в 1С
+  dd.col-sm-9 = @student.external_id || '<i>не передан</i>'.html_safe
+
+h3.row.mb-3
+
+h3.mb-3 Зачетные книжки
+
+table.table.mb-3
+  thead
+    th Номер
+    th Подразделение
+    th Направление
+    th Ступень
+    th Курс
+    th Группа
+    th Форма
+  tbody
+    - @student.grade_books.each do |gb|
+      tr
+        td style='min-width: 140px;' = gb.external_id
+        td = gb.faculty.name
+        td = gb.major
+        td = gb.grade_level
+        td = gb.grade_num
+        td = gb.group_num
+        td = gb.time_type
+
+h3 Cвязанные преподаватели
+
+p <i>Курсивом</i> отмечены семестры, включенные в текущем этапе анкетирования.
+
+table.table.mb-3
+  thead
+    th Семестр
+    th Число преподавателей
+  tbody
+    - @student.relations_by_semesters.each do |r|
+      tr class=('font-italic' if r[:is_current])
+        td = r[:is_current] ? "<i>#{r[:semester]}</i>".html_safe : r[:semester]
+        td = r[:count]

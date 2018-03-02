@@ -3,6 +3,17 @@
   .page-header-lead
     p Здесь можно просматривать и экспортировать статистику по структурным подразделениям университета.
 
+= search_form_for @q, url: admin_students_path do |f|
+  .form-row.mb-3
+    .col
+      = f.search_field :name_cont, class: 'form-control', placeholder: 'Поиск по имени'
+    .col
+      = f.search_field :external_id_cont, class: 'form-control', placeholder: 'Поиск по ID в 1С'
+    .col
+      = f.search_field :user_email_cont, class: 'form-control', placeholder: 'Поиск по почте @sfedu.ru'
+    div
+      button.btn.btn-primary Искать
+
 = paginate @students
 table.table.mb-3
   thead

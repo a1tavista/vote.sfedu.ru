@@ -11,6 +11,27 @@ class Student < ApplicationRecord
     teachers.any?
   end
 
+  def self.without_grade_books
+    select('students.id, students.name, students.external_id, count(grade_books.student_id) AS gb_count').
+    joins('LEFT JOIN "grade_books" ON "grade_books"."student_id" = "students"."id"').
+    group('students.id').
+    having('count(grade_books.student_id) = 0').
+    order('students.name ASC')
+  end
+
+  def relations_by_semesters
+    students_by_semesters = students_teachers_relations.group(:semester_id).order(:semester_id).count
+    semesters = Semester.all.index_by(&:id)
+    current_stage = Stage.current
+    students_by_semesters.map do |k, v|
+      {
+        semester: semesters[k].full_title.capitalize,
+        is_current: current_stage&.semester_ids&.include?(k) || false,
+        count: v
+      }
+    end
+  end
+
   def load_personal_information!
     student = Soap::StudentPersonal.all_info(external_id)
     update(name: student[:name])
@@ -75,18 +96,24 @@ class Student < ApplicationRecord
         teacher_external_id = Teacher.calculate_encrypted_snils(record[:snils])
 
         if teacher_external_id.nil?
-          msg = "[SOAP] There is an invalid teacher without SNILS ID: #{record[:external_id]}"
-          Raven.capture_message(msg)
+          msg = '[SOAP] Invalid teacher record'
+          Raven.capture_message(msg,
+            level: 'info',
+            extra: {
+              'teacher_external_id': record[:external_id],
+              'student_extarnal_id': external_id,
+            },
+            tags: {
+              'student_id': id
+            },
+            fingerprint: ['invalid_teacher', 'invalid_teacher_snils'],
+          )
 
-          # There you can place the logic for matching fired teachers with existed teachers
-          next # Instead of this!
+          teacher = Teacher.find_by(stale_external_id: record[:external_id])
         end
 
-        # Получаем hash СНИЛСа
-
-
         # Создаем преподавателя
-        teacher = Teacher.find_or_create_by(encrypted_snils: teacher_external_id) do |t|
+        teacher ||= Teacher.find_or_create_by(encrypted_snils: teacher_external_id) do |t|
           t.name = record[:name]
           t.snils = Teacher.clear_snils(record[:snils])
         end
@@ -97,8 +124,18 @@ class Student < ApplicationRecord
           # Создаем связи между студентом и преподавателем
           create_relations!(teacher, record[:relations])
         else
-          msg = "[SOAP] There is an invalid teacher with SNILS but without some stuff: #{record[:external_id]}"
-          Raven.capture_message(msg)
+          msg = '[SOAP] Teacher is not created'
+          Raven.capture_message(msg,
+            level: 'info',
+            extra: {
+              'teacher_external_id': record[:external_id],
+              'student_extarnal_id': external_id,
+            },
+            tags: {
+              'student_id': id
+            },
+            fingerprint: ['invalid_teacher', 'invalid_teacher_snils'],
+          )
         end
       end
     end
