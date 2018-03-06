@@ -23,16 +23,16 @@ class Stage < ApplicationRecord
       .first
   end
 
-  def faculty_breakdown
+  def faculty_breakdown(from_period: nil)
     Faculty.find_each.map do |faculty|
-      participants_count = faculty.participants(self).count
-      participations_count = faculty.participations(self).count
+      participants_count = faculty.participants(self, from_period: from_period).count
+      participations_count = faculty.participations_by_stage(self, from_period: from_period).count
       average_answers = participants_count.zero? ? 0.0 : participations_count.to_f / participants_count
 
       {
         name: faculty.name,
         participants_count: participants_count,
-        average_answers: faculty.participations(self).count,
+        average_answers: average_answers,
       }
     end
   end
