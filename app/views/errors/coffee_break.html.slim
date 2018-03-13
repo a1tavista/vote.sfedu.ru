@@ -1,0 +1,7 @@
+.error-page
+  .error-page__message
+    = image_tag 'coffee.png'
+    h1.error-page__title Извините, у нас обед.
+    p.error-page__tip В Южном федеральном университете объявлен обеденный перерыв.
+      <br>База данных 1С закрыта на техническое обслуживание. Попробуйте зайти снова после 14:00.
+    = link_to 'Вернуться на главную', root_path, class: 'btn'
