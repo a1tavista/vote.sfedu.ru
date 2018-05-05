@@ -8,5 +8,9 @@ Vue.use(Notifications);
 
 new Vue({
   el: '#common-app',
-  components: {AuthForm, SurveyForm, MultiselectField}
+  components: {
+    AuthForm,
+    SurveyForm,
+    MultiselectField,
+  }
 });

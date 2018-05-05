@@ -17,6 +17,7 @@ Rails.application.routes.draw do
     root to: 'students#index'
 
     resources :students, only: %i(index)
+    resources :surveys
   end
 
   resources :stages do

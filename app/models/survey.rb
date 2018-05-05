@@ -5,6 +5,8 @@ class Survey < ApplicationRecord
   has_many :users, -> { distinct }, through: :answers
   has_many :sharings, class_name: 'SurveySharing', dependent: :destroy
 
+  accepts_nested_attributes_for :questions
+
   belongs_to :user
 
   def new_answer!(user_id, question_id, option_id: nil, option_text: '')

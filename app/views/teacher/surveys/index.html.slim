@@ -1,0 +1,22 @@
+.page-content
+  h1 Мои опросы
+  = link_to 'Новый опрос', new_teacher_survey_path, class: 'btn'
+  table
+    thead
+      tr
+        th Название
+        th Активен до
+        th Cоздан
+        th Ссылки
+    tbody
+    - @surveys.each do |survey|
+      tr
+        td = survey.title
+        td = l survey.active_until
+        td = l survey.created_at
+        td
+          = link_to 'Ссылка на опрос', survey_path(survey.passcode)
+          br
+          = link_to 'Результаты опроса', results_survey_path(survey.passcode)
+          br
+          = link_to 'Участники опроса', respondents_survey_path(survey.passcode)

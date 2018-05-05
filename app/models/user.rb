@@ -1,6 +1,6 @@
 class User < ApplicationRecord
   devise :openid_authenticatable, :rememberable, :trackable
-  belongs_to :kind, polymorphic: true, dependent: :destroy
+  belongs_to :kind, polymorphic: true
 
   enum role: %i(regular moderator admin)
 
@@ -32,11 +32,11 @@ class User < ApplicationRecord
   end
 
   def student?
-    self.kind.is_a?(Student)
+    kind.is_a?(Student)
   end
 
   def teacher?
-    self.kind.is_a?(Teacher)
+    kind.is_a?(Teacher)
   end
 
   def normalize_id(raw_id)

@@ -33,6 +33,15 @@
     }
   }
 
+  &_red {
+    background-color: shade(indianred, 10%);
+    &:hover,
+    &:focus {
+      background-color: shade(indianred, 20%);
+      color: #fff;
+    }
+  }
+
   &.full-width {
     width: 100%;
   }

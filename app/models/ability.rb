@@ -5,8 +5,7 @@ class Ability
     return unless user.present?
 
     if user.teacher?
-      # can %i(index), Student
-      # TODO
+      can %i(read create update), Survey
     end
 
     if user.student?

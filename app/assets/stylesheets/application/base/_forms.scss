@@ -61,6 +61,32 @@ textarea {
   }
 }
 
+select {
+  display: block;
+  background-color: $base-background-color;
+  border: $base-border;
+  border-radius: $base-border-radius;
+  box-shadow: $form-box-shadow;
+  box-sizing: border-box;
+  margin-bottom: $small-spacing;
+  padding: $base-spacing / 3;
+
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAARCAYAAAAougcOAAAABmJLR…GBgZBFlFgAtwSfRZRagGIJNouoYQGGJcgWUcsCnIDa9QkAoE0sME7R6kwAAAAASUVORK5CYII=);
+  background-repeat: no-repeat;
+  background-position-x: right;
+  background-position-y: 30%;
+}
+
+.date-select {
+  display: flex;
+  flex-direction: row;
+  max-width: 400px;
+
+  > select:not(:last-child) {
+    margin-right: 10px;
+  }
+}
+
 textarea {
   resize: vertical;
 }

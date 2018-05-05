@@ -3,5 +3,7 @@ class SurveyQuestion < ApplicationRecord
   has_many :options, class_name: 'SurveyOption', dependent: :destroy
   belongs_to :survey
 
+  accepts_nested_attributes_for :options
+
   validates :text, presence: true
 end

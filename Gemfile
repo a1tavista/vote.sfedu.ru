@@ -12,6 +12,7 @@ gem 'devise'
 gem 'devise_openid_authenticatable', git: 'https://github.com/a1tavista/devise_openid_authenticatable.git', ref: '35e7d83'
 gem 'high_voltage'
 gem 'jquery-rails'
+gem 'nested_form_fields'
 gem 'normalize-rails', '~> 3.0.0'
 gem 'pg'
 gem 'puma'
@@ -44,6 +45,7 @@ group :development, :test do
   gem 'pry-byebug'
   gem 'pry-rails'
   gem 'rspec-rails', '~> 3.5.0.beta4'
+  gem 'web-console'
 end
 
 group :development, :staging do
