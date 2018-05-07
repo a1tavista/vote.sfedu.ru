@@ -1,4 +1,12 @@
 - if flash.any?
-  .flashes
-    - user_facing_flashes.each do |key, value|
-      .page-notice.page-notice--warning = value
+  .page-notice.page-notice--warning
+    - flash.each do |name, messages|
+      = content_tag :div, role: 'alert' do
+        - if messages.is_a?(Array) || messages.is_a?(Hash)
+          h3.page-notice__title Во время сохранения были обнаружены следующие ошибки:
+          .page-notice__text-content
+            ul
+              - messages.each do |m|
+                li = m
+        - else
+          .page-notice__text-content = messages

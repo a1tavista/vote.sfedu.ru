@@ -17,6 +17,7 @@ class Teacher::SurveysController < ApplicationController
     if @survey.persisted?
       redirect_to survey_path(@survey.passcode)
     else
+      flash[:error] = @survey.errors.full_messages
       render action: :new
     end
   end

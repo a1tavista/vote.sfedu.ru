@@ -1,7 +1,10 @@
+= render 'application/flashes'
+
 .page-content
   h1 Новый опрос
 
   .survey-form
+
     = form_for [:teacher, @survey] do |f|
       = render partial: 'form', locals: { f: f }
       hr
