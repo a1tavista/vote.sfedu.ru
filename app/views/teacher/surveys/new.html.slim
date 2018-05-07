@@ -3,44 +3,6 @@
 
   .survey-form
     = form_for [:teacher, @survey] do |f|
-      = f.label :title, 'Название опроса'
-      = f.text_field :title, placeholder: 'Например, "Анкета для первокурсников мехмата ЮФУ"'
-
-      = f.label :passcode, 'URI опроса'
-      = f.text_field :passcode, placeholder: 'Например, "mmcs_freshman_2018"'
-
-      = f.label :active_until, 'Активен до'
-      .date-select
-        = f.date_select :active_until, selected: Date.today + 2.weeks, start_year: Date.today.year
-
-      = f.nested_fields_for :questions do |ff|
-        .survey-form-question
-          = ff.label :text, 'Формулировка вопроса'
-          = ff.text_field :text, placeholder: 'Например, "Насколько лекции были согласованы с практикой?"'
-
-          = ff.label :required do
-            = ff.check_box :required
-            span Обязательный вопрос
-
-          = ff.label :multichoice do
-            = ff.check_box :multichoice
-            span Можно выбрать несколько вариантов ответа
-
-          = ff.label :free_answer do
-            = ff.check_box :free_answer
-            span Допускается свободный ответ на данный вопрос
-
-          = ff.nested_fields_for :options do |fo|
-            = fo.text_field :text, placeholder: 'Вариант ответа'
-          = ff.add_nested_fields_link :options do
-            button.btn type='button' Добавить вариант ответа
-          | &nbsp;
-          = ff.remove_nested_fields_link do
-            button.btn.btn_red type='button' Удалить вопрос
-
-      = f.add_nested_fields_link :questions do
-        button.btn type='button' Добавить вопрос
-
+      = render partial: 'form', locals: { f: f }
       hr
-
       = f.submit 'Создать опрос', class: 'btn full-width'

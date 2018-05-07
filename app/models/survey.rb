@@ -5,7 +5,10 @@ class Survey < ApplicationRecord
   has_many :users, -> { distinct }, through: :answers
   has_many :sharings, class_name: 'SurveySharing', dependent: :destroy
 
-  accepts_nested_attributes_for :questions
+  validates :title, presence: true
+  validates :passcode, presence: true
+
+  accepts_nested_attributes_for :questions, reject_if: :all_blank
 
   belongs_to :user
 

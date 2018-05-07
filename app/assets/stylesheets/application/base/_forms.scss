@@ -106,3 +106,12 @@ select {
   margin-bottom: $small-spacing;
   width: 100%;
 }
+
+.form {
+  &__row {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: stretch;
+  }
+}

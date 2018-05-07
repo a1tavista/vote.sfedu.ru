@@ -1,0 +1,8 @@
+.page-content
+  h1 Редактировать опрос
+
+  .survey-form
+    = form_for [:teacher, @survey], method: :put do |f|
+      = render partial: 'form', locals: { f: f }
+      hr
+      = f.submit 'Сохранить опрос', class: 'btn full-width'

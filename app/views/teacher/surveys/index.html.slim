@@ -4,19 +4,22 @@
   table
     thead
       tr
-        th Название
-        th Активен до
-        th Cоздан
-        th Ссылки
+        th style='width: 50%;' Название
+        th style='width: 10%;' Активен до
+        th style='width: 20%;' Cоздан
+        th style='width: 130px;'
+        th style='width: 130px;'
     tbody
     - @surveys.each do |survey|
       tr
-        td = survey.title
+        td = link_to survey.title, survey_path(survey.passcode)
         td = l survey.active_until
         td = l survey.created_at
         td
-          = link_to 'Ссылка на опрос', survey_path(survey.passcode)
+          = link_to 'Результаты', results_survey_path(survey.passcode)
           br
-          = link_to 'Результаты опроса', results_survey_path(survey.passcode)
+          = link_to 'Участники', respondents_survey_path(survey.passcode)
+        td
+          = link_to 'Редактировать', edit_teacher_survey_path(survey)
           br
-          = link_to 'Участники опроса', respondents_survey_path(survey.passcode)
+          = link_to 'Клонировать', new_teacher_survey_path(source_id: survey.id)
