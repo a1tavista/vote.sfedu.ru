@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 ruby '2.4.3'
 
 gem 'active_link_to'
+gem 'active_interaction'
 gem 'autoprefixer-rails'
 gem 'bootstrap', '~> 4.0.0'
 gem 'bourbon', '~> 5.0.0.beta.7'
@@ -31,6 +32,7 @@ gem 'slim-rails'
 gem 'sprockets', '>= 3.0.0'
 gem 'uglifier'
 gem 'webpacker'
+gem 'write_xlsx'
 gem 'jbuilder'
 
 group :development do

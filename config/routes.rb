@@ -49,6 +49,7 @@ Rails.application.routes.draw do
         get :lack_of_participations, on: :collection
         get :lack_of_students, on: :collection
       end
+      resources :faculties, only: [:index]
     end
   end
 
