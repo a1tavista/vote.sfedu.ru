@@ -5,7 +5,7 @@ class Student < ApplicationRecord
   has_many :teachers, through: :students_teachers_relations
   has_many :participations, dependent: :destroy
 
-  after_create :load_personal_information!
+  after_create :schedule_loading_personal_info
 
   def teachers_loaded?
     teachers.any?
@@ -36,7 +36,10 @@ class Student < ApplicationRecord
     student = Soap::StudentPersonal.all_info(external_id)
     update(name: student[:name])
     student[:study_info].each do |info|
-      grade_books << GradeBook.create(info)
+      grade_book = GradeBook.find_or_initialize_by(external_id: info[:external_id])
+      grade_book.assign_attributes(info)
+      grade_book.student_id = self.id
+      grade_book.save
     end
   rescue => e
     Raven.capture_exception(e)
@@ -143,6 +146,10 @@ class Student < ApplicationRecord
   end
 
   private
+
+  def schedule_loading_personal_info
+    PersonalDataWorker.perform_async(self.id)
+  end
 
   def create_relations!(teacher, relations)
     result = []

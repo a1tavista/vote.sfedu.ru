@@ -7,11 +7,11 @@ class User < ApplicationRecord
   attr_accessor :identity_name
 
   def self.build_identity_url(url)
-    "https://openid.sfedu.ru/server.php/idpage?user=#{url}"
+    "https://openid.sfedu.ru/server.php/idpage?user=#{url&.downcase}"
   end
 
   def self.build_from_identity_url(identity_url)
-    new(identity_url: identity_url)
+    new(identity_url: identity_url&.downcase)
   end
 
   def self.openid_optional_fields
@@ -19,8 +19,8 @@ class User < ApplicationRecord
   end
 
   def openid_fields=(fields)
-    self.email = fields.fetch('email')
-    self.nickname = fields.fetch('nickname')
+    self.email = fields.fetch('email').downcase
+    self.nickname = fields.fetch('nickname').downcase
 
     if fields.fetch('student') == '1'
       id = normalize_id(fields.fetch('r61studentid'))
