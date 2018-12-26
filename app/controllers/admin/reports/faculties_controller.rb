@@ -4,7 +4,7 @@ module Admin
       def index
         respond_to do |format|
           format.xlsx do
-            io_string = AdminInteractions::Faculties::ProgressReportByStage.run!(stage: Stage.current)
+            io_string = AdminInteractions::Faculties::ProgressReportByStage.run!(stage: Stage.current || Stage.last)
 
             send_data(
               io_string,

@@ -45,7 +45,7 @@ Rails.application.routes.draw do
     end
 
     namespace :reports do
-      resources :teachers, only: [] do
+      resources :teachers, only: [:index] do
         get :lack_of_participations, on: :collection
         get :lack_of_students, on: :collection
       end
