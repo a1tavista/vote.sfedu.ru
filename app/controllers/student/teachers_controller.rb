@@ -12,36 +12,22 @@ class Student::TeachersController < ApplicationController
   end
 
   def refresh
-    current_kind.students_teachers_relations.joins(:teacher).where(teachers: { kind: :common }).destroy_all
-    current_kind.load_teachers!
-
+    interaction = Teachers::AsStudent::ResetTeachersList.run(student: current_kind)
     redirect_to action: :index
   end
 
   def prepare
     teachers = Teacher.all.order(name: :asc)
-    @physical_teachers = teachers.where(kind: 1)
-    @lang_teachers = teachers.where(kind: 2)
+    @physical_teachers = teachers.where(kind: :physical_education)
+    @lang_teachers = teachers.where(kind: :foreign_language)
   end
 
   def choose
-    current_kind.drop_teachers_relations!
-    if current_kind.teachers_load_required?
-      current_kind.load_teachers!
-    end
-
-    ActiveRecord::Base.transaction do
-      semester = Stage.current.semesters.first
-      teachers_params[:lang_teacher_ids].each do |id|
-        relation = StudentsTeachersRelation.new(teacher_id: id, semester: semester)
-        current_kind.students_teachers_relations << relation
-      end
-
-      teachers_params[:physical_teacher_ids].each do |id|
-        relation = StudentsTeachersRelation.new(teacher_id: id, semester: semester)
-        current_kind.students_teachers_relations << relation
-      end
-    end
+    interaction = Teachers::AsStudent::ChooseCustomTeachers.run(
+      student: current_kind,
+      lang_teacher_ids: teachers_params[:lang_teacher_ids].to_a,
+      physical_teacher_ids: teachers_params[:physical_teacher_ids].to_a
+    )
 
     redirect_to action: :index
   end
@@ -51,14 +37,15 @@ class Student::TeachersController < ApplicationController
   end
 
   def respond
-    answers = answers_param.map do |q, answer|
-      question_id = q.split('_')[1]
-      {
-        question_id: question_id.to_i,
-        rate: answer.to_i,
-      }
-    end
-    Teacher.find_by_id(params[:teacher_id]).evaluate_by(current_kind, Stage.current, answers)
+    Teachers::AsStudent::Evaluate.run(
+      teacher: Teacher.find_by_id(params[:teacher_id]),
+      student: current_kind,
+      stage: Stage.current,
+      answers: answers_param.map do |question, answer|
+        { question_id: question.split('_')[1].to_i, rate: answer.to_i }
+      end.to_a
+    )
+
     redirect_to action: :index
   end
 

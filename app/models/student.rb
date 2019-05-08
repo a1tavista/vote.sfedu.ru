@@ -5,10 +5,10 @@ class Student < ApplicationRecord
   has_many :teachers, through: :students_teachers_relations
   has_many :participations, dependent: :destroy
 
-  after_create :schedule_loading_personal_info
+  after_create { publish_event(Events::RegisteredNewStudent) }
 
   def teachers_loaded?
-    teachers.any?
+    students_teachers_relations.any?
   end
 
   def self.without_grade_books
@@ -17,6 +17,16 @@ class Student < ApplicationRecord
     group('students.id').
     having('count(grade_books.student_id) = 0').
     order('students.name ASC')
+  end
+
+  def publish_event(klass, data = {})
+    data = data.merge(student_id: id)
+    event = klass.new(data: data)
+    event_store.publish(event, stream_name: stream_name)
+  end
+
+  def stream_name
+    ['Student', id].join(':')
   end
 
   def relations_by_semesters
@@ -30,24 +40,6 @@ class Student < ApplicationRecord
         count: v
       }
     end
-  end
-
-  def load_personal_information!
-    student = Soap::StudentPersonal.all_info(external_id)
-    update(name: student[:name])
-    student[:study_info].each do |info|
-      grade_book = GradeBook.find_or_initialize_by(external_id: info[:external_id])
-      grade_book.assign_attributes(info)
-      grade_book.student_id = self.id
-      grade_book.save
-    end
-  rescue => e
-    Raven.capture_exception(e)
-    raise e
-  end
-
-  def drop_teachers_relations!
-    students_teachers_relations.destroy_all
   end
 
   def all_teachers(stage)
@@ -83,90 +75,6 @@ class Student < ApplicationRecord
   end
 
   def teachers_load_required?
-    students_teachers_relations.empty?
-  end
-
-  def load_teachers!
-    ActiveRecord::Base.transaction do
-
-      StudentsTeachersRelation.where(student: self).destroy_all
-
-      student_teachers = Soap::StudentTeachers.all_info(external_id)
-
-      student_teachers.each do |record|
-        next if record[:name].nil?
-
-        teacher_external_id = Teacher.calculate_encrypted_snils(record[:snils])
-
-        if teacher_external_id.nil?
-          msg = '[SOAP] Invalid teacher record'
-          Raven.capture_message(msg,
-            level: 'info',
-            extra: {
-              'teacher_external_id': record[:external_id],
-              'student_extarnal_id': external_id,
-            },
-            tags: {
-              'student_id': id
-            },
-            fingerprint: ['invalid_teacher', 'invalid_teacher_snils'],
-          )
-
-          teacher = Teacher.find_by(stale_external_id: record[:external_id])
-        end
-
-        # Создаем преподавателя
-        teacher ||= Teacher.find_or_create_by(encrypted_snils: teacher_external_id) do |t|
-          t.name = record[:name]
-          t.snils = Teacher.clear_snils(record[:snils])
-        end
-
-        if teacher.persisted?
-          teacher.update(external_id: record[:external_id])
-
-          # Создаем связи между студентом и преподавателем
-          create_relations!(teacher, record[:relations])
-        else
-          msg = '[SOAP] Teacher is not created'
-          Raven.capture_message(msg,
-            level: 'info',
-            extra: {
-              'teacher_external_id': record[:external_id],
-              'student_extarnal_id': external_id,
-            },
-            tags: {
-              'student_id': id
-            },
-            fingerprint: ['invalid_teacher', 'invalid_teacher_snils'],
-          )
-        end
-      end
-    end
-    true
-  end
-
-  private
-
-  def schedule_loading_personal_info
-    PersonalDataWorker.perform_async(self.id)
-  end
-
-  def create_relations!(teacher, relations)
-    result = []
-    relations.each do |r|
-      semester = Semester.where(
-        year_begin: r[:year_begin],
-        year_end: r[:year_end],
-        kind: r[:semester],
-      ).first
-
-      result << StudentsTeachersRelation.create!(
-        student: self,
-        teacher: teacher,
-        semester: semester,
-        disciplines: r[:disc_name],
-      )
-    end
-    result
+    students_teachers_relations.where(choosen: false).empty?
   end
 end

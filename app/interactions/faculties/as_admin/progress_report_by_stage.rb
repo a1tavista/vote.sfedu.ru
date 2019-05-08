@@ -1,5 +1,5 @@
-module AdminInteractions
-  module Faculties
+module Faculties
+  module AsAdmin
     class ProgressReportByStage < SharedInteractions::ExportToXlsx
       record :stage
 

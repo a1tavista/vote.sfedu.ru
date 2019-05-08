@@ -26,7 +26,7 @@ class Soap::StudentTeachers
       year[:semester] = pack_to_array(year[:semester])
       year[:semester].map! do |semester|
         semester[:year_begin], semester[:year_end] = year[:edu_year_name].split(' - ')
-        semester[:semester] = semester_name_to_num(semester[:semester_name])
+        semester[:kind] = semester_name_to_num(semester[:semester_name])
         semester[:disc_name] = pack_to_array(semester[:disc_name])
         semester.except(:semester_name)
       end

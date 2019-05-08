@@ -29,9 +29,9 @@ table.table.mb-3
 h3 Результаты по стадиям анкетирования
 
 - @results.each do |result|
-  = link_to admin_stage_path(result.stage), class: 'list-group-item list-group-item-action flex-column align-items-start' do
+  = link_to admin_stage_path(result[:stage]), class: 'list-group-item list-group-item-action flex-column align-items-start' do
     .d-flex.w-100.justify-content-between
-      h5.mb-1 Анкетирование с #{l(result.stage.starts_at, format: :only_date)} по #{l(result.stage.ends_at, format: :only_date)}
-      h5.font-weight-bold #{result.mean_rating_of_questions} (#{result.scaled_rating_of_questions})
-    p.mb-1 По оценке #{result.participations_count} cтудентов
+      h5.mb-1 Анкетирование с #{l(result[:stage].starts_at, format: :only_date)} по #{l(result[:stage].ends_at, format: :only_date)}
+      h5.font-weight-bold #{result[:results][:mean_rating_of_stage]} (#{result[:results][:final_rating_of_stage]})
+    p.mb-1 По оценке #{result[:results][:participations_count]} cтудентов
     p.mb-1

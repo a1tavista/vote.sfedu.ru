@@ -10,10 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180305162155) do
+ActiveRecord::Schema.define(version: 20190508134034) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "pgcrypto"
 
   create_table "answers", force: :cascade do |t|
     t.bigint "question_id"
@@ -26,6 +27,25 @@ ActiveRecord::Schema.define(version: 20180305162155) do
     t.index ["ratings"], name: "index_answers_on_ratings", using: :gin
     t.index ["stage_id"], name: "index_answers_on_stage_id"
     t.index ["teacher_id"], name: "index_answers_on_teacher_id"
+  end
+
+  create_table "event_store_events", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "event_type", null: false
+    t.binary "metadata"
+    t.binary "data", null: false
+    t.datetime "created_at", null: false
+    t.index ["created_at"], name: "index_event_store_events_on_created_at"
+    t.index ["event_type"], name: "index_event_store_events_on_event_type"
+  end
+
+  create_table "event_store_events_in_streams", id: :serial, force: :cascade do |t|
+    t.string "stream", null: false
+    t.integer "position"
+    t.uuid "event_id", null: false
+    t.datetime "created_at", null: false
+    t.index ["created_at"], name: "index_event_store_events_in_streams_on_created_at"
+    t.index ["stream", "event_id"], name: "index_event_store_events_in_streams_on_stream_and_event_id", unique: true
+    t.index ["stream", "position"], name: "index_event_store_events_in_streams_on_stream_and_position", unique: true
   end
 
   create_table "faculties", force: :cascade do |t|
@@ -100,6 +120,8 @@ ActiveRecord::Schema.define(version: 20180305162155) do
     t.string "scale_ladder", array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "with_scale", default: true, null: false
+    t.boolean "with_truncation", default: true, null: false
   end
 
   create_table "students", force: :cascade do |t|
@@ -108,6 +130,7 @@ ActiveRecord::Schema.define(version: 20180305162155) do
     t.boolean "enabled", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["external_id"], name: "index_students_on_external_id"
   end
 
   create_table "students_teachers_relations", force: :cascade do |t|
@@ -117,6 +140,7 @@ ActiveRecord::Schema.define(version: 20180305162155) do
     t.string "disciplines", array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "choosen", default: false, null: false
     t.index ["semester_id"], name: "index_students_teachers_relations_on_semester_id"
     t.index ["student_id"], name: "index_students_teachers_relations_on_student_id"
     t.index ["teacher_id"], name: "index_students_teachers_relations_on_teacher_id"
@@ -186,6 +210,7 @@ ActiveRecord::Schema.define(version: 20180305162155) do
     t.integer "kind", default: 0
     t.string "encrypted_snils"
     t.string "stale_external_id"
+    t.index ["external_id"], name: "index_teachers_on_external_id"
   end
 
   create_table "users", force: :cascade do |t|

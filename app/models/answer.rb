@@ -9,12 +9,6 @@ class Answer < ApplicationRecord
 
   before_create :initialize_ratings!
 
-  def self.save_rating_for!(stage, teacher, question, rate)
-    answer = where(stage: stage, teacher: teacher, question: question).first_or_create!
-    answer.ratings[rate - 1] += 1
-    answer.save
-  end
-
   private
 
   def initialize_ratings!

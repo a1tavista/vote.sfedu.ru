@@ -6,7 +6,7 @@ class Teacher::ClearData
       remove_empty_records
       nullify_external_id_for_regular_teachers
       move_external_id_to_snils_for_irregular_teachers
-      clear_snils_for_regular_teachers
+      normalize_snils_for_regular_teachers
       encrypt_snils_for_regular_teachers
     end
   end
@@ -25,8 +25,8 @@ class Teacher::ClearData
     end
   end
 
-  def clear_snils_for_regular_teachers
-    Teacher.where(kind: 0).find_each(&:clear_snils!)
+  def normalize_snils_for_regular_teachers
+    Teacher.where(kind: 0).find_each(&:normalize_snils!)
   end
 
   def encrypt_snils_for_regular_teachers

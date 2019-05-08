@@ -5,7 +5,7 @@ class Teacher < ApplicationRecord
   has_many :participations, dependent: :destroy
   has_many :stages, -> { distinct }, through: :participations
 
-  enum kind: %i(common physical_education foreign_language)
+  enum kind: [:common, :physical_education, :foreign_language]
 
   def stage_relations(stage)
     students_teachers_relations.where(semester: stage.semesters)
@@ -24,42 +24,15 @@ class Teacher < ApplicationRecord
     end
   end
 
-  def evaluate_by(student, stage, answers)
-    ActiveRecord::Base.transaction do
-      answers.uniq! { |a| a[:question_id] }
-      ids = answers.map { |a| a[:question_id] }
-      unless ids.sort == stage.questions.pluck(:id).sort
-        raise 'Answer questions and stage questions are different'
-      end
-      answers.each do |a|
-        Answer.save_rating_for!(stage, self, Question.find(a[:question_id]), a[:rate])
-      end
-      Participation.create!(stage: stage, student: student, teacher: self)
-    end
-  end
-
   def relations_count
     students_teachers_relations.pluck(:student_id).count
   end
 
-  def clear_snils!
-    update(snils: self.class.clear_snils(snils)) unless snils.nil?
+  def normalize_snils!
+    update(snils: Snils.normalize(snils)) unless snils.nil?
   end
 
   def encrypt_snils!
-    update(encrypted_snils: Digest::SHA1.hexdigest(snils))
-  end
-
-  def self.clear_snils(snils)
-    return nil if snils.nil?
-    truncated = snils.gsub(' ', '').gsub('-', '')
-    return nil if truncated.empty?
-    truncated
-  end
-
-  def self.calculate_encrypted_snils(snils)
-    snils_truncated = clear_snils(snils)
-    return nil if snils_truncated.nil?
-    Digest::SHA1.hexdigest(snils_truncated)
+    update(encrypted_snils: Snils.encrypt(snils))
   end
 end
