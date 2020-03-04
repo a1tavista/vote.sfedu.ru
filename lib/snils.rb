@@ -6,6 +6,7 @@ module Snils
   end
 
   def self.encrypt(normalized_snils)
+    return nil if normalized_snils.nil?
     Digest::SHA1.hexdigest(normalized_snils)
   end
 end
