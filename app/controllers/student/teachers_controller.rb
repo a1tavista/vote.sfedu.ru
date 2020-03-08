@@ -3,10 +3,9 @@ class Student::TeachersController < ApplicationController
   load_and_authorize_resource
 
   def index
-    unless current_kind.teachers_loaded?
-      redirect_to prepare_student_teachers_path
-    end
+    redirect_to prepare_student_teachers_path unless current_kind.teachers_chosen?(Stage.current)
 
+    @stage_attendee = StageAttendee.find_or_create_by(stage: Stage.current, student: current_kind)
     @evaluated = current_kind.evaluated_teachers(Stage.current)
     @available = current_kind.available_teachers(Stage.current)
   end

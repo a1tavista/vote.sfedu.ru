@@ -5,6 +5,7 @@
 # Created by https://www.gitignore.io/api/ruby,rails
 
 .idea
+.tool-versions
 
 ### Rails ###
 *.rbc

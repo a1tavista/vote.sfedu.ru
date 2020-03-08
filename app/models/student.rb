@@ -4,11 +4,12 @@ class Student < ApplicationRecord
   has_many :students_teachers_relations, dependent: :destroy
   has_many :teachers, through: :students_teachers_relations
   has_many :participations, dependent: :destroy
+  has_many :stage_attendees, dependent: :destroy
 
   after_create { publish_event(Events::RegisteredNewStudent) }
 
-  def teachers_loaded?
-    students_teachers_relations.any?
+  def teachers_chosen?(stage)
+    stage_attendees.find_by(stage: stage).choosing_selected?
   end
 
   def self.without_grade_books
@@ -72,9 +73,5 @@ class Student < ApplicationRecord
               AND \"participations\".\"stage_id\" = #{stage.id}
               AND \"participations\".\"student_id\" = #{id}").
       where(participations: { student_id: nil })
-  end
-
-  def teachers_load_required?
-    students_teachers_relations.where(choosen: false).empty?
   end
 end

@@ -8,6 +8,8 @@ module Subscriptions
           Events::UserAuthenticated
         ]
       )
+
+      event_store.subscribe(DataSynchronizationHandlers::LoadTeachers, to: [Events::StudentRequestedTeachers])
     end
   end
 end

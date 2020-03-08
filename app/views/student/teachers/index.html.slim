@@ -10,22 +10,5 @@
     p Помните, что процесс анкетирования <b>полностью анонимен</b>. Мы храним ответы таким образом, чтобы никто не мог
       восстановить их принадлежность к кому-либо из проходивших анкетирование.
 
-  .teachers-list-container
-    h1 Доступные действия
-    .teachers-list-actions
-      = link_to 'Обновить список преподавателей из 1С:Университет', refresh_student_teachers_path
-      = link_to 'Перевыбрать преподавателей по иностранному/физкультуре', prepare_student_teachers_path
-
-  .teachers-list-container
-    h1 Незаполненные анкеты
-    .teachers-list
-      - @available.each do |t|
-        = link_to(t.name, student_teacher_path(t.id), class: "teacher")
-
-  - if @evaluated.present?
-    .teachers-list-container
-      h1 Заполненные анкеты
-      .teachers-list
-        - @evaluated.each do |t|
-          .teacher = t.name
+  = render partial: "student/teachers/index/fetching_#{@stage_attendee.fetching_status}"
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190508134034) do
+ActiveRecord::Schema.define(version: 20200308083116) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -107,6 +107,17 @@ ActiveRecord::Schema.define(version: 20190508134034) do
     t.bigint "stage_id"
     t.index ["semester_id"], name: "index_semesters_stages_on_semester_id"
     t.index ["stage_id"], name: "index_semesters_stages_on_stage_id"
+  end
+
+  create_table "stage_attendees", force: :cascade do |t|
+    t.bigint "student_id"
+    t.bigint "stage_id"
+    t.integer "choosing_status", default: 0, null: false
+    t.integer "fetching_status", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["stage_id"], name: "index_stage_attendees_on_stage_id"
+    t.index ["student_id"], name: "index_stage_attendees_on_student_id"
   end
 
   create_table "stages", force: :cascade do |t|
@@ -246,6 +257,8 @@ ActiveRecord::Schema.define(version: 20190508134034) do
   add_foreign_key "questions_stages", "stages"
   add_foreign_key "semesters_stages", "semesters"
   add_foreign_key "semesters_stages", "stages"
+  add_foreign_key "stage_attendees", "stages"
+  add_foreign_key "stage_attendees", "students"
   add_foreign_key "students_teachers_relations", "semesters"
   add_foreign_key "students_teachers_relations", "students"
   add_foreign_key "students_teachers_relations", "teachers"

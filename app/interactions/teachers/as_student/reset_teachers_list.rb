@@ -4,8 +4,14 @@ module Teachers
       record :student
 
       def execute
-        student.students_teachers_relations.where(choosen: false).delete_all
-        FetchFromDataSource.run(student: student)
+        stage_attendee.update(fetching_status: :in_progress)
+        student.publish_event(Events::StudentRequestedTeachers)
+      end
+
+      private
+
+      def stage_attendee
+        @stage_attendee ||= StageAttendee.find_or_initialize_by(student: student, stage: Stage.current)
       end
     end
   end

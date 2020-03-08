@@ -16,7 +16,14 @@ module Teachers
           selected_teacher_ids.each do |id|
             student.students_teachers_relations.create(teacher_id: id, semester: semester, choosen: true)
           end
+
+          stage_attendee.update(choosing_status: :selected)
+          student.publish_event(Events::StudentRequestedTeachers)
         end
+      end
+
+      def stage_attendee
+        @stage_attendee ||= StageAttendee.find_or_initialize_by(student: student, stage: Stage.current)
       end
     end
   end
