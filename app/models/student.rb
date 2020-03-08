@@ -9,7 +9,7 @@ class Student < ApplicationRecord
   after_create { publish_event(Events::RegisteredNewStudent) }
 
   def teachers_chosen?(stage)
-    stage_attendees.find_by(stage: stage).choosing_selected?
+    stage_attendees.find_or_create_by(stage: stage).choosing_selected?
   end
 
   def self.without_grade_books
