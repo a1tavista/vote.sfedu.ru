@@ -10,7 +10,7 @@ module Teachers
           next log_broken_data_for_teacher(raw) if raw[:name].blank?
 
           # Шаг 1. Готовим SHA1(СНИЛС)
-          teacher = Teachers::AsStudent::FindOrInitializeTeacher.run(raw_teacher: raw)
+          teacher = Teachers::AsStudent::FindOrInitializeTeacher.run(raw_teacher: raw).result
           success = teacher.update(name: raw[:name], external_id: raw[:external_id])
 
           next log_incorrect_teacher(teacher) unless success
