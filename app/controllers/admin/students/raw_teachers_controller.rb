@@ -9,8 +9,10 @@ module Admin
       private
 
       def teachers_from_soap
-        Soap::StudentTeachers.all_info(@student.external_id).map do |teacher|
-          teacher.merge(record: Teachers::AsStudent::FindOrInitializeTeacher.run(raw_teacher: teacher).result)
+        Soap::StudentTeachers.all_info(@student.external_id).map do |raw_teacher|
+          teacher = Teachers::AsStudent::FindOrInitializeTeacher.run(raw_teacher: raw_teacher).result
+          teacher.validate
+          raw_teacher.merge(record: teacher, errors: teacher.errors.full_messages)
         end
       end
     end

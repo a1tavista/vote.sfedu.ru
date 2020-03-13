@@ -11,6 +11,7 @@ module Teachers
 
           # Шаг 1. Готовим SHA1(СНИЛС)
           teacher = Teachers::AsStudent::FindOrInitializeTeacher.run(raw_teacher: raw).result
+          next log_broken_data_for_teacher(raw) if teacher.nil?
           success = teacher.update(name: raw[:name], external_id: raw[:external_id])
 
           next log_incorrect_teacher(teacher) unless success
