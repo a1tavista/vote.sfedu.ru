@@ -1,0 +1,25 @@
+.page-header
+  h1.page-header-title = @student.name
+
+h3.mb-3 Преподаватели студента из 1С
+
+table.table.mb-3
+  thead
+    tr
+      th Имя
+      th ID в 1С
+      th СНИЛС
+      th
+      th Действия
+  tbody
+    - @teachers_data.each do |teacher|
+      tr
+        td = teacher[:name]
+        td
+          small = teacher[:external_id] || '<i>Не передан</i>'.html_safe
+        td
+          small = teacher[:snils] || '<i>Не передан</i>'.html_safe
+        td = teacher[:record].valid? ? 'OK' : teacher[:record].errors.full_messages
+        td
+          - if teacher[:record].persisted?
+            = link_to 'Подробнее', admin_teacher_path(teacher[:record])

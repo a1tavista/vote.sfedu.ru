@@ -35,7 +35,9 @@ Rails.application.routes.draw do
     root to: 'base#index'
 
     resources :stages
-    resources :students
+    resources :students do
+      resources :raw_teachers, only: [:index], module: :students
+    end
     resources :teachers
     resources :questions
     resources :faculties

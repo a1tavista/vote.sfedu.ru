@@ -10,15 +10,8 @@ module Teachers
           next log_broken_data_for_teacher(raw) if raw[:name].blank?
 
           # Шаг 1. Готовим SHA1(СНИЛС)
-          clean_snils = Snils.normalize(raw[:snils])
-          teacher_external_id = Snils.encrypt(clean_snils)
-
-          # Шаг 2. Ищем преподаватлея в базе, если из 1С пришел пустой СНИЛС
-          teacher = Teacher.find_by(stale_external_id: raw[:external_id]) if teacher_external_id.nil?
-
-          # Шаг 3. Ищем или инициализируем преподавателя, если его ещё не было, и обновляем его данные из 1С
-          teacher ||= Teacher.find_or_initialize_by(encrypted_snils: teacher_external_id)
-          success = teacher.update(name: raw[:name], snils: clean_snils, external_id: raw[:external_id])
+          teacher = Teachers::AsStudent::FindOrInitializeTeacher.run(raw_teacher: raw)
+          success = teacher.update(name: raw[:name], external_id: raw[:external_id])
 
           next log_incorrect_teacher(teacher) unless success
 
