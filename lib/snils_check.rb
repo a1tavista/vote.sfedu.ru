@@ -6,6 +6,7 @@ class SnilsCheck
              elsif number.present?
                number.to_s.gsub(/[^\d]/, '')
              end
+    @snils ||= ''
 
     @errors = []
     @validated = false
@@ -61,7 +62,7 @@ class SnilsCheck
 
   def validate
     @errors << [:wrong_length, { :count => 11 }] if @snils.blank? || @snils.length != 11
-    @errors << :invalid  unless @snils[-2..-1] == self.checksum
+    @errors << :invalid if @snils.present? && @snils[-2..-1] != self.checksum
     @validated = true
   end
 

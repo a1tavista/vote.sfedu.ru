@@ -4,9 +4,8 @@ module Teachers
       hash :raw_teacher, strip: false
 
       def execute
-        snils = SnilsCheck.new(raw_teacher[:snils])
-        clean_snils = snils.raw
-        teacher_external_id = snils.encrypt
+        clean_snils = Snils.normalize(raw_teacher[:snils])
+        teacher_external_id = Snils.encrypt(clean_snils)
 
         # Вариант 1. Ищем или инициализируем преподаватлея в базе по ID из 1С, если из 1С пришел пустой СНИЛС
         return Teacher.find_or_initialize_by(stale_external_id: raw_teacher[:external_id]) if teacher_external_id.blank?
