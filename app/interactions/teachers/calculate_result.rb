@@ -4,14 +4,14 @@ module Teachers
     record :stage
 
     object :questions,
-           class: :object,
-           default: -> { stage.questions.select(:id, :text).index_by(&:id) }
+      class: :object,
+      default: -> { stage.questions.select(:id, :text).index_by(&:id) }
     object :answers,
-           class: :object,
-           default: -> { teacher.answers.select(:id, :question_id, :ratings).where(stage: stage).order('id ASC') }
+      class: :object,
+      default: -> { teacher.answers.select(:id, :question_id, :ratings).where(stage: stage).order("id ASC") }
     integer :participations_count, default: -> { teacher.participations.where(stage: stage).count }
 
-    boolean :safe, default: true, desc: 'If stage still in progress, returns N/A as result'
+    boolean :safe, default: true, desc: "If stage still in progress, returns N/A as result"
 
     def execute
       mean_rating = mean_rating_of_stage(calc_by: stage.with_truncation ? :relaxed_rating : :rating)
@@ -32,15 +32,15 @@ module Teachers
     #   * rating_before_limitation_check – рейтинг по критерию без модификаций (среднее арифмитическое)
     #   * rating – рейтинг по критерию с учетом минимального порога респондентов
     def rating_by_questions
-      @rating_by_questions = answers.map do |answer|
+      @rating_by_questions = answers.map { |answer|
         rating = calculate_question_rating_for(answer.ratings.dup)
 
         {
           question: questions[answer.question_id],
           rating_before_limitation_check: rating,
-          rating: respondents_limitation_check(answer, rating),
+          rating: respondents_limitation_check(answer, rating)
         }.merge(relaxed_ratings_for_question(answer))
-      end
+      }
     end
 
     # Рейтинг преподавателя по каждому критерию оценивания после нормализации оценок.
@@ -62,7 +62,7 @@ module Teachers
     end
 
     def mean_rating_of_stage(calc_by:)
-      return 'N/A' if stage.current? && safe
+      return "N/A" if stage.current? && safe
 
       questions_ratings ||= (@rating_by_questions || rating_by_questions)
       return 0.0 if questions_ratings.count.zero?
@@ -74,7 +74,7 @@ module Teachers
     end
 
     def scale_rating(mean_rating:)
-      return 'N/A' if stage.current? && safe
+      return "N/A" if stage.current? && safe
 
       score = stage.converted_scale_ladder.index { |range| range.include?(mean_rating) }
       (score || -1) + 1

@@ -5,5 +5,6 @@ class Admin::FacultiesController < Admin::BaseController
     @faculties = paginate_entries(@faculties).order(name: :asc)
   end
 
-  def show; end
+  def show
+  end
 end

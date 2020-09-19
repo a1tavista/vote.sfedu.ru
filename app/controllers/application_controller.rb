@@ -15,18 +15,16 @@ class ApplicationController < ActionController::Base
 
   rescue_from CanCan::AccessDenied do |exception|
     Raven.capture_message(exception.message,
-      level: 'info',
-      fingerprint: ['cancancan'],
-    )
-    render 'errors/access_denied', layout: 'application', locals: { message: exception.message }
+      level: "info",
+      fingerprint: ["cancancan"])
+    render "errors/access_denied", layout: "application", locals: {message: exception.message}
   end
 
   rescue_from Savon::HTTPError do |exception|
     Raven.capture_message(exception.message,
-      level: 'info',
-      fingerprint: ['savon', 'soap'],
-    )
-    render 'errors/coffee_break', layout: 'application', locals: { message: exception.message }
+      level: "info",
+      fingerprint: ["savon", "soap"])
+    render "errors/coffee_break", layout: "application", locals: {message: exception.message}
   end
 
   private

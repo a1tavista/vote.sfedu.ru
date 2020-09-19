@@ -6,11 +6,11 @@ class SurveyAnswer < ApplicationRecord
 
   validates :user, uniqueness: {
     scope: :survey_question,
-    message: 'может дать только один ответ на вопрос'
+    message: "может дать только один ответ на вопрос"
   }, if: -> { !survey_question.multichoice? }
 
   validates :user, uniqueness: {
-    scope: %i(survey_question survey_option),
-    message: 'уже дал указанный ответ на этот вопрос'
+    scope: %i[survey_question survey_option],
+    message: "уже дал указанный ответ на этот вопрос"
   }
 end

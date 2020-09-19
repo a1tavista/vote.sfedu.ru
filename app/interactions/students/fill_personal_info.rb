@@ -2,8 +2,8 @@ module Students
   class FillPersonalInfo < BaseInteraction
     record :student
     object :personal_data,
-           class: :object,
-           default: -> { Soap::StudentPersonal.all_info(student.external_id) }
+      class: :object,
+      default: -> { Soap::StudentPersonal.all_info(student.external_id) }
 
     def execute
       student.update(name: personal_data[:name])

@@ -38,7 +38,7 @@ module Teachers
       end
 
       def define_available_formats(workbook)
-        workbook.set_custom_color(40, '#F5F5DC')
+        workbook.set_custom_color(40, "#F5F5DC")
 
         {
           heading_centered: workbook.add_format(DEFAULT_STRING_FORMAT.merge(bold: 1)),
@@ -63,18 +63,18 @@ module Teachers
 
       def add_worksheet_heading(worksheet, first_row, formats)
         worksheet.set_row(first_row, 50)
-        worksheet.write(first_row, 0, 'Преподаватель', formats[:heading_centered])
-        worksheet.write(first_row, 1, 'SHA1(СНИЛС)', formats[:heading_centered])
-        worksheet.write(first_row, 2, 'Идентификатор 1С', formats[:heading_centered])
-        worksheet.write(first_row, 3, 'Число респондентов', formats[:heading_centered])
-        worksheet.write(first_row, 4, 'Оценка по критериям', formats[:heading_centered])
-        worksheet.write(first_row, 5, 'Средняя оценка', formats[:heading_centered])
+        worksheet.write(first_row, 0, "Преподаватель", formats[:heading_centered])
+        worksheet.write(first_row, 1, "SHA1(СНИЛС)", formats[:heading_centered])
+        worksheet.write(first_row, 2, "Идентификатор 1С", formats[:heading_centered])
+        worksheet.write(first_row, 3, "Число респондентов", formats[:heading_centered])
+        worksheet.write(first_row, 4, "Оценка по критериям", formats[:heading_centered])
+        worksheet.write(first_row, 5, "Средняя оценка", formats[:heading_centered])
       end
 
       def write_data(worksheet, row, formats, data)
         worksheet.write(row, 0, data[:name], formats[:cell])
         worksheet.write(row, 1, data[:encrypted_snils], formats[:cell_number])
-        worksheet.write_string(row, 2, data[:external_id] || 'none', formats[:cell_number])
+        worksheet.write_string(row, 2, data[:external_id] || "none", formats[:cell_number])
         worksheet.write(row, 3, data[:participations_count], formats[:cell_number])
         worksheet.write(row, 4, data[:rating_of_questions].to_s, formats[:cell_number])
         worksheet.write(row, 5, data[:avg_rating], formats[:cell_number])

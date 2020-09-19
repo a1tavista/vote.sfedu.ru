@@ -7,5 +7,6 @@ class Admin::UsersController < Admin::BaseController
     @users = @users.where(role: params[:role]) if params[:role].present?
   end
 
-  def show; end
+  def show
+  end
 end

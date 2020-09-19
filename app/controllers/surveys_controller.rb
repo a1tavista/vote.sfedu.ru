@@ -2,7 +2,8 @@ class SurveysController < ApplicationController
   before_action :authenticate_user!
   load_resource find_by: :passcode
 
-  def show; end
+  def show
+  end
 
   def results
     @breakdown = Survey::Results.new(@survey).breakdown

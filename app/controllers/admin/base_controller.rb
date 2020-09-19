@@ -1,7 +1,7 @@
 module Admin
   class BaseController < ApplicationController
-    layout 'admin'
-    prepend_view_path 'app/views/admin'
+    layout "admin"
+    prepend_view_path "app/views/admin"
 
     def index
       authorize!(:index, :admin)

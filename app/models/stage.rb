@@ -8,18 +8,18 @@ class Stage < ApplicationRecord
   after_save :recalculate_scale_ladder!
 
   def self.upcoming
-    Stage.where('stages.starts_at > ?', Time.current)
+    Stage.where("stages.starts_at > ?", Time.current)
   end
 
   def self.past
-    Stage.where('stages.ends_at < ?', Time.current)
+    Stage.where("stages.ends_at < ?", Time.current)
   end
 
   def self.current
     current_time = Time.current
     Stage
-      .where('stages.starts_at <= ?', current_time)
-      .where('stages.ends_at >= ?', current_time)
+      .where("stages.starts_at <= ?", current_time)
+      .where("stages.ends_at >= ?", current_time)
       .first
   end
 
@@ -32,7 +32,7 @@ class Stage < ApplicationRecord
       {
         name: faculty.name,
         participants_count: participants_count,
-        average_answers: average_answers,
+        average_answers: average_answers
       }
     end
   end
@@ -62,9 +62,9 @@ class Stage < ApplicationRecord
 
   def converted_scale_ladder
     scale_ladder.map do |range|
-      range_begin, range_end = range.split('...')
+      range_begin, range_end = range.split("...")
       exclude_end = !range_end.nil?
-      range_begin, range_end = range.split('..') if range_end.nil?
+      range_begin, range_end = range.split("..") if range_end.nil?
       Range.new(range_begin.to_f, range_end.to_f, exclude_end)
     end
   end

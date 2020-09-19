@@ -7,11 +7,11 @@ class Teacher::MergeDuplicates
   def process!
     ActiveRecord::Base.transaction do
       pairs = (@teachers_to_process + @duplicates)
-                .group_by(&:encrypted_snils)
+        .group_by(&:encrypted_snils)
 
       pairs.each do |hash, pair|
         next if pair.length != 2
-        pair.sort! { |a, b| (a.kind == 0) ? 0 : 1 }
+        pair.sort! { |a, b| a.kind == 0 ? 0 : 1 }
         merge_participations(pair[0], pair[1])
         merge_relations(pair[0], pair[1])
         merge_ratings(pair[0], pair[1])

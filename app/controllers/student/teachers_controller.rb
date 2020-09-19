@@ -11,7 +11,7 @@ class Student::TeachersController < ApplicationController
   end
 
   def refresh
-    interaction = Teachers::AsStudent::ResetTeachersList.run(student: current_kind)
+    Teachers::AsStudent::ResetTeachersList.run(student: current_kind)
     redirect_to action: :index
   end
 
@@ -22,7 +22,7 @@ class Student::TeachersController < ApplicationController
   end
 
   def choose
-    interaction = Teachers::AsStudent::ChooseCustomTeachers.run(
+    Teachers::AsStudent::ChooseCustomTeachers.run(
       student: current_kind,
       lang_teacher_ids: teachers_params[:lang_teacher_ids].to_a,
       physical_teacher_ids: teachers_params[:physical_teacher_ids].to_a
@@ -40,9 +40,9 @@ class Student::TeachersController < ApplicationController
       teacher: Teacher.find_by_id(params[:teacher_id]),
       student: current_kind,
       stage: Stage.current,
-      answers: answers_param.map do |question, answer|
-        { question_id: question.split('_')[1].to_i, rate: answer.to_i }
-      end.to_a
+      answers: answers_param.map { |question, answer|
+        {question_id: question.split("_")[1].to_i, rate: answer.to_i}
+      }.to_a
     )
 
     redirect_to action: :index

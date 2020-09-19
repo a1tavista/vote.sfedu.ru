@@ -1,5 +1,6 @@
 class Teacher::ClearData
-  def initialize; end
+  def initialize
+  end
 
   def process!
     ActiveRecord::Base.transaction do

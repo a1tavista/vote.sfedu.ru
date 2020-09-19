@@ -7,7 +7,7 @@ class Admin::Reports::TeachersController < Admin::BaseController
         send_data(
           io_string,
           filename: "Результаты-#{I18n.l(Time.current, format: :slug)}.xlsx",
-          disposition: 'attachment',
+          disposition: "attachment",
           type: Mime::Type.lookup_by_extension(:xlsx)
         )
       end
@@ -16,15 +16,15 @@ class Admin::Reports::TeachersController < Admin::BaseController
 
   def lack_of_participations
     @report = ::TeachersReports::NotEnoughParticipationsReport
-                .new(Stage.current)
-                .paginate(page: params[:page], per: 20)
-                .build
+      .new(Stage.current)
+      .paginate(page: params[:page], per: 20)
+      .build
   end
 
   def lack_of_students
     @report = ::TeachersReports::NotEnoughStudentsReport
-                .new(Stage.current)
-                .paginate(page: params[:page], per: 20)
-                .build
+      .new(Stage.current)
+      .paginate(page: params[:page], per: 20)
+      .build
   end
 end

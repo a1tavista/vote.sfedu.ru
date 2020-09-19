@@ -4,7 +4,7 @@ module SoapConnectable
   included do
     extend Savon::Model
 
-    client wsdl: ENV.fetch('SFEDU_WSDL_PATH')
+    client wsdl: ENV.fetch("SFEDU_WSDL_PATH")
 
     global :env_namespace, :soap
     global :namespace_identifier, :perf

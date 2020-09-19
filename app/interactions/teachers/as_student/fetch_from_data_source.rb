@@ -26,7 +26,7 @@ module Teachers
 
       def teachers_data
         @teachers_data ||= Soap::StudentTeachers.all_info(student.external_id)
-      rescue StandardError => e
+      rescue => e
         stage_attendee.update(fetching_status: :failed)
         raise e
       end

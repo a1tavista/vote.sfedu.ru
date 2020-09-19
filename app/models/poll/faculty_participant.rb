@@ -1,6 +1,6 @@
 class Poll
   class FacultyParticipant < ApplicationRecord
-    self.table_name = 'poll_faculty_participants'
+    self.table_name = "poll_faculty_participants"
 
     belongs_to :poll
     belongs_to :faculty

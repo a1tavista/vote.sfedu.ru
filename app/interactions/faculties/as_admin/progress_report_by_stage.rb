@@ -27,7 +27,7 @@ module Faculties
           row += 1
         end
 
-        worksheet.write(row, 0, 'Итого:', formats[:cell_number])
+        worksheet.write(row, 0, "Итого:", formats[:cell_number])
         worksheet.write(row, 1, "=SUM(B2:B#{row})", formats[:cell_number_highlighted])
         worksheet.write(row, 2, "=SUM(C2:C#{row})", formats[:cell_number_highlighted])
 
@@ -41,7 +41,7 @@ module Faculties
       end
 
       def define_available_formats(workbook)
-        workbook.set_custom_color(40, '#F5F5DC')
+        workbook.set_custom_color(40, "#F5F5DC")
 
         {
           heading_centered: workbook.add_format(DEFAULT_STRING_FORMAT.merge(bold: 1)),
@@ -63,10 +63,10 @@ module Faculties
 
       def add_worksheet_heading(worksheet, first_row, formats)
         worksheet.set_row(first_row, 50)
-        worksheet.write(first_row, 0, 'Факультет', formats[:heading_centered])
-        worksheet.write(first_row, 1, 'Студенты', formats[:heading_centered])
-        worksheet.write(first_row, 2, 'Заполненные анкеты', formats[:heading_centered])
-        worksheet.write(first_row, 3, 'Анкет на студента', formats[:heading_centered])
+        worksheet.write(first_row, 0, "Факультет", formats[:heading_centered])
+        worksheet.write(first_row, 1, "Студенты", formats[:heading_centered])
+        worksheet.write(first_row, 2, "Заполненные анкеты", formats[:heading_centered])
+        worksheet.write(first_row, 3, "Анкет на студента", formats[:heading_centered])
       end
 
       def write_data(worksheet, row, formats, data)

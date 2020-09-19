@@ -6,7 +6,8 @@ class Teacher::SurveysController < ApplicationController
     @surveys = @surveys.order(created_at: :desc)
   end
 
-  def show; end
+  def show
+  end
 
   def new
     @survey = SurveyCloner.call(Survey.find_by_id(params[:source_id])) if params[:source_id].present?
@@ -22,7 +23,8 @@ class Teacher::SurveysController < ApplicationController
     end
   end
 
-  def edit; end
+  def edit
+  end
 
   def update
     if @survey.update(survey_params.merge(user: current_user))

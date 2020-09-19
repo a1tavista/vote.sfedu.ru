@@ -1,12 +1,12 @@
 class SnilsCheck
   # New object with SNILS +number+ if provided.
   def initialize(number = nil)
-    @snils = if number.kind_of?(Numeric)
-               '%011d' % number
-             elsif number.present?
-               number.to_s.gsub(/[^\d]/, '')
-             end
-    @snils ||= ''
+    @snils = if number.is_a?(Numeric)
+      "%011d" % number
+    elsif number.present?
+      number.to_s.gsub(/[^\d]/, "")
+    end
+    @snils ||= ""
 
     @errors = []
     @validated = false
@@ -14,15 +14,15 @@ class SnilsCheck
 
   # Calculates checksum (last 2 digits) of a number
   def checksum
-    digits = @snils.split('').take(9).map(&:to_i)
-    checksum = digits.each.with_index.reduce(0) do |sum, (digit, index)|
+    digits = @snils.split("").take(9).map(&:to_i)
+    checksum = digits.each.with_index.reduce(0) { |sum, (digit, index)|
       sum + digit * (9 - index)
-    end
-    while checksum > 101 do
+    }
+    while checksum > 101
       checksum = checksum % 101
     end
-    checksum = 0  if (100..101).include?(checksum)
-    '%02d' % checksum
+    checksum = 0 if (100..101).cover?(checksum)
+    "%02d" % checksum
   end
 
   # Validates SNILS. Valid SNILS is a 11 digits long and have correct checksum
@@ -33,7 +33,7 @@ class SnilsCheck
 
   # Validates string with a SNILS. Valid SNILS is a 11 digits long and have correct checksum.
   def self.valid?(snils)
-    self.new(snils).valid?
+    new(snils).valid?
   end
 
   # Returns SNILS in format 000-000-000 00
@@ -61,9 +61,8 @@ class SnilsCheck
   protected
 
   def validate
-    @errors << [:wrong_length, { :count => 11 }] if @snils.blank? || @snils.length != 11
-    @errors << :invalid if @snils.present? && @snils[-2..-1] != self.checksum
+    @errors << [:wrong_length, {count: 11}] if @snils.blank? || @snils.length != 11
+    @errors << :invalid if @snils.present? && @snils[-2..-1] != checksum
     @validated = true
   end
-
 end

@@ -2,24 +2,24 @@ module SharedInteractions
   class ExportToXlsx < ActiveInteraction::Base
     # Constants
     DEFAULT_FORMAT = {
-      color: 'black',
+      color: "black",
       size: 9,
-      align: 'left',
-      valign: 'vcenter',
+      align: "left",
+      valign: "vcenter",
       text_wrap: 1
     }.freeze
-    DEFAULT_NUMBER_FORMAT = self::DEFAULT_FORMAT.merge(align: 'right')
-    DEFAULT_STRING_FORMAT = self::DEFAULT_FORMAT.merge(align: 'center')
+    DEFAULT_NUMBER_FORMAT = self::DEFAULT_FORMAT.merge(align: "right")
+    DEFAULT_STRING_FORMAT = self::DEFAULT_FORMAT.merge(align: "center")
 
     # Required params
     string :file_name, default: nil
 
     # Optional params
-    symbol :export_type, default: :stream, desc: 'Format of output. Could be `:file` or `:stream`.'
-    object :path, class: Pathname, default: -> { Rails.root.join('tmp', "#{file_name}.xlsx") }
+    symbol :export_type, default: :stream, desc: "Format of output. Could be `:file` or `:stream`."
+    object :path, class: Pathname, default: -> { Rails.root.join("tmp", "#{file_name}.xlsx") }
 
     # Validations
-    validates :export_type, presence: true, acceptance: { accept: [:file, :stream] }
+    validates :export_type, presence: true, acceptance: {accept: [:file, :stream]}
     validates :file_name, presence: true, if: -> { export_type == :file }
 
     # Callbacks

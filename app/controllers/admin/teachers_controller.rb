@@ -7,11 +7,11 @@ class Admin::TeachersController < Admin::BaseController
   end
 
   def show
-    @results = Stage.all.map do |stage|
+    @results = Stage.all.map { |stage|
       {
         stage: stage,
         results: Teachers::CalculateResult.run!(teacher: @teacher, stage: stage)
       }
-    end
+    }
   end
 end

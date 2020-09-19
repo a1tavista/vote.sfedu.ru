@@ -2,7 +2,7 @@ class User < ApplicationRecord
   devise :openid_authenticatable, :rememberable, :trackable
   belongs_to :kind, polymorphic: true
 
-  enum role: %i(regular moderator admin)
+  enum role: %i[regular moderator admin]
 
   attr_accessor :identity_name
   after_create { publish_event(Events::RegisteredNewUser) }
@@ -22,18 +22,18 @@ class User < ApplicationRecord
   end
 
   def self.openid_optional_fields
-    %w(email nickname r61globalkey r61studentid student staff)
+    %w[email nickname r61globalkey r61studentid student staff]
   end
 
   def openid_fields=(fields)
-    self.email = fields.fetch('email').downcase
-    self.nickname = fields.fetch('nickname').downcase
+    self.email = fields.fetch("email").downcase
+    self.nickname = fields.fetch("nickname").downcase
 
-    if fields.fetch('student') == '1'
-      id = normalize_id(fields.fetch('r61studentid'))
+    if fields.fetch("student") == "1"
+      id = normalize_id(fields.fetch("r61studentid"))
       self.kind = Student.find_or_create_by(external_id: id)
     else
-      id = normalize_id(fields.fetch('r61globalkey'))
+      id = normalize_id(fields.fetch("r61globalkey"))
       self.kind = Teacher.find_or_create_by(external_id: id)
     end
   end
@@ -45,7 +45,7 @@ class User < ApplicationRecord
   end
 
   def stream_name
-    ['User', id].join(':')
+    ["User", id].join(":")
   end
 
   def student?
@@ -57,6 +57,6 @@ class User < ApplicationRecord
   end
 
   def normalize_id(raw_id)
-    raw_id.gsub(/[^0-9]/, '').rjust(9, '0')
+    raw_id.gsub(/[^0-9]/, "").rjust(9, "0")
   end
 end

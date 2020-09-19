@@ -9,7 +9,7 @@ module Admin
             send_data(
               io_string,
               filename: "ВыгрузкаПоФакультетам-#{I18n.l(Time.current, format: :slug)}.xlsx",
-              disposition: 'attachment',
+              disposition: "attachment",
               type: Mime::Type.lookup_by_extension(:xlsx)
             )
           end

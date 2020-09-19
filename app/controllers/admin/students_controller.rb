@@ -6,5 +6,6 @@ class Admin::StudentsController < Admin::BaseController
     @students = paginate_entries(@q.result).order(id: :asc)
   end
 
-  def show; end
+  def show
+  end
 end

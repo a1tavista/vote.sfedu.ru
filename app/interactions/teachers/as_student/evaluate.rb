@@ -12,7 +12,7 @@ module Teachers
           ids = answers.map { |a| a[:question_id] }
 
           unless ids.sort == stage.questions.pluck(:id).sort
-            raise 'Answer questions and stage questions are different'
+            raise "Answer questions and stage questions are different"
           end
 
           answers.each do |a|

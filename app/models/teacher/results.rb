@@ -13,7 +13,7 @@ class Teacher::Results
 
     @questions = stage.questions.select(:id, :text).index_by(&:id)
     @participations_count = teacher.participations.where(stage: stage).count
-    @answers = teacher.answers.select(:id, :question_id, :ratings).where(stage: stage).order('id ASC')
+    @answers = teacher.answers.select(:id, :question_id, :ratings).where(stage: stage).order("id ASC")
   end
 
   def full_info
@@ -43,13 +43,13 @@ class Teacher::Results
         total_rating: respondents_bound_check(answer, rating),
 
         # Очищенный рейтинг после проверки на преодоление нижней границы участников
-        total_relaxed_rating: respondents_bound_check(answer, relaxed_rating || rating),
+        total_relaxed_rating: respondents_bound_check(answer, relaxed_rating || rating)
       }
     end
   end
 
   def mean_rating_of_questions(calc_by: :total_rating)
-    return 'N/A' if @stage.current? && @safe
+    return "N/A" if @stage.current? && @safe
 
     questions_ratings ||= rating_of_questions
     return 0.0 if questions_ratings.count.zero?
@@ -61,12 +61,12 @@ class Teacher::Results
   end
 
   def scaled_rating_of_questions(calc_by: :total_rating)
-    return 'N/A' if @stage.current? && @safe
+    return "N/A" if @stage.current? && @safe
 
     rating = mean_rating_of_questions
-    score = @stage.converted_scale_ladder.index do |r|
+    score = @stage.converted_scale_ladder.index { |r|
       r.include?(rating)
-    end
+    }
     (score || -1) + 1
   end
 

@@ -1,7 +1,7 @@
 module Snils
   def self.normalize(raw_snils)
     return nil if raw_snils.nil?
-    normalized_snils = raw_snils.gsub(' ', '').gsub('-', '')
+    normalized_snils = raw_snils.delete(" ").delete("-")
     normalized_snils.presence
   end
 

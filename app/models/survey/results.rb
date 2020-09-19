@@ -18,33 +18,33 @@ class Survey::Results
   private
 
   def breakdown_by(questions)
-    questions_fields = %i(id text required multichoice free_answer)
-    options_fields = %i(id text custom)
-    results = questions.select(*questions_fields).map do |question|
+    questions_fields = %i[id text required multichoice free_answer]
+    options_fields = %i[id text custom]
+    results = questions.select(*questions_fields).map { |question|
       survey_options = question.options
-                         .select(*options_fields)
-                         .where(custom: false)
-                         .map(&method(:handle_regular_options))
+        .select(*options_fields)
+        .where(custom: false)
+        .map(&method(:handle_regular_options))
       custom_options = question.options
-                         .select(*options_fields)
-                         .where(custom: true)
-                         .map(&method(:handle_regular_options))
+        .select(*options_fields)
+        .where(custom: true)
+        .map(&method(:handle_regular_options))
 
-      { question: question, survey_options: survey_options, custom_options: custom_options, }
-    end
+      {question: question, survey_options: survey_options, custom_options: custom_options}
+    }
     {
       results: results,
-      respondents: @respondents.map { |r| { user: r, kind: r.kind } },
+      respondents: @respondents.map { |r| {user: r, kind: r.kind} }
     }
   end
 
   def handle_regular_options(option)
-    option_answers_count = option.answers.where('survey_answers.user_id IN (?)', ids).count
+    option_answers_count = option.answers.where("survey_answers.user_id IN (?)", ids).count
     percentage = @respondents_count.positive? ? (100 * option_answers_count / @respondents_count.to_f) : 0
     {
       option: option,
       count: option_answers_count,
-      rate: percentage,
+      rate: percentage
     }
   end
 

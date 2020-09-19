@@ -1,5 +1,6 @@
 class EventStore
-  def initialize; end
+  def initialize
+  end
 
   def setup
     [

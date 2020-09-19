@@ -3,11 +3,11 @@ module TeachersReports
     def initialize(stage)
       @stage = stage
       @teachers = Teacher.
-        select('teachers.id, teachers.name, count(participations.student_id) AS students_count').
+        select("teachers.id, teachers.name, count(participations.student_id) AS students_count").
         joins("LEFT JOIN \"participations\" ON \"participations\".\"teacher_id\" = \"teachers\".\"id\" AND \"participations\".\"stage_id\" = #{stage.id}").
-        group('teachers.id').
-        having('count(participations.student_id) < 10').
-        order('teachers.name ASC')
+        group("teachers.id").
+        having("count(participations.student_id) < 10").
+        order("teachers.name ASC")
     end
 
     def paginate(page: 1, per: 20)
@@ -15,12 +15,11 @@ module TeachersReports
       self
     end
 
-
     def summary
       [
         {
-          label: 'Всего преподавателей в списке:',
-          count: @teachers.count,
+          label: "Всего преподавателей в списке:",
+          count: @teachers.count
         }
       ]
     end
@@ -38,7 +37,7 @@ module TeachersReports
 
       OpenStruct.new(
         rows: result,
-        source: @teachers,
+        source: @teachers
       )
     end
   end
