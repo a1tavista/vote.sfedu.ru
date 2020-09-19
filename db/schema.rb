@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_08_083116) do
+ActiveRecord::Schema.define(version: 2020_09_18_184248) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -78,6 +78,47 @@ ActiveRecord::Schema.define(version: 2020_03_08_083116) do
     t.index ["stage_id"], name: "index_participations_on_stage_id"
     t.index ["student_id"], name: "index_participations_on_student_id"
     t.index ["teacher_id"], name: "index_participations_on_teacher_id"
+  end
+
+  create_table "poll_answers", force: :cascade do |t|
+    t.bigint "poll_id"
+    t.bigint "poll_option_id"
+    t.index ["id"], name: "index_poll_answers_on_id"
+    t.index ["poll_id"], name: "index_poll_answers_on_poll_id"
+    t.index ["poll_option_id"], name: "index_poll_answers_on_poll_option_id"
+  end
+
+  create_table "poll_faculty_participants", force: :cascade do |t|
+    t.bigint "poll_id"
+    t.bigint "faculty_id"
+    t.index ["faculty_id"], name: "index_poll_faculty_participants_on_faculty_id"
+    t.index ["poll_id"], name: "index_poll_faculty_participants_on_poll_id"
+  end
+
+  create_table "poll_options", force: :cascade do |t|
+    t.bigint "poll_id"
+    t.string "title", null: false
+    t.string "description"
+    t.text "image_data"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["poll_id"], name: "index_poll_options_on_poll_id"
+  end
+
+  create_table "poll_participations", force: :cascade do |t|
+    t.bigint "poll_id"
+    t.bigint "student_id"
+    t.index ["id"], name: "index_poll_participations_on_id"
+    t.index ["poll_id"], name: "index_poll_participations_on_poll_id"
+    t.index ["student_id"], name: "index_poll_participations_on_student_id"
+  end
+
+  create_table "polls", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "starts_at", null: false
+    t.datetime "ends_at", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "questions", force: :cascade do |t|
@@ -253,6 +294,13 @@ ActiveRecord::Schema.define(version: 2020_03_08_083116) do
   add_foreign_key "participations", "stages"
   add_foreign_key "participations", "students"
   add_foreign_key "participations", "teachers"
+  add_foreign_key "poll_answers", "poll_options"
+  add_foreign_key "poll_answers", "polls"
+  add_foreign_key "poll_faculty_participants", "faculties"
+  add_foreign_key "poll_faculty_participants", "polls"
+  add_foreign_key "poll_options", "polls"
+  add_foreign_key "poll_participations", "polls"
+  add_foreign_key "poll_participations", "students"
   add_foreign_key "questions_stages", "questions"
   add_foreign_key "questions_stages", "stages"
   add_foreign_key "semesters_stages", "semesters"

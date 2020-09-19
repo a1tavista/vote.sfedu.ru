@@ -1,4 +1,24 @@
 FactoryBot.define do
+  factory :poll_faculty_participant, class: 'Poll::FacultyParticipant' do
+    
+  end
+
+  factory :poll_participation, class: 'Poll::Participation' do
+    
+  end
+
+  factory :poll_option, class: 'Poll::Option' do
+    
+  end
+
+  factory :poll_answer, class: 'Poll::Answer' do
+    
+  end
+
+  factory :poll do
+    
+  end
+
   factory :survey_participation do
 
   end
