@@ -1,9 +1,9 @@
 class Survey < ApplicationRecord
-  has_many :questions, class_name: "SurveyQuestion", dependent: :destroy
-  has_many :options, class_name: "SurveyOption", through: :questions
-  has_many :answers, class_name: "SurveyAnswer", dependent: :destroy
+  has_many :questions, class_name: "Survey::Question", dependent: :destroy
+  has_many :options, class_name: "Survey::Option", through: :questions
+  has_many :answers, class_name: "Survey::Answer", dependent: :destroy
   has_many :users, -> { distinct }, through: :answers
-  has_many :sharings, class_name: "SurveySharing", dependent: :destroy
+  has_many :sharings, class_name: "Survey::Sharing", dependent: :destroy
 
   validates :title, presence: true
   validates :passcode, presence: true
@@ -28,7 +28,7 @@ class Survey < ApplicationRecord
       end
     end
 
-    SurveyAnswer.create!(survey: self, survey_question: question, survey_option: option, user_id: user_id)
+    Survey::Answer.create!(survey: self, survey_question: question, survey_option: option, user_id: user_id)
   end
 
   def answered_for?(user_id)

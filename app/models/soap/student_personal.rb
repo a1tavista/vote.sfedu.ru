@@ -12,14 +12,14 @@ class Soap::StudentPersonal
     handled_response = response[:get_student_info_response][:return][:student_info]
     {
       name: handled_response[:fio],
-      grade_books: prepare_grade_books(handled_response[:study_inf])
-        .map { |grade_book| grade_book[:zachetka] }.uniq
+      grade_books: Array.wrap(handled_response[:study_inf]).map { |grade_book| grade_book[:zachetka] }.uniq
     }
   end
 
   def self.study_info(grade_book_id)
     response = get_study_info(message: {'ZachNum': grade_book_id}).body
     handled_response = response[:get_study_info_response][:return][:study_infо]
+
     {
       external_id: grade_book_id,
       time_type: detect_type(handled_response[:f_obuch]),
@@ -74,11 +74,4 @@ class Soap::StudentPersonal
     }.fetch(raw, 0)
   end
 
-  def self.prepare_grade_books(study_info)
-    if study_info.is_a?(Hash)
-      [study_info]
-    elsif study_info.is_a?(Array)
-      study_info
-    end
-  end
 end

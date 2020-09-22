@@ -3,17 +3,12 @@ Rails.application.routes.draw do
 
   devise_for :users, path: ""
 
-  namespace :student do
-    root to: "teachers#index"
-    resources :teachers do
-      get :refresh, on: :collection
-      get :prepare, on: :collection
-      post :choose, on: :collection
-      post :respond
-    end
+  namespace :student, module: "students" do
+    root to: "root#show"
+    get "(/*any)" => "root#show"
   end
 
-  namespace :teacher do
+  namespace :teacher, module: "teachers" do
     root to: "students#index"
 
     resources :students, only: %i[index]
@@ -30,7 +25,6 @@ Rails.application.routes.draw do
   end
 
   # Admin
-
   namespace :admin do
     root to: "base#index"
 
@@ -57,9 +51,24 @@ Rails.application.routes.draw do
 
   # API
   namespace :api, defaults: {format: :json} do
-    resources :surveys, only: [] do
-      get :questions, on: :member
-      post :answers, on: :member
+    namespace :students_api do
+      namespace :teachers do
+        resources :relations, only: [:new, :create] do
+          collection do
+            delete :destroy_all
+          end
+        end
+      end
+
+      resources :polls, only: [:index, :show] do
+        resource :vote, only: [:create], module: 'polls'
+      end
+
+      resources :stages do
+        resources :teachers, module: 'stages', only: [:index, :show] do
+          resource :feedback, module: 'teachers', only: [:show, :create]
+        end
+      end
     end
   end
 

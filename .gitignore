@@ -4,6 +4,8 @@
 *.swp
 # Created by https://www.gitignore.io/api/ruby,rails
 
+*.dump
+
 .idea
 .tool-versions
 

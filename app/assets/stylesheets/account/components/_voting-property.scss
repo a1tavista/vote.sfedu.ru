@@ -1,0 +1,15 @@
+.voting-property {
+  display: flex;
+
+  &__name {
+    margin-right: 8px;
+    font-weight: 400;
+    color: gray;
+
+    width: 100px;
+  }
+
+  &__value {
+
+  }
+}

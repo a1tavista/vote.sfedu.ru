@@ -2,7 +2,7 @@ class Admin::Reports::TeachersController < Admin::BaseController
   def index
     respond_to do |format|
       format.xlsx do
-        io_string = Teachers::AsAdmin::ResultsReportByStage.run!(stage: Stage.current || Stage.second_to_last)
+        io_string = ::Stages::ResultsReport.run!(stage: Stage.current || Stage.second_to_last)
 
         send_data(
           io_string,
@@ -15,14 +15,14 @@ class Admin::Reports::TeachersController < Admin::BaseController
   end
 
   def lack_of_participations
-    @report = ::TeachersReports::NotEnoughParticipationsReport
+    @report = ::Teachers::NotEnoughParticipationsReport
       .new(Stage.current)
       .paginate(page: params[:page], per: 20)
       .build
   end
 
   def lack_of_students
-    @report = ::TeachersReports::NotEnoughStudentsReport
+    @report = ::Teachers::NotEnoughStudentsReport
       .new(Stage.current)
       .paginate(page: params[:page], per: 20)
       .build

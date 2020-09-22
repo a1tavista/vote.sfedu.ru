@@ -1,0 +1,16 @@
+.page {
+  max-width: 1000px;
+  margin: 0 auto;
+
+  &__title {
+    margin: 16px 0 16px;
+    color: #303133;
+    font-weight: normal;
+    font-size: 32px;
+  }
+
+  &__subtitle {
+    margin: 16px 0 16px;
+    color: #606266;
+  }
+}

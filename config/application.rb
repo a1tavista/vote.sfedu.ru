@@ -8,6 +8,10 @@ require "action_mailer/railtie"
 require "action_view/railtie"
 require "action_cable/engine"
 require "sprockets/railtie"
+
+require "dry/monads"
+require "dry/transaction/operation"
+
 Bundler.require(*Rails.groups)
 module VoteSfeduRu
   class Application < Rails::Application
@@ -19,6 +23,7 @@ module VoteSfeduRu
       generate.routing_specs false
       generate.stylesheets false
       generate.test_framework :rspec
+      generate.factory_bot filename_proc: ->(table_name) { "#{table_name.singularize}_factory" }
       generate.view_specs false
     end
 

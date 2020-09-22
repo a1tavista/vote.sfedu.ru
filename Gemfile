@@ -11,6 +11,10 @@ gem "cancancan"
 gem "clowne"
 gem "devise"
 gem "devise_openid_authenticatable", git: "https://github.com/a1tavista/devise_openid_authenticatable.git", ref: "35e7d83"
+gem "dry-transaction"
+gem "dry-initializer"
+gem "dry-monads"
+gem "dry-validation"
 gem "high_voltage"
 gem "jquery-rails"
 gem "nested_form_fields"
@@ -31,6 +35,7 @@ gem "sidekiq"
 gem "sprockets", ">= 3.0.0"
 gem "uglifier"
 gem "webpacker"
+gem "with_advisory_lock"
 gem "write_xlsx"
 gem "jbuilder"
 
@@ -45,11 +50,13 @@ group :development, :test do
   gem "dotenv-rails"
   gem "factory_bot_rails"
   gem "rspec-rails", "~> 3.5.0.beta4"
+  gem "rspec_api_documentation"
 end
 
 group :test do
   gem "database_cleaner"
   gem "faker"
+  gem "faker-russian"
   gem "shoulda-matchers"
   gem "simplecov", require: false
   gem "webmock"

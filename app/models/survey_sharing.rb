@@ -1,2 +1,0 @@
-class SurveySharing < ApplicationRecord
-end

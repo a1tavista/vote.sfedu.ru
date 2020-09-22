@@ -42,36 +42,4 @@ class Student < ApplicationRecord
       }
     end
   end
-
-  def all_teachers(stage)
-    return [] if stage.nil?
-    Teacher.
-      select('"teachers"."id"', '"teachers"."name"').
-      distinct.
-      joins('INNER JOIN "students_teachers_relations" ON "teachers"."id" = "students_teachers_relations"."teacher_id"').
-      joins('INNER JOIN "semesters_stages" ON "students_teachers_relations"."semester_id" = "semesters_stages"."semester_id"').
-      joins('INNER JOIN "stages" ON "stages"."id" = "semesters_stages"."stage_id"').
-      where('"stages"."id" = ?', stage.id).
-      where('"students_teachers_relations"."student_id" = ?', id).
-      order('"teachers"."name" ASC')
-  end
-
-  def evaluated_teachers(stage)
-    return [] if stage.nil?
-    all_teachers(stage).
-      joins("INNER JOIN \"participations\"
-              ON \"teachers\".\"id\" = \"participations\".\"teacher_id\"
-              AND \"participations\".\"stage_id\" = #{stage.id}
-              AND \"participations\".\"student_id\" = #{id}")
-  end
-
-  def available_teachers(stage)
-    return [] if stage.nil?
-    all_teachers(stage).
-      joins("LEFT JOIN \"participations\"
-              ON \"teachers\".\"id\" = \"participations\".\"teacher_id\"
-              AND \"participations\".\"stage_id\" = #{stage.id}
-              AND \"participations\".\"student_id\" = #{id}").
-      where(participations: {student_id: nil})
-  end
 end

@@ -1,0 +1,11 @@
+.voting-description {
+  font-size: 14px;
+
+  &__item {
+    margin: 0 0 8px;
+
+    &_lg-offset {
+      margin-bottom: 16px;
+    }
+  }
+}

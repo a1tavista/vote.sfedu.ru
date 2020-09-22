@@ -1,0 +1,15 @@
+doctype html
+html lang="en"
+  head
+    meta content=("text/html; charset=UTF-8") http-equiv="Content-Type" /
+    meta charset="utf-8" /
+    meta content="NOODP" name="ROBOTS" /
+    meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport" /
+    title Система анкетирования ЮФУ
+    = stylesheet_link_tag :account, media: "all"
+    link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"
+    link rel="icon" type="image/png" href="/favicon.png"
+    = csrf_meta_tags
+  body
+    #application
+    = javascript_pack_tag 'student_account'

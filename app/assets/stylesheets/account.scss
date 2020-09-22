@@ -1,0 +1,29 @@
+@charset "utf-8";
+
+@import "normalize-rails";
+
+@import 'element-ui/lib/theme-chalk/index';
+
+@font-face {
+  font-family: element-icons;
+  src: url(element-ui/lib/theme-chalk/fonts/element-icons.woff) format("woff"),
+  url(element-ui/lib/theme-chalk/fonts/element-icons.ttf) format("truetype");
+  font-weight: 400;
+  font-display: "auto";
+  font-style: normal
+}
+
+.el-header {
+  background-color: #409EFF;
+  color: #ffffff;
+  line-height: 60px;
+}
+
+@import 'account/components/check-mark';
+@import 'account/components/header';
+@import 'account/components/page';
+@import 'account/components/stage-teacher';
+@import 'account/components/stage-teachers-list';
+@import 'account/components/voting';
+@import 'account/components/voting-description';
+@import 'account/components/voting-property';
