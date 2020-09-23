@@ -15,6 +15,7 @@ module Polls
 
       step :validate_input
       check :poll_not_closed_yet
+      check :option_belongs_to_poll
       check :student_not_participated_before
       check :student_allowed_to_leave_voice
       step :record_student_vote
@@ -23,16 +24,17 @@ module Polls
         Operations::ValidateInput.new.call(input, contract_klass: Contract)
       end
 
+      def option_belongs_to_poll(input)
+        input[:poll].options.find_by_id(input[:poll_option].id).present?
+      end
+
       def poll_not_closed_yet(input)
-        input[:poll].ends_at > Time.current
+        input[:poll].starts_at < Time.current && Time.current < input[:poll].ends_at
       end
 
       def student_allowed_to_leave_voice(input)
         student_faculty_id = GradeBook.most_recent_for(student: input[:student]).faculty_id
-
-        # input[:poll].faculties.ids.include?(student_faculty_id)
-
-        true
+        input[:poll].faculties.ids.include?(student_faculty_id)
       end
 
       def student_not_participated_before(input)
