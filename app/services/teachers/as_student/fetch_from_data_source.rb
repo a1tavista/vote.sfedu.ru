@@ -4,6 +4,8 @@ module Teachers
       record :student
 
       def execute
+        return if Stage.current.nil?
+
         drop_old_relations
 
         teachers_data.each do |raw|
