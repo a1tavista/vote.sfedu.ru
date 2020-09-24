@@ -13,7 +13,7 @@ module Teachers
 
           required(:answers).array(:hash) do
             required(:question_id).filled(:integer)
-            required(:rate).filled(:integer)
+            required(:rate).filled(:integer) { gteq?(1) & lteq?(10) }
           end
         end
       end
@@ -26,7 +26,6 @@ module Teachers
       step :record_feedback
 
       def validate_input(input)
-        puts input
         ::Operations::ValidateInput.new.call(input, contract_klass: Contract)
       end
 
@@ -55,6 +54,7 @@ module Teachers
         answers = input[:answers].uniq { |a| a[:question_id] }
 
         ActiveRecord::Base.transaction do
+          # TODO: Only save answers inside transaction, don't fetch it
           answers.each do |answer_data|
             answer = Answer.where(
               stage: input[:stage],

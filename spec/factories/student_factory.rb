@@ -10,7 +10,9 @@ FactoryBot.define do
       end
 
       after(:create) do |student, evaluator|
-        create(:grade_book, student: student, faculty: Faculty.find(evaluator.faculty_id))
+        grade_book = build(:grade_book, student: student)
+        grade_book.faculty = Faculty.find(evaluator.faculty_id) if evaluator.faculty_id.present?
+        grade_book.save
         student.reload
       end
     end
