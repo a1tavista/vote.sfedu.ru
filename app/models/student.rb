@@ -1,6 +1,7 @@
 class Student < ApplicationRecord
   has_one :user, as: :kind, dependent: :destroy
   has_many :grade_books, dependent: :destroy
+  has_many :faculties, through: :grade_books
   has_many :students_teachers_relations, dependent: :destroy
   has_many :teachers, through: :students_teachers_relations
   has_many :participations, dependent: :destroy

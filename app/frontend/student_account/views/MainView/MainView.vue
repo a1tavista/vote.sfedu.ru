@@ -5,7 +5,7 @@
     <el-divider></el-divider>
     <template v-if="items.length > 0">
       <app-voting
-        v-for="item in items" :key="item.meta"
+        v-for="item in items" :key="item.meta.id + item.meta.source"
 
         :title="item.title"
         :description="item.description"

@@ -33,8 +33,8 @@ module Polls
       end
 
       def student_allowed_to_leave_voice(input)
-        student_faculty_id = GradeBook.most_recent_for(student: input[:student]).faculty_id
-        input[:poll].faculties.ids.include?(student_faculty_id)
+        student_faculty_ids = input[:student].faculty_ids
+        (input[:poll].faculty_ids & student_faculty_ids).any?
       end
 
       def student_not_participated_before(input)

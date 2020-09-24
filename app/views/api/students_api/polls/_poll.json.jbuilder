@@ -4,7 +4,7 @@ json.starts_at poll.starts_at
 json.starts_at_localized I18n.l(poll.starts_at, format: :default)
 json.ends_at poll.ends_at
 json.ends_at_localized I18n.l(poll.ends_at, format: :default)
-json.participated poll.student_participated_in_poll?(Student.first)
+json.participated poll.student_participated_in_poll?(@current_kind)
 
 json.meta do
   json.id poll.id

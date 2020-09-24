@@ -3,6 +3,15 @@ class Faculty < ApplicationRecord
   has_many :students, through: :grade_books
   has_many :participations, through: :students
 
+  def self.find_or_create_with(name:)
+    # Достать факультет по прямому имени
+    faculty = find_by(name: name)
+    # Если не получилось, достать факультет с алиасом
+    faculty ||= where("aliases @> ?", "{#{name}}").first
+    # Если не получилось, создать новый
+    faculty || create(name: name)
+  end
+
   def participants(stage, from_period: nil)
     students = self.students
       .distinct

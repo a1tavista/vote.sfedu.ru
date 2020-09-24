@@ -52,7 +52,7 @@ ActiveRecord::Schema.define(version: 2020_09_19_160336) do
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.jsonb "aliases"
+    t.text "aliases", default: [], array: true
   end
 
   create_table "grade_books", force: :cascade do |t|

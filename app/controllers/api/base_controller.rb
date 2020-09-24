@@ -1,13 +1,15 @@
 class Api::BaseController < ActionController::API
   include ActionView::Rendering
   include CanCan::ControllerAdditions
+  include Devise::Controllers::Helpers
 
   before_action :verify_requested_format!
+  before_action :authenticate_user!
 
   respond_to :json
 
   def current_kind
-    # TODO: Retrieve student entity from current_user
+    @current_kind ||= current_user&.kind
   end
 
   def respond_with_errors(errors)
