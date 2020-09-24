@@ -8,6 +8,8 @@ ul.nav.nav-pills.flex-column
       li.nav-item
         = active_link_to 'Критерии оценивания', admin_questions_path, class: 'nav-link'
   li.nav-item
+    = active_link_to 'Голосования', admin_polls_path, class: 'nav-link'
+  li.nav-item
     = active_link_to 'Структурные подразделения', admin_faculties_path, class: 'nav-link'
   li.nav-item
     = active_link_to 'Преподаватели', admin_teachers_path, class: 'nav-link'
@@ -15,9 +17,14 @@ ul.nav.nav-pills.flex-column
     = active_link_to 'Студенты', admin_students_path, class: 'nav-link'
   .dropdown-divider
   li.nav-item
-    a.nav-link href="#" Пользователи
+    a.nav-link.disabled href="#" Инструменты поддержки
   li.nav-item
-    a.nav-link href="#" Администраторы
+    = active_link_to 'Объединение СП', admin_support_merge_faculties_path, class: 'nav-link'
+  .dropdown-divider
+  li.nav-item
+    a.nav-link.disabled href="#" Пользователи
+  li.nav-item
+    a.nav-link.disabled href="#" Администраторы
   .dropdown-divider
   li.nav-item
     = link_to 'Вернуться на сайт', root_path, class: 'nav-link'

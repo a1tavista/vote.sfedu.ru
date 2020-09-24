@@ -1,0 +1,22 @@
+.page-header
+  h1.page-header-title Новое голосование
+
+= form_for(@poll, url: admin_polls_path) do |f|
+  .form-group
+    div.mb-1 Укажите название для голосования
+    = f.text_field :name, class: 'form-control'
+
+  .form-row.mb-3
+    .col
+      div.mb-1 Дата начала
+      = f.text_field :starts_at, class: 'form-control', type: "date"
+    .col
+      div.mb-1 Дата завершения
+      = f.text_field :ends_at, class: 'form-control', type: "date"
+
+  .form-group
+    div.mb-1 Выберите, на каких факультетах проводится голосование (с помощью <code>Ctrl+Левая кнопка мыши</code> можно выбрать несколько)
+    = f.collection_select :faculty_ids, @faculties, :id, :name, {}, class: 'form-control', multiple: true, style: "height: 400px;"
+
+  .form-grop
+    = f.submit 'Создать голосование', class: 'btn btn-primary'

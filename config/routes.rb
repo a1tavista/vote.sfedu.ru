@@ -28,6 +28,16 @@ Rails.application.routes.draw do
   namespace :admin do
     root to: "base#index"
 
+    namespace :support do
+      resource :merge_faculties, only: [:show] do
+        post :execute
+      end
+    end
+
+    resources :polls do
+      resources :poll_options, module: :polls
+    end
+
     resources :stages
     resources :students do
       resources :raw_teachers, only: [:index], module: :students

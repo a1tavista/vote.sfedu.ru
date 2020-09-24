@@ -1,0 +1,13 @@
+.page-header
+  h1.page-header-title Голосования
+  .page-header-lead
+    p Здесь можно управлять голосованиями, проводимыми на структурных поразделениях.
+  ul.nav.nav-pills.page-header-actions.d-flex.justify-content-end
+    li.nav-item
+      = active_link_to 'Новая стадия', new_admin_poll_path, class: 'nav-link', role: 'button'
+
+.list-group
+  - @polls.each do |poll|
+    = link_to admin_poll_path(poll), class: 'list-group-item list-group-item-action flex-column align-items-start' do
+      h5.mb-2 = poll.name
+      p.mb-0.text-muted Голосование с #{l(poll.starts_at, format: :only_date)} по #{l(poll.ends_at, format: :only_date)}

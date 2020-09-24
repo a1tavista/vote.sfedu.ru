@@ -1,0 +1,26 @@
+.page-header
+  h1.page-header-title Голосование
+  .page-header-lead
+    p = @poll.name
+
+
+.mb-3
+  h4.mb-1 Варианты ответа / кандидаты
+  = active_link_to 'Новый кандидат / вариант', new_admin_poll_poll_option_path(@poll), role: 'button'
+
+.list-group.mb-3
+  - @options.each do |option|
+    div class='list-group-item list-group-item-action'
+      .d-flex.flex-row.align-items-center
+        div.mr-3 style="width: 100px; height: 100px; background-image: url('#{option.image_url}'); background-size: contain;"
+        div style='flex: 1;'
+          h5.mb-2 = option.title
+          p.mb-0 = option.description
+        div
+          p.mb-0.text-muted #{number_to_percentage(option.proportion)} (#{option.answers.count})
+
+.mb-3
+  h4.mb-1 Подразделения-участники
+ul
+  - @poll.faculties.each do |faculty|
+    li = faculty.name

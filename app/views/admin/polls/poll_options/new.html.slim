@@ -1,0 +1,19 @@
+.page-header
+  h1.page-header-title Новый кандидат / вариант ответа
+
+= form_for(@poll_option, url: admin_poll_poll_options_path(@poll)) do |f|
+  .form-group
+    div.mb-1 Имя кандидата / название варианта ответа
+    = f.text_field :title, class: 'form-control'
+
+  .form-group
+    div.mb-1 Краткое описание
+    = f.text_area :description, class: 'form-control'
+
+  .form-group
+    div.mb-1 Фотография (необязательно)
+    = f.hidden_field :image, value: @poll_option.cached_image_data
+    = f.file_field :image
+
+  .form-grop
+    = f.submit 'Создать опцию', class: 'btn btn-primary'

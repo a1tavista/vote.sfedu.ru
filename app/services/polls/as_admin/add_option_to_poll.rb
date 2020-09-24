@@ -10,7 +10,7 @@ module Polls
           required(:poll).filled(type?: Poll)
 
           required(:title).filled(:string)
-          optional(:image).value(:filled?)
+          optional(:image).maybe(type?: Object)
           optional(:description).filled(:string)
         end
       end

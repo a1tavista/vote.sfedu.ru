@@ -8,8 +8,8 @@ module Polls
 
         params do
           required(:name).filled(:string)
-          required(:starts_at).filled(:time)
-          required(:ends_at).filled(:time)
+          required(:starts_at).value(:time)
+          required(:ends_at).value(:time)
 
           required(:faculty_ids).array(:integer)
         end
@@ -27,7 +27,7 @@ module Polls
       end
 
       def starts_in_future(starts_at:, **)
-        starts_at > Time.current.tomorrow.beginning_of_day
+        starts_at >= Time.current.tomorrow.beginning_of_day
       end
 
       def dates_are_valid(starts_at:, ends_at:, **)

@@ -1,0 +1,18 @@
+.page-header
+  h1.page-header-title Объединение структурных подразделений
+  .page-header-lead
+    p Если из чьей-то зачетки в 1С:Университет поступили устаревшие данные о названии факультета, то этот инструмент
+      помогает решить эту проблему.
+
+.alert.alert-warning role='alert'
+  | Внимание! Изменения, которые вносятся этим инструментом, необратимы. Выбирайте мудро.
+
+= form_tag execute_admin_support_merge_faculties_path, method: :post do |f|
+  .form-group
+    div Выберите актуальное название факультета
+    = collection_select :tool, :faculty_id, @faculties, :id, :name, class: 'form-control', prompt: 'Выберите факультет, в который нужно влить данные'
+
+  .form-group
+    div Выберите старое название факультета
+    = collection_select :tool, :duplicated_faculty_id, @faculties, :id, :name, class: 'form-control', prompt: 'Выберите факультет, который будет влит в выбранный выше'
+  = submit_tag 'Объединить факультеты', class: 'btn btn-primary'
