@@ -10,9 +10,9 @@
 = form_tag execute_admin_support_merge_faculties_path, method: :post do |f|
   .form-group
     div Выберите актуальное название факультета
-    = collection_select :tool, :faculty_id, @faculties, :id, :name, class: 'form-control', prompt: 'Выберите факультет, в который нужно влить данные'
+    = collection_select :tool, :faculty_id, @faculties, :id, :name, {prompt: 'Выберите факультет, в который нужно влить данные'}, class: 'form-control'
 
   .form-group
     div Выберите старое название факультета
-    = collection_select :tool, :duplicated_faculty_id, @faculties, :id, :name, class: 'form-control', prompt: 'Выберите факультет, который будет влит в выбранный выше'
+    = collection_select :tool, :duplicated_faculty_id, @faculties, :id, :name, {prompt: 'Выберите факультет, который будет влит в выбранный выше'}, class: 'form-control'
   = submit_tag 'Объединить факультеты', class: 'btn btn-primary'
