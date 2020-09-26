@@ -21,7 +21,7 @@ describe Faculties::AsAdmin::MergeDuplicatedFacultyToAnotherFaculty do
     end
 
     it("adds alias to master faculty") do
-      expect { subject }.to change { master_faculty.aliases }.from(nil).to([duplicated_faculty.name])
+      expect { subject }.to change { master_faculty.aliases }.from([]).to([duplicated_faculty.name])
     end
 
     it("destroys duplicated faculty") do
