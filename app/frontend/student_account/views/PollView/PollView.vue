@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <h1 class="page__title">{{ poll.title }}</h1>
+    <h1 class="page__title">{{ poll.title || "Загрузка..." }}</h1>
     <p class="page__subtitle">Выберите кандидатуру из списка ниже, чтобы проголосовать.</p>
     <el-divider></el-divider>
     <div style="margin-top: 16px">
@@ -12,7 +12,7 @@
         <el-button @click="$router.push({ path: `/` })" type="success">Вернуться к списку опросов</el-button>
       </template>
       <template v-else>
-        <el-radio-group v-model="pollOptionId" size="small" style="width: 100%;">
+        <el-radio-group v-loading="loading" v-model="pollOptionId" size="small" style="width: 100%; min-height: 100px;">
           <poll-option v-for="option in poll.options" :option="option" />
         </el-radio-group>
         <el-button
@@ -34,13 +34,18 @@ import CheckMark from "../../components/CheckMark";
 
 export default {
   mounted() {
-    pollsService.show(this.$route.params.id).then((response) => this.poll = response.data);
+    this.loading = true;
+    pollsService.show(this.$route.params.id).then((response) => {
+      this.loading = false;
+      this.poll = response.data
+    });
   },
   data() {
     return {
       poll: {
         options: []
       },
+      loading: false,
       pollOptionId: null
     }
   },

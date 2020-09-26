@@ -5,7 +5,8 @@
     <el-divider></el-divider>
     <template v-if="items.length > 0">
       <app-voting
-        v-for="item in items" :key="item.meta.id + item.meta.source"
+        v-loading="loading"
+        v-for="item in items" :key="item.meta.source"
 
         :title="item.title"
         :description="item.description"
@@ -31,12 +32,15 @@ import pollsService from "../../api/pollsService";
 
 export default {
   mounted() {
-    stagesService.index().then((response) => (this.items = this.items.concat(response.data)));
-    pollsService.index().then((response) => (this.items = this.items.concat(response.data)));
+    this.loading = true
+
+    stagesService.index().then((response) => { this.items = this.items.concat(response.data); this.loading = false });
+    pollsService.index().then((response) => { this.items = this.items.concat(response.data); this.loading = false; });
   },
   data() {
     return {
-      items: []
+      items: [],
+      loading: false
     }
   },
   methods: {
