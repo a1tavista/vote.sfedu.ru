@@ -34,7 +34,7 @@ module VoteSfeduRu
     config.active_record.default_timezone = :local
 
     config.i18n.default_locale = :ru
-    config.i18n.available_locales = [:ru]
+    config.i18n.available_locales = [:ru, :en]
 
     config.action_controller.action_on_unpermitted_parameters = :raise
     config.load_defaults 5.1

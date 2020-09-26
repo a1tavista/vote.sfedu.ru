@@ -7,6 +7,7 @@ module Teachers
 
     def call
       return Teacher.none if stage.nil?
+
       Teacher.
         select('"teachers"."id"', '"teachers"."name"').
         distinct.

@@ -27,7 +27,7 @@ module Teachers
       private
 
       def teachers_data
-        @teachers_data ||= Soap::StudentTeachers.all_info(student.external_id)
+        @teachers_data ||= OneCApi::FetchStudentTeachersRelations.new.call(external_id: student.external_id)
       rescue => e
         stage_attendee.update(fetching_status: :failed)
         raise e

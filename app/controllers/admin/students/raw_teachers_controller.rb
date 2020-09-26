@@ -9,7 +9,7 @@ module Admin
       private
 
       def teachers_from_soap
-        Soap::StudentTeachers.all_info(@student.external_id).map do |raw_teacher|
+        OneCApi::FetchStudentTeachersRelations.new.call(external_id: @student.external_id).map do |raw_teacher|
           teacher = Teachers::Operations::FindOrInitializeTeacher.run(raw_teacher: raw_teacher).result
           teacher.validate
           raw_teacher.merge(record: teacher, errors: teacher.errors.full_messages)

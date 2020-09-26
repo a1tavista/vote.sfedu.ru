@@ -15,6 +15,7 @@ class Teacher < ApplicationRecord
     students_by_semesters = students_teachers_relations.group(:semester_id).order(:semester_id).count
     semesters = Semester.all.index_by(&:id)
     current_stage = Stage.current
+
     students_by_semesters.map do |k, v|
       {
         semester: semesters[k].full_title.capitalize,

@@ -23,7 +23,7 @@ module Students
       private
 
       def personal_data_for(student)
-        Soap::StudentPersonal.all_info(student.external_id)
+        OneCApi::FetchStudentPersonalData.new.call(external_id: student.external_id)
       end
     end
   end
