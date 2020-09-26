@@ -43,6 +43,23 @@ section.page-section
             = link_to 'Регламент участия', stage_path(stage)
             /= link_to 'Результаты опроса', stage_path(stage) if stage.past?
 
+section.page-section
+  h1.page-section__title Голосования
+  .page-section__content--with-cards
+    - @polls.each do |poll|
+      .survey-card
+        header.survey-card__title
+          = link_to poll.name, "#"
+        .survey-card__content
+          dl.survey-card__date
+            dt Начало:
+            dd = l(poll.starts_at, format: :only_date)
+          dl.survey-card__date
+            dt Конец:
+            dd = l(poll.ends_at, format: :only_date)
+          footer.survey-card__footer
+            = link_to 'Результаты', poll_path(poll)
+
 section.page-section.page-section--raised
   .page-section__content--limited.about-page__service-description-section
     .about-page__images

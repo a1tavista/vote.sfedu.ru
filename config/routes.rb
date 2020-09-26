@@ -15,6 +15,8 @@ Rails.application.routes.draw do
     resources :surveys
   end
 
+  resources :polls, only: [:show]
+
   resources :stages do
     get :statistics, on: :member
   end

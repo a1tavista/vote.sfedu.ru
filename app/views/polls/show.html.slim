@@ -1,0 +1,37 @@
+section.page-section.page-section--raised.page-section--survey-header
+  h1.page-section__label--main Голосование / #{@poll.name}
+  p с #{l(@poll.starts_at, format: :only_date)} по #{l(@poll.ends_at, format: :only_date)}
+
+section.page-section
+  h1 Результаты
+
+  - if @poll.finished?
+    p Результы прошедшего голосования:
+
+    .page-section__content.page-section__content--limited.page-section__content--justify
+      table
+        thead
+          td
+          td <b>Процент голосов</b>
+        tbody
+        - @poll.options.each do |option|
+          tr
+            td = option.title
+            td = number_to_percentage(option.proportion)
+  - else
+    p Результаты голосования будут автоматически опубликованы на этой странице после #{l(@poll.ends_at)}.
+
+section.page-section
+  h1 Порядок проведения
+  .page-section__content.page-section__content--limited.page-section__content--justify
+    p Голосование проводится среди студентов следующих структурных подразделений:
+    table
+      - @poll.faculties.each do |faculty|
+        tr
+          td = faculty.name
+  .page-section__content.page-section__content--limited
+    p Голосование проводится в анонимном режиме. Система раздельно хранит голос и факт участия.
+      После внесения ответа в систему его <b>невозможно отследить, изменить или отменить</b>,
+      так как отсутствует связь между респондентом и его голосом.
+
+

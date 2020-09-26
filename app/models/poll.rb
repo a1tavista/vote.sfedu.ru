@@ -11,4 +11,8 @@ class Poll < ApplicationRecord
   def student_participated_in_poll?(student)
     Poll::Participation.find_by(student: student, poll: self).present?
   end
+
+  def finished?
+    ends_at < Time.current
+  end
 end
