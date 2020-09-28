@@ -4,7 +4,7 @@
     p Здесь можно управлять голосованиями, проводимыми на структурных поразделениях.
   ul.nav.nav-pills.page-header-actions.d-flex.justify-content-end
     li.nav-item
-      = active_link_to 'Новая стадия', new_admin_poll_path, class: 'nav-link', role: 'button'
+      = active_link_to 'Новое голосование', new_admin_poll_path, class: 'nav-link', role: 'button'
 
 .list-group
   - @polls.each do |poll|
