@@ -35,7 +35,7 @@ module Polls
       end
 
       def all_faculties_are_present(faculty_ids:, **)
-        Faculty.where(id: faculty_ids).count == faculty_ids.count
+        Faculty.where(id: faculty_ids).count == faculty_ids.count && faculty_ids.count > 0
       end
 
       def create_poll(input)

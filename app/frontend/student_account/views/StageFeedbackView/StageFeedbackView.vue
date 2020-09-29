@@ -46,7 +46,7 @@ export default {
           {
             id: question.id,
             text: question.text,
-            rate: 10
+            rate: null
           }
         ));
       });

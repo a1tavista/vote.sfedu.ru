@@ -9,8 +9,23 @@ module Admin
 
     def create
       ::Polls::AsAdmin::CreatePoll.new.call(create_params.to_h) do |monad|
-        monad.success { redirect_to admin_polls_path }
-        monad.failure { redirect_to new_admin_poll_path }
+        monad.success do |result|
+          respond_with(:success, 'Голосование успешно создано')
+          redirect_to admin_poll_path(result[:poll])
+        end
+        monad.failure(:starts_in_future) do
+          respond_with(:error, 'Пожалуйста, укажите дату не раньше завтрашней')
+        end
+        monad.failure(:dates_are_valid) do
+          respond_with(:error, 'Пожалуйста, убедитесь, что дата начала предшествует дате завершения')
+        end
+        monad.failure(:all_faculties_are_present) do
+          respond_with(:error, 'Пожалуйста, убедитесь, что вы выбрали факультеты, которые могут участвовать в голосовании')
+        end
+        monad.failure do
+          respond_with(:error, 'Во время сохранения опроса возникли ошибки')
+          redirect_to new_admin_poll_path
+        end
       end
     end
 
@@ -22,6 +37,10 @@ module Admin
     end
 
     private
+
+    def respond_with(kind, msg)
+      flash[kind] = msg
+    end
 
     def create_params
       parameters = params.require(:poll).permit!

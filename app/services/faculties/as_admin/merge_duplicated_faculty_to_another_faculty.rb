@@ -4,8 +4,6 @@ module Faculties
       include Dry::Transaction
 
       class Contract < Dry::Validation::Contract
-        config.messages.backend = :i18n
-
         params do
           required(:faculty).filled(type?: Faculty)
           required(:duplicated_faculty).filled(type?: Faculty)

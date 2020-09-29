@@ -9,6 +9,7 @@ gem "bootstrap", "~> 4.0.0"
 gem "bourbon", "~> 5.0.0.beta.7"
 gem "cancancan"
 gem "clowne"
+gem 'data_migrate'
 gem "devise"
 gem "devise_openid_authenticatable", git: "https://github.com/a1tavista/devise_openid_authenticatable.git", ref: "35e7d83"
 gem "dry-transaction"

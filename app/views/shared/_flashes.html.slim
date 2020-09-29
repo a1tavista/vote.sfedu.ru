@@ -1,0 +1,11 @@
+- flash.each do |name, messages|
+  .row
+    .col-12
+      = content_tag :div, class: "alert mb-2 alert-#{name == 'error' ? 'warning' : 'success'}", role: 'alert' do
+        - if messages.is_a?(Array) || messages.is_a?(Hash)
+          h3 Во время сохранения были обнаружены следующие ошибки:
+          ul
+            - messages.each do |m|
+              li = m
+        - else
+          = messages

@@ -12,7 +12,7 @@ module Teachers
     private
 
     def join_condition
-      "LEFT JOIN \"participations\"
+      "INNER JOIN \"participations\"
               ON \"teachers\".\"id\" = \"participations\".\"teacher_id\"
               AND \"participations\".\"stage_id\" = #{stage.id}
               AND \"participations\".\"student_id\" = #{student.id}"

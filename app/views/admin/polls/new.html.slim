@@ -9,14 +9,17 @@
   .form-row.mb-3
     .col
       div.mb-1 Дата начала
-      = f.text_field :starts_at, class: 'form-control', type: "date"
+      = f.text_field :starts_at, class: 'form-control', type: "date", min: (Time.current + 1.day).strftime("%Y-%m-%d")
     .col
       div.mb-1 Дата завершения
-      = f.text_field :ends_at, class: 'form-control', type: "date"
+      = f.text_field :ends_at, class: 'form-control', type: "date", min: (Time.current + 2.days).strftime("%Y-%m-%d")
 
   .form-group
-    div.mb-1 Выберите, на каких факультетах проводится голосование (с помощью <code>Ctrl+Левая кнопка мыши</code> можно выбрать несколько)
+    div.mb-1 Выберите, на каких факультетах проводится голосование
     = f.collection_select :faculty_ids, @faculties, :id, :name, {}, class: 'form-control', multiple: true, style: "height: 400px;"
+    .text-muted.mt-1
+      small С помощью <code>Ctrl+Левая кнопка мыши</code>/<code>Cmd+Левая кнопка мыши</code> можно выбрать
+                    несколько вариантов, а с помощью <code>Ctrl+A</code>/<code>Cmd+A</code> – все варианты из списка
 
   .form-grop
     = f.submit 'Создать голосование', class: 'btn btn-primary'

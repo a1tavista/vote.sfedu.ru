@@ -101,6 +101,8 @@ GEM
     content_disposition (1.0.0)
     crack (0.4.4)
     crass (1.0.6)
+    data_migrate (6.3.0)
+      rails (>= 5.0)
     database_cleaner (1.8.5)
     devise (4.7.2)
       bcrypt (~> 3.0)
@@ -472,6 +474,7 @@ DEPENDENCIES
   bundler-audit (>= 0.5.0)
   cancancan
   clowne
+  data_migrate
   database_cleaner
   devise
   devise_openid_authenticatable!

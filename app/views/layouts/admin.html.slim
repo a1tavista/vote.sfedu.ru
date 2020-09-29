@@ -10,11 +10,12 @@ html lang="en"
     = csrf_meta_tags
   body
     = render 'shared/header'
+    = render 'shared/flashes'
     main.container-fluid
       .row.flex-xl-nowrap
         .col-12.col-md-3.col-xl-2.bd-sidebar
           = render 'shared/sidebar'
-        .col-12.col-md-9.col-xl-8.py-md-3.pl-md-5.bd-content
+        .col-12.col-md-9.col-xl-8.bd-content.py-md-3.pl-md-5
           = yield
     = javascript_include_tag :admin
     = yield :javascript

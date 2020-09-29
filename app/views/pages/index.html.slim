@@ -16,7 +16,7 @@ section.page-section.page-section--main
   - else
     .authorization-form
       h3.authorization-form__title Добро пожаловать, #{current_user.nickname}!
-      = link_to("Перейти в личный кабинет", user_root_path, class: 'btn')
+      = link_to("Голосовать", user_root_path, class: 'btn')
 
 
 - if @stage.present?

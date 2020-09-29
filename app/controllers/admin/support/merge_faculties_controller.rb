@@ -9,8 +9,14 @@ module Admin
         raise CanCan::AccessDenied unless can?(:merge_faculties, current_user)
 
         ::Faculties::AsAdmin::MergeDuplicatedFacultyToAnotherFaculty.new.call(call_params) do |monad|
-          monad.success { puts 'ok' }
-          monad.failure { puts 'failure' }
+          monad.success do
+            flash[:success] = 'Структурные подразделения успешно объединены'
+            redirect_to admin_support_merge_faculties_path
+          end
+          monad.failure do
+            flash[:error] = 'Не удалось объединить выбранные факультеты'
+            redirect_to admin_support_merge_faculties_path
+          end
         end
       end
 
@@ -18,8 +24,8 @@ module Admin
 
       def call_params
         {
-          faculty: Faculty.find(execute_params[:faculty_id]),
-          duplicated_faculty: Faculty.find(execute_params[:duplicated_faculty_id])
+          faculty: Faculty.find_by_id(execute_params[:faculty_id]),
+          duplicated_faculty: Faculty.find_by_id(execute_params[:duplicated_faculty_id])
         }
       end
 

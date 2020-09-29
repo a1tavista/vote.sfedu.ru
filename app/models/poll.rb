@@ -5,7 +5,7 @@ class Poll < ApplicationRecord
   has_many :answers, class_name: 'Poll::Answer'
 
   def self.for_student(student)
-    joins(:faculties).where(faculties: { id: student.faculty_ids })
+    joins(:faculties).where(faculties: { id: student.faculty_ids }).distinct
   end
 
   def student_participated_in_poll?(student)
