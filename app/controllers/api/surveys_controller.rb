@@ -1,5 +1,5 @@
 module Api
-  class SurveysController < API::BaseController
+  class SurveysController < BaseController
     before_action :authenticate_user!
 
     def questions
