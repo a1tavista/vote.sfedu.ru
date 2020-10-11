@@ -1,0 +1,17 @@
+.poll-option {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  &__image {
+    height: 100px;
+    width: 100px;
+
+    background-position: center;
+    background-size: cover;
+  }
+
+  &__info {
+    margin-left: 16px;
+  }
+}

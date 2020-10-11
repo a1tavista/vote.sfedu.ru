@@ -36,6 +36,20 @@ module Admin
       @options = @poll.options
     end
 
+    def destroy
+      ::Polls::AsAdmin::RemovePoll.new.call(poll: @poll) do |monad|
+        monad.success do |result|
+          respond_with(:success, 'Опрос успешно удален')
+          redirect_to admin_polls_path
+        end
+
+        monad.failure do
+          respond_with(:error, 'К сожалению, уже невозможно удалить этот опрос')
+          redirect_to admin_poll_path(@poll)
+        end
+      end
+    end
+
     private
 
     def respond_with(kind, msg)

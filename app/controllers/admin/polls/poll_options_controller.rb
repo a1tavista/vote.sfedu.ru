@@ -23,6 +23,15 @@ module Admin
         end
       end
 
+      def destroy
+        @poll = Poll.find(params[:poll_id])
+
+        @poll_option = Poll::Option.find(params[:id])
+        @poll_option.destroy
+
+        respond_with(:success, 'Вариант ответа успешно удален из голосования')
+      end
+
       private
 
       def respond_with(kind, msg)

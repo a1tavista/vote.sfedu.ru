@@ -3,6 +3,8 @@ Rails.application.routes.draw do
 
   devise_for :users, path: ""
 
+  get 'login_as', to: 'debug#login_as' if ENV["DEBUG_LOGIN_INTO_ACCOUNT"]
+
   namespace :student, module: "students" do
     root to: "root#show"
     get "(/*any)" => "root#show"

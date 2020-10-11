@@ -2,7 +2,7 @@ module Api
   module StudentsApi
     class PollsController < BaseController
       def index
-        @polls = Poll.for_student(current_kind)
+        @polls = Poll.for_student(current_kind).active
       end
 
       def show

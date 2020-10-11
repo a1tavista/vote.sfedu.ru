@@ -16,7 +16,7 @@ if local_assigns[:full_representation]
     json.id option.id
     json.title option.title
     json.description option.description
-    json.image_data option.image_data
+    json.image_url option.image_url
   end
 end
 
