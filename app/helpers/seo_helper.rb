@@ -3,11 +3,9 @@ module SeoHelper
 
   def default_tags
     {
-      site: "Система анкетирования ОСО ЮФУ",
-      description: "Помогает студентам сделать университет лучше.",
-      keywords: [
-        "юфу",
-      ],
+      site: "Система анкетирования Объединённого совета обучающихся ЮФУ",
+      description: "От твоего выбора сегодня зависит завтрашняя жизнь",
+      keywords: ["юфу", "студсовет"],
       og: {
         title: :title,
         description: :description,
