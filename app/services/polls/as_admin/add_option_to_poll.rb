@@ -11,7 +11,7 @@ module Polls
 
           required(:title).filled(:string)
           optional(:image).maybe(type?: Object)
-          optional(:description).filled(:string)
+          optional(:description).maybe(:string)
         end
       end
 
