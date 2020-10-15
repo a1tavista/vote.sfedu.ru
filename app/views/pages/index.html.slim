@@ -53,10 +53,10 @@ section.page-section
         .survey-card__content
           dl.survey-card__date
             dt Начало:
-            dd = l(poll.starts_at, format: :only_date)
+            dd = l(poll.starts_at, format: :short)
           dl.survey-card__date
             dt Конец:
-            dd = l(poll.ends_at, format: :only_date)
+            dd = l(poll.ends_at, format: :short)
           footer.survey-card__footer
             = link_to 'Результаты', poll_path(poll)
 
