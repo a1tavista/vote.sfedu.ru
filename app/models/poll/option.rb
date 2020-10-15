@@ -7,7 +7,7 @@ class Poll
     has_many :answers, class_name: 'Poll::Answer', foreign_key: 'poll_option_id'
 
     def proportion
-      answers_by_poll = poll.answers.count
+      answers_by_poll = poll.answers.count.to_f
 
       return 0 if answers_by_poll
 
