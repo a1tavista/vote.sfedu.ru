@@ -8,7 +8,8 @@ class Poll < ApplicationRecord
   scope :active, -> { where('starts_at < ?', Time.current).where('ends_at > ?', Time.current) }
 
   def self.for_student(student)
-    joins(:faculties).where(faculties: { id: student.faculty_ids }).distinct
+    most_recent_faculty = GradeBook.most_recent_for(student: student)&.faculty_id
+    joins(:faculties).where(faculties: { id: most_recent_faculty }).distinct
   end
 
   def student_participated_in_poll?(student)
