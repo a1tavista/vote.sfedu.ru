@@ -11,7 +11,7 @@ class Poll
 
       return 0 if answers_by_poll == 0
 
-      answers.count.to_f / answers_by_poll
+      (answers.count.to_f / answers_by_poll) * 100
     end
   end
 end
