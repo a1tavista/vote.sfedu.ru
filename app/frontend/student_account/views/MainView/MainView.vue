@@ -5,7 +5,6 @@
     <el-divider></el-divider>
     <template v-if="items.length > 0">
       <app-voting
-        v-loading="loading"
         v-for="item in items" :key="item.meta.source"
 
         :title="item.title"
@@ -19,12 +18,16 @@
       />
     </template>
     <div v-else>
-      <p>Нет активных опросов. Приходите позднее и следите за СИЦ вашего структурного подразделения,
+      <div v-loading="loading" v-if="attempts > 0">
+        <h1>Загрузка...</h1>
+      </div>
+      <p v-else>
+        Нет активных опросов. Приходите позднее и следите за СИЦ вашего структурного подразделения,
         где студенческий совет публикует информацию о предстоящих опросах.
       </p>
       <p>
-        Если вы не видите опрос по вашему новому структурному подразделению,
-        то попробуйте обновить страницу через пару минут. Возможно, мы не можем получить ваши зачётные книжки из 1С:Университет.
+        Если вы не видите опрос по вашему актуальному структурному подразделению, то попробуйте зайти сюда через пару минут.
+        Возможно, мы не можем получить ваши зачётные книжки из 1С:Университет.
       </p>
     </div>
   </div>
@@ -37,18 +40,24 @@ import pollsService from "../../api/pollsService";
 
 export default {
   mounted() {
-    this.loading = true
-
-    stagesService.index().then((response) => { this.items = this.items.concat(response.data); this.loading = false });
-    pollsService.index().then((response) => { this.items = this.items.concat(response.data); this.loading = false; });
+    this.loading = true;
+    this.fetchData();
   },
   data() {
     return {
       items: [],
-      loading: false
+      loading: false,
+      attempts: 10
     }
   },
   methods: {
+    fetchData() {
+      pollsService.index().then((response) => {
+        this.items = this.items.concat(response.data);
+        this.loading = response.data.length === 0;
+        if(response.data.length === 0) setTimeout(() => { this.fetchData(); this.attempts -= 1; }, 5000);
+      });
+    }
   },
   components: {
     AppVoting: MainViewVoteCard
