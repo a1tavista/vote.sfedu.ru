@@ -1,3 +1,5 @@
+require 'sidekiq/web'
+
 Rails.application.routes.draw do
   root "pages#index"
 
@@ -84,6 +86,10 @@ Rails.application.routes.draw do
         end
       end
     end
+  end
+
+  authenticate :user, lambda { |u| u.admin? } do
+    mount Sidekiq::Web => '/sidekiq'
   end
 
   match "/404", to: "errors#not_found", via: :all
