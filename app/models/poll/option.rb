@@ -9,9 +9,9 @@ class Poll
     def proportion
       answers_by_poll = poll.answers.count.to_f
 
-      return 0 if answers_by_poll
+      return 0 if answers_by_poll == 0
 
-      answers.count / answers_by_poll
+      answers.count.to_f / answers_by_poll
     end
   end
 end
