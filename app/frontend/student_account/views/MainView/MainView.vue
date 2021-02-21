@@ -57,6 +57,11 @@ export default {
         this.loading = response.data.length === 0;
         if(response.data.length === 0) setTimeout(() => { this.fetchData(); this.attempts -= 1; }, 5000);
       });
+
+      stagesService.index().then((response) => {
+        this.items = this.items.concat(response.data);
+        this.loading = response.data.length === 0;
+      });
     }
   },
   components: {
