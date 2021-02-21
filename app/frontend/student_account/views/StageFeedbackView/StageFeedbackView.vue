@@ -1,23 +1,27 @@
 <template>
   <div class="page">
     <h1 class="page__title">{{ teacher.name }}</h1>
-    <p class="page__subtitle">Тут предметы, которые преподает препод.</p>
+    <p class="page__subtitle">Дисциплины, которые связывают вас с преподавателем:</p>
+    <ul class="page__subtitle">
+      <li v-for="discipline in teacher.disciplines">{{ discipline }}</li>
+    </ul>
     <el-divider></el-divider>
     <div>
       <template v-if="formState.done">
         <div style="display: flex; align-items: center; margin-bottom: 16px;">
-          <check-mark></check-mark>
           <span style="margin-left: 8px;">Ваше мнение принято. Спасибо за участие!</span>
         </div>
         <el-button @click="$router.push({ path: `/stages/${stage.id}` })" type="success">Вернуться к списку преподавателей</el-button>
       </template>
       <template v-else>
-        <div :gutter="20" v-for="question in questions" style="display: flex; justify-content: space-between; margin: 24px 0;">
-          <div style="max-width: 600px;">{{ question.text }}</div>
-          <div style="min-width: 200px;">
-            <el-radio-group  v-model="question.rate" size="mini">
-              <el-radio-button :label="item" v-for="item in 10" />
-            </el-radio-group>
+        <div :gutter="20" v-for="question in questions" class="feedback-control">
+          <div class="feedback-control__question">{{ question.text }}</div>
+          <div class="feedback-control__buttons">
+            <el-rate
+              v-model="question.rate"
+              :show-score="true"
+              :max="10"
+            />
           </div>
         </div>
 
@@ -81,6 +85,7 @@ export default {
         .leaveFeedback(feedback)
         .then((_response) => (this.formState.done = true))
         .catch((error) => {
+          this.formState.sent = false;
           this.$message({
             message: error.response.data[0],
             type: 'warning'

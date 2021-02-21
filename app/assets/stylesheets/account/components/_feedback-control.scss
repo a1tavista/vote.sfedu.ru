@@ -1,0 +1,28 @@
+.feedback-control {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  margin: 24px 0;
+
+  @media(max-width: 1023px) {
+    flex-direction: column;
+  }
+
+  &__question {
+    flex: 1;
+    font-size: 14px;
+    margin-bottom: 12px;
+  }
+
+  &__buttons {
+  }
+}
+
+.el-rate__icon {
+  font-size: 24px;
+}
+
+.el-rate__text {
+  display: inline-block;
+  width: 24px;
+}

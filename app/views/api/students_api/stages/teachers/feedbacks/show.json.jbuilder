@@ -4,6 +4,7 @@ end
 
 json.teacher do
   json.partial! 'api/students_api/stages/teachers/teacher', teacher: @teacher
+  json.disciplines @student_relations.pluck(:disciplines).flatten
 end
 
 json.questions @questions do |question|

@@ -4,8 +4,6 @@ module Teachers
       include Dry::Transaction
 
       class Contract < Dry::Validation::Contract
-        config.messages.backend = :i18n
-
         params do
           required(:student).filled(type?: Student)
           required(:stage).filled(type?: Stage)

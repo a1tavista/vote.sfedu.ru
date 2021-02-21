@@ -1,7 +1,7 @@
 <template>
   <div class="page">
-    <h1 class="page__title">Оценка качества</h1>
-    <p class="page__subtitle">Голосование за кандидата в председатели студенческого совета.</p>
+    <h1 class="page__title">Оценка качества преподавания</h1>
+    <p class="page__subtitle">Анкеты преподавателей, которые вели дисциплины за указанный период.</p>
     <el-divider></el-divider>
     <div class="stage-teachers-list">
       <stage-teacher
