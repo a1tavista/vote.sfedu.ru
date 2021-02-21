@@ -16,7 +16,7 @@ module CalculationRules
       }
     end
 
-    def self.converted_scale_ladder
+    def self.converted_scale_ladder(stage:)
       stage.scale_ladder.map do |range|
         range_begin, range_end = range.split("...")
         exclude_end = !range_end.nil?
@@ -25,7 +25,7 @@ module CalculationRules
       end
     end
 
-    def self.recalculate_scale_ladder!
+    def self.recalculate_scale_ladder!(stage:)
       step = (stage.scale_max - stage.scale_min) / stage.scale_max.to_f
       current = stage.scale_min.to_f
 
