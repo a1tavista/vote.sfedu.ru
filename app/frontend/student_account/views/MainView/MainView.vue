@@ -41,7 +41,8 @@ import pollsService from "../../api/pollsService";
 export default {
   mounted() {
     this.loading = true;
-    this.fetchData();
+    this.fetchPolls();
+    this.fetchStages();
   },
   data() {
     return {
@@ -51,13 +52,15 @@ export default {
     }
   },
   methods: {
-    fetchData() {
+    fetchPolls() {
       pollsService.index().then((response) => {
         this.items = this.items.concat(response.data);
         this.loading = response.data.length === 0;
-        if(response.data.length === 0) setTimeout(() => { this.fetchData(); this.attempts -= 1; }, 5000);
+        if(response.data.length === 0) setTimeout(() => { this.fetchPolls(); this.attempts -= 1; }, 5000);
       });
+    },
 
+    fetchStages() {
       stagesService.index().then((response) => {
         this.items = this.items.concat(response.data);
         this.loading = response.data.length === 0;
