@@ -68,7 +68,7 @@ export default {
   },
   computed: {
     isSubmitEnabled() {
-      return this.questions.map((question) => question.rate).every((v) => v != null);
+      return this.questions.map((question) => question.rate).every((v) => v !== 0);
     }
   },
   methods: {

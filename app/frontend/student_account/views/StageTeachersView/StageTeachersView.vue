@@ -10,7 +10,7 @@
         :key="item.id"
         :id="item.id"
         :name="item.name"
-        :stage-id="7"
+        :stage-id="stageId"
         :participated="item.participated"
       />
     </div>
@@ -23,7 +23,7 @@ import stagesTeachersService from "../../api/stagesTeachersService";
 
 export default {
   mounted() {
-    stagesTeachersService.index(this.$route.params.id).then((response) => {
+    stagesTeachersService.index(this.stageId).then((response) => {
       this.items = this.items.concat(response.data.available);
       this.items = this.items.concat(response.data.evaluated);
     });
@@ -34,6 +34,11 @@ export default {
     }
   },
   methods: {
+  },
+  computed: {
+    stageId() {
+      return this.$route.params.id;
+    }
   },
   components: {
     StageTeacher
