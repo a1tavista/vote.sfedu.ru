@@ -3,6 +3,15 @@
   align-items: center;
   justify-content: space-between;
 
-  &__name {}
-  &__action {}
+  @media(max-width: 767px) {
+    flex-direction: column;
+  }
+
+  &__name {
+    @media(max-width: 767px) {
+      margin-bottom: 16px;
+    }
+  }
+  &__action {
+  }
 }

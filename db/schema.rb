@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_19_160336) do
+ActiveRecord::Schema.define(version: 2021_02_23_085223) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -196,7 +196,10 @@ ActiveRecord::Schema.define(version: 2020_09_19_160336) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "choosen", default: false, null: false
+    t.string "origin"
+    t.bigint "stage_id"
     t.index ["semester_id"], name: "index_students_teachers_relations_on_semester_id"
+    t.index ["stage_id"], name: "index_students_teachers_relations_on_stage_id"
     t.index ["student_id"], name: "index_students_teachers_relations_on_student_id"
     t.index ["teacher_id"], name: "index_students_teachers_relations_on_teacher_id"
   end
@@ -266,6 +269,17 @@ ActiveRecord::Schema.define(version: 2020_09_19_160336) do
     t.string "encrypted_snils"
     t.string "stale_external_id"
     t.index ["external_id"], name: "index_teachers_on_external_id"
+  end
+
+  create_table "teachers_rosters", force: :cascade do |t|
+    t.bigint "stage_id"
+    t.bigint "teacher_id"
+    t.string "kind"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["kind"], name: "index_teachers_rosters_on_kind"
+    t.index ["stage_id"], name: "index_teachers_rosters_on_stage_id"
+    t.index ["teacher_id"], name: "index_teachers_rosters_on_teacher_id"
   end
 
   create_table "users", force: :cascade do |t|

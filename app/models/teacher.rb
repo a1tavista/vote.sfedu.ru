@@ -4,6 +4,7 @@ class Teacher < ApplicationRecord
   has_many :answers, dependent: :destroy
   has_many :participations, dependent: :destroy
   has_many :stages, -> { distinct }, through: :participations
+  has_many :teachers_rosters, dependent: :destroy
 
   enum kind: [:common, :physical_education, :foreign_language]
 

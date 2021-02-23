@@ -1,4 +1,15 @@
 .stage-teachers-list {
+  &__message {
+
+  }
+
+  &__actions {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-bottom: 16px;
+  }
+
   &__item {
     margin-bottom: 16px;
     box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);

@@ -2,6 +2,7 @@ class Stage < ApplicationRecord
   has_and_belongs_to_many :semesters
   has_and_belongs_to_many :questions
   has_many :participations
+  has_many :teachers_rosters, dependent: :destroy
 
   after_save :recalculate_scale_ladder!
 

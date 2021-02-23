@@ -68,14 +68,6 @@ Rails.application.routes.draw do
   # API
   namespace :api, defaults: {format: :json} do
     namespace :students_api do
-      namespace :teachers do
-        resources :relations, only: [:new, :create] do
-          collection do
-            delete :destroy_all
-          end
-        end
-      end
-
       resources :polls, only: [:index, :show] do
         resource :vote, only: [:create], module: 'polls'
       end
@@ -83,7 +75,12 @@ Rails.application.routes.draw do
       resources :stages do
         resources :teachers, module: 'stages', only: [:index, :show] do
           resource :feedback, module: 'teachers', only: [:show, :create]
+          resource :relation, module: 'teachers', only: [:create, :destroy]
+
+          post :refresh, on: :collection
         end
+
+        resource :roster, module: 'stages/teachers', only: [:show]
       end
     end
   end

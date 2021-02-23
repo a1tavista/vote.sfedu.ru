@@ -58,7 +58,8 @@ module Teachers
               year_begin: relation[:year_begin],
               year_end: relation[:year_end],
               kind: relation[:kind]
-            )
+            ),
+            origin: :database
           )
         end
 
@@ -66,7 +67,7 @@ module Teachers
       end
 
       def drop_old_relations
-        student.students_teachers_relations.where(choosen: false).delete_all
+        student.students_teachers_relations.where(origin: :database).delete_all
       end
     end
   end

@@ -8,6 +8,13 @@ module Api
           @available = ::Teachers::AvailableTeachersForStudent.new(stage: stage, student: current_kind).call
         end
 
+        def refresh
+          ::Teachers::AsStudent::ResetTeachersList.new.call(stage: stage, student: current_kind) do |monad|
+            monad.success { head :ok }
+            monad.failure { respond_with_errors(['Мы не смогли обработать ваш запрос :( Пожалуйста, обратитесь в техническую поддержку.']) }
+          end
+        end
+
         private
 
         def stage
