@@ -5,9 +5,9 @@ module OneCApi
     included do
       extend Savon::Model
 
-      client wsdl: ENV.fetch("SFEDU_WSDL_PATH"),
-             soap_header: {username: ENV.fetch("SFEDU_WSDL_USERNAME"), password: ENV.fetch("SFEDU_WSDL_PASSWORD")},
-             basic_auth: [ENV.fetch("SFEDU_WSDL_USERNAME"), ENV.fetch("SFEDU_WSDL_PASSWORD")]
+      client wsdl: ENV.fetch("SFEDU_WSDL_PATH", nil),
+             soap_header: {username: ENV.fetch("SFEDU_WSDL_USERNAME", nil), password: ENV.fetch("SFEDU_WSDL_PASSWORD", nil)},
+             basic_auth: [ENV.fetch("SFEDU_WSDL_USERNAME", nil), ENV.fetch("SFEDU_WSDL_PASSWORD", nil)]
 
       global :env_namespace, :soap
       global :namespace_identifier, :perf
