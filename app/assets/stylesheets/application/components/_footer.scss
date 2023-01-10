@@ -22,7 +22,7 @@
     padding: 5px 15px;
     font-size: 0.6em;
     a { @include styled-link(#F1F1F1); }
-    text-align: right;
+    text-align: center;
     @media(max-width: 425px) {
       text-align: center;
     }
