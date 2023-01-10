@@ -20,9 +20,13 @@
   .sub-footer {
     margin-top: 10px;
     padding: 5px 15px;
-    font-size: 0.6em;
+    font-size: 0.7em;
+
+    color: lighten(#36475f, 40%);
     a { @include styled-link(#F1F1F1); }
-    text-align: center;
+
+    text-align: right;
+
     @media(max-width: 425px) {
       text-align: center;
     }
