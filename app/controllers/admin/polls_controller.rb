@@ -30,10 +30,17 @@ module Admin
     end
 
     def index
+      @polls = @polls.order(starts_at: :desc)
     end
 
     def show
       @options = @poll.options
+    end
+
+    def archive
+      @poll.update(archived_at: Time.current)
+
+      redirect_to admin_polls_path
     end
 
     def destroy

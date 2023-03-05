@@ -42,6 +42,7 @@ Rails.application.routes.draw do
 
     resources :polls do
       resources :poll_options, module: :polls
+      put :archive, on: :member
     end
 
     resources :stages

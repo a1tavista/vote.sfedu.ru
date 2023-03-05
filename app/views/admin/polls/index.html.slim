@@ -9,5 +9,6 @@
 .list-group
   - @polls.each do |poll|
     = link_to admin_poll_path(poll), class: 'list-group-item list-group-item-action flex-column align-items-start' do
-      h5.mb-2 = poll.name
+      h5.mb-2
+        | #{poll.name} #{"[Архив]" if poll.archived?}
       p.mb-0.text-muted Голосование с #{l(poll.starts_at, format: :only_date)} по #{l(poll.ends_at, format: :only_date)}

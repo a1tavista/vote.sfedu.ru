@@ -1,11 +1,16 @@
 .page-header
   h1.page-header-title Голосование
   .page-header-lead
-    p = @poll.name
+    p
+      | #{@poll.name} #{"[Архив]" if @poll.archived?}
   ul.nav.nav-pills.page-header-actions.d-flex.justify-content-end
+    - if @poll.archived?
+      li.nav-item
+        = form_for @poll, url: archive_admin_poll_path(@poll), method: :put do |f|
+          = f.submit 'Архивировать', class: 'nav-link btn', data: { confirm: 'Вы уверены?' }
     li.nav-item
       = form_for @poll, url: admin_poll_path(@poll), method: :delete do |f|
-        = f.submit 'Удалить опрос', class: 'nav-link btn btn-danger', data: { confirm: 'Вы уверены?' }
+        = f.submit 'Удалить', class: 'nav-link btn btn-danger', data: { confirm: 'Вы уверены?' }
 
 .mb-3
   h4.mb-1 Варианты ответа / кандидаты
