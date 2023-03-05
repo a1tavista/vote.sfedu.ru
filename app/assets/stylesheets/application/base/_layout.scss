@@ -13,17 +13,8 @@ body {
   height: 100%;
 }
 
-.sticky-wrapper {
+.wrapper {
   min-height: 100%;
-  margin-bottom: -128px;
-
-  &:after {
-    content: "";
-    height: 140px;
-    display: block;
-  }
-}
-
-.footer {
-  height: 140px;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
 }

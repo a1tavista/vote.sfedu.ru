@@ -1,10 +1,18 @@
 footer.footer
-  .title Южный федеральный университет &copy; #{Date.current.year}
-  .sources
+  .footer__logotypes
+    = link_to "https://sfedu.ru", target: "_blank" do
+      = image_tag("logo.png")
+    = link_to "https://vk.com/oso.sfedu", target: "_blank" do
+      = image_tag("studsovet-white.png")
+  .footer__about-service
+    div style='max-width: 600px;'
+      | Система оценки профессорско-преподавательского состава Южного федерального университета реализуется с целью
+      |  совершенствования образовательного процесса университета и вовлечения обучающихся в процесс повышения качества
+      |  образования через независимую оценку преподавательской деятельности.
+
+  .footer__admin-info
     = link_to "Исходный код на GitHub", "https://github.com/a1tavista/vote.sfedu.ru", target: "_blank"
-  .sub-footer
-    | Администратор – Моисеенко Екатерина Эдуардовна
-    | <br>Телефон:&nbsp;
-    a href='tel:+79181234216' +7 (918) 123 42-16
-    | <br>E-Mail:&nbsp;
-    a href='mailto:ekmoiseenko@sfedu.ru' ekmoiseenko@sfedu.ru
+    div Администратор: Моисеенко Екатерина Эдуардовна
+    div Телефон:&nbsp;#{link_to '+7 (918) 123 42-16', 'tel:+79181234216'}
+    div E-Mail:&nbsp;#{link_to 'ekmoiseenko@sfedu.ru', 'mailto:ekmoiseenko@sfedu.ru'}
+

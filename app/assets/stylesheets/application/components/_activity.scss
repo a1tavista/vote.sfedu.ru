@@ -1,0 +1,39 @@
+.activity {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  @media(max-width: 1023px) {
+    flex-direction: column;
+  }
+
+  &__label {
+    margin-right: 8px;
+    font-size: 0.8em;
+    line-height: 1.7em;
+    border-radius: 3px;
+
+    vertical-align: center;
+
+    padding: 0 8px;
+
+    &--poll {
+      background: $action-color;
+      color: white;
+    }
+
+    &--stage {
+      background: #81F495;
+    }
+  }
+
+  &__name {
+    flex: 1
+  }
+
+  &__dates {
+    &--past {
+      color: $dark-gray;
+    }
+  }
+}

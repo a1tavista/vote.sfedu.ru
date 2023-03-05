@@ -24,47 +24,29 @@ section.page-section.page-section--main
     = link_to @stage, class: 'page-notice__title' do
       | Cпешите принять участие в рейтинге с #{l(@stage.starts_at, format: :only_date)} по #{l(@stage.ends_at, format: :only_date)}!
 
-section.page-section
-  h1.page-section__title Общеуниверситетские опросы
-  .page-section__content--with-cards
-    - @stages.each do |stage|
-      .survey-card class=('survey-card--active' if stage.current?)
-        header.survey-card__title
-          = link_to "Рейтинг НПР", "#"
-        .survey-card__content
-          dl.survey-card__date
-            dt Начало:
-            dd = l(stage.starts_at, format: :only_date)
-          dl.survey-card__date
-            dt Конец:
-            dd = l(stage.ends_at, format: :only_date)
-          footer.survey-card__footer
-            = link_to 'Регламент участия', stage_path(stage)
-            /= link_to 'Результаты опроса', stage_path(stage) if stage.past?
 
 section.page-section
-  h1.page-section__title Голосования
-  .page-section__content--with-cards
-    - @polls.each do |poll|
-      .survey-card
-        header.survey-card__title
-          = link_to poll.name, "#"
-        .survey-card__content
-          dl.survey-card__date
-            dt Начало:
-            dd = l(poll.starts_at, format: :short)
-          dl.survey-card__date
-            dt Конец:
-            dd = l(poll.ends_at, format: :short)
-          footer.survey-card__footer
-            = link_to 'Результаты', poll_path(poll)
-
-section.page-section.page-section--raised
-  .page-section__content--limited.about-page__service-description-section
-    .about-page__images
-      = image_tag 'logo-colored.png'
-      = image_tag 'studsovet.png'
-    p.about-page__service-description
-      | Система оценки профессорско-преподавательского состава Южного федерального университета реализуется с целью
-      |  совершенствования образовательного процесса университета и вовлечения обучающихся в процесс повышения качества
-      |  образования через независимую оценку преподавательской деятельности.
+  h1.page-section__title История опросов
+  .page-section__content.page-section__content--w1300
+    table
+      tbody
+        - @all_activities.each do |activity|
+          tr
+            td
+              .activity
+                - if activity.is_a?(Poll)
+                  .activity__label.activity__label--poll Голосование
+                - elsif activity.is_a?(Stage)
+                  .activity__label.activity__label--stage Рейтинг НПР
+                .activity__name
+                  - if activity.is_a?(Poll)
+                    = link_to activity.name, poll_path(activity)
+                  - elsif activity.is_a?(Stage)
+                    = link_to 'Рейтинг научно-педагогического работника', stage_path(activity)
+                .activity__dates class=('activity__dates--past' if activity.past?)
+                  - if activity.upcoming?
+                    | с #{l(activity.starts_at, format: :short)}
+                  - elsif activity.current?
+                    | до #{l(activity.ends_at, format: :short)}
+                  - elsif activity.past?
+                    | Завершено #{l(activity.ends_at, format: :only_date)}

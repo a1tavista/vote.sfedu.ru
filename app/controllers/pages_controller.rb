@@ -1,8 +1,7 @@
 class PagesController < ApplicationController
   def index
     @stage = Stage.current
-    @stages = Stage.all.order("starts_at DESC")
-    @polls = Poll.all.order(starts_at: :desc)
+    @all_activities = (Stage.all + Poll.all).sort_by(&:starts_at).reverse
   end
 
   def faq

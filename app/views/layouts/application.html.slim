@@ -10,13 +10,13 @@ html lang="en"
     link rel="icon" type="image/png" href="/favicon.png"
     = csrf_meta_tags
   body
-    .sticky-wrapper
+    = render 'shared/aside'
+    .wrapper
       = render 'shared/header'
-      = render 'shared/aside'
       main#common-app
         notifications
         = yield
-    = render 'shared/footer'
+      = render 'shared/footer'
     = render 'shared/metrika'
     = render 'javascript'
     = javascript_pack_tag 'common'

@@ -23,14 +23,17 @@ class Stage < ApplicationRecord
     active.first
   end
 
+  def upcoming?
+    Time.current < starts_at
+  end
+
   def current?
     current_time = Time.current
     starts_at <= current_time && current_time <= ends_at
   end
 
   def past?
-    current_time = Time.current
-    ends_at < current_time
+    ends_at < Time.current
   end
 
   def calculation_rule_klass

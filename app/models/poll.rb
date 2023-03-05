@@ -16,6 +16,15 @@ class Poll < ApplicationRecord
     Poll::Participation.find_by(student: student, poll: self).present?
   end
 
+  def current?
+    current_time = Time.current
+    starts_at <= current_time && current_time <= ends_at
+  end
+
+  def upcoming?
+    Time.current < starts_at
+  end
+
   def started?
     starts_at < Time.current
   end
@@ -23,4 +32,6 @@ class Poll < ApplicationRecord
   def finished?
     ends_at < Time.current
   end
+
+  alias_method :past?, :finished?
 end

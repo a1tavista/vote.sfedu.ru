@@ -76,8 +76,13 @@
     width: 100%;
 
     padding: 0 10px;
+
     &--limited {
       max-width: 1000px;
+    }
+
+    &--w1300 {
+      max-width: 1300px;
     }
 
     &--justify {
