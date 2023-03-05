@@ -4,7 +4,7 @@
     p
       | #{@poll.name} #{"[Архив]" if @poll.archived?}
   ul.nav.nav-pills.page-header-actions.d-flex.justify-content-end
-    - if @poll.archived?
+    - unless @poll.archived?
       li.nav-item
         = form_for @poll, url: archive_admin_poll_path(@poll), method: :put do |f|
           = f.submit 'Архивировать', class: 'nav-link btn', data: { confirm: 'Вы уверены?' }
