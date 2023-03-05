@@ -31,7 +31,7 @@ module VoteSfeduRu
     config.eager_load_paths << "#{Rails.root}/lib"
 
     config.time_zone = "Moscow"
-    config.active_record.default_timezone = :local
+    config.active_record.default_timezone = :utc
 
     config.i18n.default_locale = :ru
     config.i18n.available_locales = [:ru, :en]
