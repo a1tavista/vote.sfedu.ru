@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-ruby "2.7.5"
+ruby "2.7.7"
 
 gem "active_link_to"
 gem "active_interaction"
