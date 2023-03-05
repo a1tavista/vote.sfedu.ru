@@ -18,7 +18,6 @@ section.page-section.page-section--main
       h3.authorization-form__title Добро пожаловать, #{current_user.nickname}!
       = link_to("Голосовать", user_root_path, class: 'btn')
 
-
 - if @stage.present?
   .page-notice.page-notice--with-margin.page-notice--notice
     = image_tag "poll.svg"
