@@ -4,8 +4,10 @@ module StagesHelper
 
     if result.length > 1
       result[0..-2].join(", ") + " и " + result[-1]
-    else
+    elsif result.length == "1"
       result[0]
+    else
+      "–"
     end
   end
 

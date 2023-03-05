@@ -1,0 +1,11 @@
+.page-header
+  h1.page-header-title Рейтинг НПР с #{l(@stage.starts_at, format: :only_date)} по #{l(@stage.ends_at, format: :only_date)}
+
+
+h3.mb-3 Доступные отчёты
+
+.card
+  .card-header Выгрузка по факультетам
+  .card-body
+    p.card-text Выгружает информацию о количестве участников по каждому факультету.
+    = link_to 'Скачать', admin_stage_path(@stage, format: :xlsx)

@@ -11,7 +11,7 @@ module Stages
 
       row = 1
 
-      Stages::ProgressReportByFaculties.new.call(stage: stage).values.find_each do |entity|
+      Stages::ProgressReportByFaculties.new.call(stage: stage).values.each do |entity|
         worksheet.set_row(row, 30)
         write_data(worksheet, row, formats, {
           faculty: entity[:faculty].name,

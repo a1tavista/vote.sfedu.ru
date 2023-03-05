@@ -10,7 +10,7 @@ class Admin::TeachersController < Admin::BaseController
     @results = Stage.all.map { |stage|
       {
         stage: stage,
-        results: Teachers::CalculateResult.run!(teacher: @teacher, stage: stage)
+        results: stage.calculation_rule_klass.new(@teacher, stage).call
       }
     }
   end

@@ -14,7 +14,7 @@
   - @stages.each do |stage|
     = link_to admin_stage_path(stage), class: 'list-group-item list-group-item-action flex-column align-items-start' do
       .d-flex.w-100.justify-content-between
-        h5.mb-1 Анкетирование с #{l(stage.starts_at, format: :only_date)} по #{l(stage.ends_at, format: :only_date)}
+        h5.mb-1 Рейтинг НПР с #{l(stage.starts_at, format: :only_date)} по #{l(stage.ends_at, format: :only_date)}
         h5
           - if stage.current?
             .badge.badge-primary Активная
