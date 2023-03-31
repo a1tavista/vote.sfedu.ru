@@ -2,7 +2,7 @@ class Admin::Reports::TeachersController < Admin::BaseController
   def index
     respond_to do |format|
       format.xlsx do
-        io_string = ::Stages::ResultsReport.run!(stage: Stage.current || Stage.second_to_last)
+        io_string = ::Stages::ResultsReport.run!(stage: Stage.current || Stage.last)
 
         send_data(
           io_string,

@@ -21,7 +21,7 @@ module Stages
           external_id: teacher.external_id,
           encrypted_snils: teacher.encrypted_snils,
           participations_count: results[:participations_count],
-          rating_of_questions: results[:rating_of_questions].map { |q| q[:rating].try(:round, 1) },
+          rating_of_questions: results[:rating_by_questions].map { |q| q[:rating].try(:round, 1) },
           avg_rating: results[:final_rating_of_stage].try(:round, 1)
         })
         row += 1
