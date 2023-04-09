@@ -3,7 +3,7 @@ require 'sidekiq/web'
 Rails.application.routes.draw do
   root "pages#index"
 
-  devise_for :users, path: ""
+  devise_for :users, path: "", controllers: { omniauth_callbacks: 'auth/omniauth_callbacks' }
 
   get 'login_as', to: 'debug#login_as' if ENV["DEBUG_LOGIN_INTO_ACCOUNT"]
 

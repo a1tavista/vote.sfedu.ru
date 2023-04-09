@@ -1,6 +1,9 @@
 class User < ApplicationRecord
-  devise :openid_authenticatable, :rememberable, :trackable
+  devise :openid_authenticatable, :rememberable, :trackable, :omniauthable, omniauth_providers: [:azure_oauth2]
+
   belongs_to :kind, polymorphic: true
+  belongs_to :student, optional: true
+  belongs_to :teacher, optional: true
 
   enum role: %i[regular moderator admin]
 
@@ -49,11 +52,11 @@ class User < ApplicationRecord
   end
 
   def student?
-    kind.is_a?(Student)
+    kind.is_a?(Student) || student.present?
   end
 
   def teacher?
-    kind.is_a?(Teacher)
+    kind.is_a?(Teacher) || teacher.present?
   end
 
   def normalize_id(raw_id)

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_03_05_144303) do
+ActiveRecord::Schema.define(version: 2023_04_12_125917) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -53,6 +53,22 @@ ActiveRecord::Schema.define(version: 2023_03_05_144303) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "aliases", default: [], array: true
+  end
+
+  create_table "flipper_features", force: :cascade do |t|
+    t.string "key", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["key"], name: "index_flipper_features_on_key", unique: true
+  end
+
+  create_table "flipper_gates", force: :cascade do |t|
+    t.string "feature_key", null: false
+    t.string "key", null: false
+    t.string "value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["feature_key", "key", "value"], name: "index_flipper_gates_on_feature_key_and_key_and_value", unique: true
   end
 
   create_table "grade_books", force: :cascade do |t|
@@ -299,9 +315,14 @@ ActiveRecord::Schema.define(version: 2023_03_05_144303) do
     t.bigint "kind_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "name"
+    t.bigint "teacher_id"
+    t.bigint "student_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["identity_url"], name: "index_users_on_identity_url", unique: true
     t.index ["kind_type", "kind_id"], name: "index_users_on_kind_type_and_kind_id"
+    t.index ["student_id"], name: "index_users_on_student_id"
+    t.index ["teacher_id"], name: "index_users_on_teacher_id"
   end
 
   add_foreign_key "answers", "questions"
@@ -336,4 +357,6 @@ ActiveRecord::Schema.define(version: 2023_03_05_144303) do
   add_foreign_key "survey_sharings", "surveys"
   add_foreign_key "survey_sharings", "users"
   add_foreign_key "surveys", "users"
+  add_foreign_key "users", "students"
+  add_foreign_key "users", "teachers"
 end

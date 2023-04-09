@@ -4,7 +4,7 @@ ENV PATH /root/.yarn/bin:$PATH
 
 RUN apk update && apk upgrade && \
     apk add --no-cache binutils tar gnupg \
-                       curl jq python3 py3-pip bash git openssh \
+                       curl jq python3 py3-pip bash openssh \
                        build-base nodejs tzdata postgresql-dev
 
 RUN /bin/bash \
@@ -12,6 +12,8 @@ RUN /bin/bash \
   && curl -o- -L https://yarnpkg.com/install.sh | bash
 
 WORKDIR /app
+
+COPY vendor ./vendor/
 COPY Gemfile Gemfile.lock ./
 
 RUN bundle config set without 'development test' && \

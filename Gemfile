@@ -11,15 +11,21 @@ gem "cancancan"
 gem "clowne"
 gem 'data_migrate'
 gem "devise"
-gem "devise_openid_authenticatable", git: "https://github.com/a1tavista/devise_openid_authenticatable.git", ref: "35e7d83"
+gem "devise_openid_authenticatable", path: "vendor/devise_openid_authenticatable"
 gem "dry-transaction"
 gem "dry-initializer"
 gem "dry-monads"
 gem "dry-validation"
+gem "flipper"
+gem 'flipper-active_record'
 gem "high_voltage"
 gem "jquery-rails"
 gem "nested_form_fields"
 gem "normalize-rails", "~> 3.0.0"
+
+gem "omniauth-rails_csrf_protection"
+gem "omniauth-azure-activedirectory-v2"
+
 gem "pg"
 gem "puma"
 gem "rack-canonical-host"
