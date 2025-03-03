@@ -38,6 +38,8 @@ module VoteSfeduRu
 
     config.action_controller.action_on_unpermitted_parameters = :raise
     config.load_defaults 5.1
+    config.autoloader = :zeitwerk
+    config.add_autoload_paths_to_load_path = false
     config.generators.system_tests = nil
 
     config.exceptions_app = routes
